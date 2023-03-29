@@ -1,0 +1,25 @@
+@import './variable.scss';
+
+.base-btn {
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.btn-submit {
+    background-color: $color-main;
+    color: $white;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+}

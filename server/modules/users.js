@@ -1,0 +1,46 @@
+import { Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
+
+const UserSchema = new Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+    maxLength: 255,
+    minLength: 6,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  role: {
+    type: Number,
+    default: 1,
+  },
+  avater: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+UserSchema.methods = {
+  comparePass(pass) {
+    return bcrypt.compare(pass, this.password);
+  },
+};
+
+export default model("users", UserSchema);
