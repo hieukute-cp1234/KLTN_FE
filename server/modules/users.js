@@ -20,6 +20,25 @@ const UserSchema = new Schema({
     required: true,
     trim: true,
   },
+  birthday: {
+    type: String,
+    trim: true,
+    default: null,
+  },
+  company: {
+    type: String,
+    trim: true,
+    default: null,
+  },
+  phone: {
+    type: String,
+    trim: true,
+    default: null,
+  },
+  project: {
+    type: Array,
+    default: [],
+  },
   role: {
     type: Number,
     default: 1,
