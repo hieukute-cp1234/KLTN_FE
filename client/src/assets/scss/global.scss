@@ -1,6 +1,9 @@
 @import './variable.scss';
 
-body {
+html {
   font-size: $font-size-default;
+}
+
+body {
   user-select: none;
 }

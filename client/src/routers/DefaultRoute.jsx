@@ -1,19 +1,15 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-const DefaultRoute = ({ route }) => {
-  return route.children.length ? (
-    <Route path={route.path} element={route.component}>
-      {route.children.map((routeChild) => (
-        <Route
-          key={routeChild.key}
-          path={routeChild.path}
-          element={routeChild.component}
-        />
+const DefaultRoute = ({ routes }) => {
+  return (
+    <>
+      {routes.map((route) => (
+        <Route key={route.key} path={route.path} element={route.component}>
+          {route.children.length && <DefaultRoute routes={route.children} />}
+        </Route>
       ))}
-    </Route>
-  ) : (
-    <Route path={route.path} element={route.component} />
+    </>
   );
 };
 
