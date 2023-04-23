@@ -10,12 +10,14 @@ const LayoutComponent = ({ children }) => {
   return (
     <Layout className="ms-layout">
       <Sider trigger={null} collapsible>
-        <div className="logo" />
+        <div className="logo">
+          <div></div>
+        </div>
         <Menu />
       </Sider>
       <Layout className="site-layout">
         <Header />
-        <Content>{children}</Content>
+        <Content className="ms-layout__content">{children}</Content>
       </Layout>
     </Layout>
   );

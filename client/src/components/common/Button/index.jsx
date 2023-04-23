@@ -2,10 +2,34 @@ import React from "react";
 import "./button.scss";
 
 const CommonButton = (props) => {
-  const { text, typeButton, click, classButton, beforeIcon, afterIcon } = props;
+  const {
+    text,
+    typeButton,
+    click,
+    classButton = "",
+    beforeIcon,
+    afterIcon,
+    largeSize,
+    defaultSize,
+    smallSize,
+  } = props;
+
+  const size = {
+    "ms-large": largeSize,
+    "ms-default": defaultSize,
+    "ms-small": smallSize,
+  };
+
+  const classSizeButton = Object.entries(size)
+    .filter(([_key, value]) => !!value)
+    .map(([key, _value]) => key)
+    .join(" ");
+
+  const stringClass = `base-btn ${classSizeButton} ${classButton}`.trim();
+
   return (
     <button
-      className={`base-btn ${classButton}`}
+      className={stringClass}
       type={typeButton || "button"}
       onClick={click}
     >

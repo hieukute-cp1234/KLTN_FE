@@ -1,7 +1,7 @@
 @import '../../../assets/scss/variable.scss';
 
 .base-btn {
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 0.4rem;
   border: none;
   cursor: pointer;
@@ -9,14 +9,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.75rem;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   &.btn-submit {
     background-color: $color-main;
     color: $white;
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 
   &.full-width {
@@ -24,10 +25,43 @@
   }
 
   &__before-icon {
-
+    margin-right: 0.3rem;
   }
 
   &__after-icon {
-    
+    margin-left: 0.3rem;
+  }
+
+  &.ms-btn-create {
+
+  }
+
+  &.ms-btn-edit {
+    color: $white;
+    background-color: $color-edit;
+    min-width: 4rem;
+    padding: 0 0.75rem;
+  }
+
+  &.ms-btn-copy {
+    color: $white;
+    background-color: $color-copy;
+    min-width: 4rem;
+    padding: 0 0.75rem;
+  }
+
+  &.ms-btn-delete {
+    color: $white;
+    background-color: $color-delete;
+    min-width: 4rem;
+    padding: 0 0.75rem;
+  }
+
+  &.ms-btn-view {
+    color: $white;
+    background-color: $color-copy;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10rem;
   }
 }

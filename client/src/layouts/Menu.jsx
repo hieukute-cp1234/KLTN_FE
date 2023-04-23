@@ -5,6 +5,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
 
 const MENU = [
   {
@@ -39,12 +40,12 @@ const MENU_ADMIN = [
   {
     icon: <UserOutlined />,
     label: "List Process",
-    key: "/admin/process",
+    path: "/admin/process",
   },
   {
     icon: <UserOutlined />,
     label: "Role Process",
-    key: "/admin/role",
+    path: "/admin/role",
   },
 ];
 
@@ -58,9 +59,20 @@ const MenuComponent = () => {
       theme="dark"
       mode="inline"
       defaultSelectedKeys={["/admin"]}
-      items={MENU_ADMIN}
       onSelect={selectMenu}
-    />
+    >
+      {MENU_ADMIN.map((menuItem) => (
+        <Menu.Item
+          className="menu-item"
+          key={menuItem.path}
+          icon={menuItem.icon}
+        >
+          <NavLink className="nav-link" to={menuItem.path}>
+            {menuItem.label}
+          </NavLink>
+        </Menu.Item>
+      ))}
+    </Menu>
   );
 };
 

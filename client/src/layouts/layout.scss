@@ -4,8 +4,40 @@
   align-items: center;
   min-height: 3.125rem;
   padding: 0 1.25rem;
+  background-color: #001529;
+  color: #ffffff;
+
+  &__search {
+    display: flex;
+    max-height: 70%;
+    gap: 0.625rem;
+  }
+}
+
+.logo{
+  min-height: 3.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ms-layout {
   min-height: 100vh;
+
+  &__content {
+    padding: 1.25rem;
+    .ant-spin-container {
+      height: 85vh;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: rgba(#888888, 0.5); 
+        border-radius: 999px;
+      }
+    }
+  }
 }

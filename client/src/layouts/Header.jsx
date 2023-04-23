@@ -1,13 +1,20 @@
 import React from "react";
+import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
+import Button from "../components/common/Button";
+import Input from "../components/common/Input";
 import "./layout.scss";
 
-const Header = (props) => {
+const Header = ({ namePage }) => {
   return (
     <div className="ms-header">
-      <div>dieu huowng</div>
-      <div>
-        <input />
-        <button>add</button>
+      <div>{namePage}</div>
+      <div className="ms-header__search">
+        <Input placeholder="search..." beforeIcon={<SearchOutlined />} />
+        <Button
+          text="Add"
+          classButton="ms-btn-create"
+          beforeIcon={<PlusCircleOutlined />}
+        />
       </div>
     </div>
   );
