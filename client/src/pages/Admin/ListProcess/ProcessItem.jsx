@@ -11,7 +11,7 @@ import { STATUS_PROCESS } from "../../../constants";
 import "./process.scss";
 
 const ProcessItem = (props) => {
-  const { processData, onEdit, onCopy, onDelete, onViewWorkFollow } = props;
+  const { processData, onEdit, onCopy, onDelete, onViewWorkflow } = props;
   const [toggleDescription, setDescription] = useState(false);
 
   const renderStatus = () => {
@@ -58,12 +58,12 @@ const ProcessItem = (props) => {
             <Descriptions.Item label="Description" span={3}>
               {processData.description}
             </Descriptions.Item>
-            <Descriptions.Item label="Work Follow">
+            <Descriptions.Item label="Work Flow">
               <Button
                 text="view"
                 classButton="ms-btn-view"
                 afterIcon={<FileSearchOutlined />}
-                click={() => onViewWorkFollow("view")}
+                click={() => onViewWorkflow("view")}
               />
             </Descriptions.Item>
             <Descriptions.Item label="List Role">

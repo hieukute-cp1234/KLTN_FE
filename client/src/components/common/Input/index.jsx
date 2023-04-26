@@ -2,14 +2,18 @@ import { Input } from "antd";
 import "./input.scss";
 
 const CommonInput = (props) => {
-  const { placeholder, beforeIcon, afterIcon, onChange } = props;
+  const { placeholder, label, beforeIcon, afterIcon, onChange } = props;
   return (
-    <Input
-      placeholder={placeholder}
-      prefix={beforeIcon}
-      suffix={afterIcon}
-      onChange={onChange}
-    />
+    <div className="ms-input">
+      <span className="ms-input__label">{label}</span>
+      <Input
+        classNames="ms-input__custom"
+        placeholder={placeholder}
+        prefix={beforeIcon}
+        suffix={afterIcon}
+        onChange={onChange}
+      />
+    </div>
   );
 };
 

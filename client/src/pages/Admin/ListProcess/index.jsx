@@ -3,11 +3,13 @@ import { List, Modal, Form } from "antd";
 import Layout from "../../../layouts";
 import ProcessItem from "./ProcessItem";
 import CreateAndEditProcess from "./CreateAndEdit";
-import { listProcess } from "../../../dataFake";
+import PreviewWorkflow from "./PreviewWorkFlow";
+import { listProcess, diagrams } from "../../../dataFake";
 import "./process.scss";
 
 const ListProcess = () => {
   const [toggleCreateEdit, setCreateEdit] = useState(false);
+  const [toggleViewWorkflow, setViewWorkflow] = useState(false);
 
   const [formCreate] = Form.useForm();
 
@@ -24,8 +26,8 @@ const ListProcess = () => {
     console.log(key);
   };
 
-  const handleViewWorkFollow = (key) => {
-    console.log(key);
+  const handleViewWorkflow = (key) => {
+    setViewWorkflow(true);
   };
 
   const handleSubmitForm = () => {
@@ -43,7 +45,7 @@ const ListProcess = () => {
               onEdit={handleEditProcess}
               onCopy={handleCopyProcess}
               onDelete={handleDeleteProcess}
-              onViewWorkFollow={handleViewWorkFollow}
+              onViewWorkflow={handleViewWorkflow}
             />
           </List.Item>
         )}
@@ -56,6 +58,11 @@ const ListProcess = () => {
       >
         <CreateAndEditProcess formCreateEdit={formCreate} />
       </Modal>
+      <PreviewWorkflow
+        open={toggleViewWorkflow}
+        onCancel={() => setViewWorkflow(false)}
+        dataDiagrams={diagrams}
+      />
     </Layout>
   );
 };

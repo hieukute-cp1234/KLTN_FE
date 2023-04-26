@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, AutoComplete } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 import Button from "../../../components/common/Button";
-import { listWorkFollow } from "../../../dataFake";
+import { listWorkflow } from "../../../dataFake";
 import "./process.scss";
 
 const { TextArea } = Input;
@@ -13,26 +13,26 @@ const CreateAndEditProcess = (props) => {
     console.log(value);
   };
 
-  const viewWorkFollow = (id) => {
+  const viewWorkflow = (id) => {
     console.log(id);
   };
 
-  const renderItemWorkfollow = (name, id) => ({
+  const renderItemWorkflow = (name, id) => ({
     value: name,
     label: (
-      <div className="item-workfollow">
+      <div className="item-workflow">
         <span>{name}</span>
         <Button
           text={<FileSearchOutlined />}
           classButton="ms-btn-view"
-          click={viewWorkFollow(id)}
+          click={()=> viewWorkflow(id)}
         />
       </div>
     ),
   });
 
-  const options = listWorkFollow.map((item) =>
-    renderItemWorkfollow(item.name, item.id)
+  const options = listWorkflow.map((item) =>
+    renderItemWorkflow(item.name, item.id)
   );
 
   return (
@@ -53,7 +53,7 @@ const CreateAndEditProcess = (props) => {
         <Form.Item label="Description" name="description" rules={[]}>
           <TextArea rows={4} />
         </Form.Item>
-        <Form.Item label="Work Follow" name="work_follow" rules={[]}>
+        <Form.Item label="Work Flow" name="work_flow" rules={[]}>
           <AutoComplete options={options} />
         </Form.Item>
         <Form.Item label="Roles" name="roles" rules={[]}>

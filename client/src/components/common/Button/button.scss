@@ -32,10 +32,6 @@
     margin-left: 0.3rem;
   }
 
-  &.ms-btn-create {
-
-  }
-
   &.ms-btn-edit {
     color: $white;
     background-color: $color-edit;
@@ -63,5 +59,12 @@
     font-size: 0.75rem;
     padding: 0.3rem 0.5rem;
     border-radius: 10rem;
+  }
+
+  &.ms-btn-submit {
+    color: $white;
+    background-color: $color-main;
+    min-width: 4rem;
+    padding: 0 0.75rem;
   }
 }

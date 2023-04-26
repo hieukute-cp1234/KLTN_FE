@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { routersPublic, routersPrivate } from "./routers/routes";
 import PrivateRoute from "./routers/PrivateRoute";
 import "./assets/scss/global.scss";
+import 'reactflow/dist/style.css';  
 
 function App() {
   return (
