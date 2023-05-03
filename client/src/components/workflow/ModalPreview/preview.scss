@@ -1,0 +1,53 @@
+@import "../../../assets/scss/variable.scss";
+
+.box-editor {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  z-index: 10;
+  
+  &__minisize-editor {
+  }
+
+  &__full-modal {
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    border: 1px solid gray;
+    padding: 0 1rem 1rem;
+    box-shadow: 0px 0px 10px gray;
+    gap: 0.75rem;
+
+    &__title {
+      text-align: center;
+      font-weight: 500;
+      padding: 0.5rem 0.25rem 0;
+    }
+
+    &__minisize {
+      position: absolute;
+      padding: 0.25rem;
+      right: 1rem;
+      cursor: pointer;
+    }
+  }
+}
+
+.preview-workflow {
+  width: 85vw;
+  height: calc(80vh - 40px);
+  border: 1px solid black;
+}
+
+.preview-workflow-actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 1rem 1rem 0 0;
+  gap: 1rem;
+
+  > button {
+    padding: 0.5rem 0.75rem !important;
+  }
+}

@@ -12,9 +12,9 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
 } from "reactflow";
-import Button from "../../../components/common/Button";
-import EditMiniSize from "../../../components/workflow/ModalPreview/EditMiniSize";
-import "./process.scss";
+import Button from "../../components/common/Button";
+import Input from "../../components/common/Input";
+import "./preview.scss";
 
 const PreviewWorkflow = (props) => {
   const { dataDiagrams, open, onCancel, onMinisize } = props;
@@ -66,6 +66,14 @@ const PreviewWorkflow = (props) => {
     },
   ];
 
+  const handleChangeNameWorkflow = (event) => {
+    const value = event.target.value;
+  };
+
+  const handleBlurWorkflow = (event) => {
+    const value = event.target.value;
+  };
+
   return (
     <Modal
       title="name work flow"
@@ -84,7 +92,23 @@ const PreviewWorkflow = (props) => {
           fitView
           attributionPosition="top-right"
         >
-          {isEdit && <EditMiniSize />}
+          {isEdit && (
+            <div className="box-editor">
+              <span className="box-editor__minisize" onClick={onMinisize}>_</span>
+              <span className="box-editor__title">Workflow Editor</span>
+              <Input placeholder="Node name" label="List role" />
+              <Input
+                placeholder="Workflow name"
+                label="Name"
+                onChange={handleChangeNameWorkflow}
+                onBlur={handleBlurWorkflow}
+              />
+              <span className="box-editor__title">Node Editor</span>
+              <Input placeholder="Node name" label="Name" />
+              <Input placeholder="Color" label="Color" />
+              <Input placeholder="Mention role" label="Mention" />
+            </div>
+          )}
 
           <Controls />
           <Background color="#aaa" gap={16} />
