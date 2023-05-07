@@ -1,36 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
+import { LineOutlined, FullscreenOutlined } from "@ant-design/icons";
 import Input from "../../common/Input";
+import Button from "../../common/Button";
+import ColorPicker from "../../common/ColorPicker";
 import "./preview.scss";
 
 const EditMiniSize = (props) => {
-  const { onMinisize } = props;
+  const { changeWorkflow, selectNode } = props;
+  const [isMiniSize, setMiniSize] = useState(false);
+  const [color, setColor] = useState('#222');
+
   const handleChangeNameWorkflow = (event) => {
     const value = event.target.value;
+    changeWorkflow("workflow_name", value);
   };
 
-  const handleBlurWorkflow = (event) => {
+  const handleChangeListRole = (event) => {
     const value = event.target.value;
+    changeWorkflow("list_role", value);
   };
+
+  const handleMiniSize = () => {
+    setMiniSize(!isMiniSize);
+  };
+
+  const handleChangeNameNode = (event) => {
+    const value = event.target.value;
+    changeWorkflow("name", value);
+  };
+
+  const handleChangeColor = (color) => {
+    setColor(color);
+    changeWorkflow("color", color);
+  };
+
+  const handleChangeMention = (event) => {
+    const value = event.target.value;
+    changeWorkflow("mention", value);
+  };
+
   return (
     <div className="box-editor">
-      <div className="box-editor__minisize-editor">edit</div>
-      <div className="box-editor__full-modal">
-        <span className="full-modal__minisize" onClick={onMinisize}>
-          _
-        </span>
-        <span className="box-editor__full-modal__title">Workflow Editor</span>
-        <Input placeholder="Node name" label="List role" />
-        <Input
-          placeholder="Workflow name"
-          label="Name"
-          onChange={handleChangeNameWorkflow}
-          onBlur={handleBlurWorkflow}
-        />
-        <span className="box-editor__full-modal__title">Node Editor</span>
-        <Input placeholder="Node name" label="Name" />
-        <Input placeholder="Color" label="Color" />
-        <Input placeholder="Mention role" label="Mention" />
-      </div>
+      {isMiniSize ? (
+        <div className="box-editor__minisize-editor">
+          <Button text={<FullscreenOutlined />} click={handleMiniSize} />
+        </div>
+      ) : (
+        <div className="box-editor__full-modal">
+          <span
+            className="box-editor__full-modal__minisize"
+            onClick={handleMiniSize}
+          >
+            <Button text={<LineOutlined />} />
+          </span>
+          <span className="box-editor__full-modal__title">Workflow Editor</span>
+          <Input
+            placeholder="Node name"
+            label="List role"
+            onChange={handleChangeListRole}
+          />
+          <Input
+            placeholder="Workflow name"
+            label="Name"
+            onChange={handleChangeNameWorkflow}
+          />
+          <span className="box-editor__full-modal__title">Node Editor</span>
+          <Input
+            placeholder="Node name"
+            label="Name"
+            onChange={handleChangeNameNode}
+          />
+          <ColorPicker
+            label="Color"
+            color={color}
+            onChangeColor={handleChangeColor}
+          />
+          <Input
+            placeholder="Mention role"
+            label="Mention"
+            onChange={handleChangeMention}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -9,9 +9,8 @@ const LoginPage = () => {
     label: { span: 6 },
     container: { span: 24 },
   };
-  const handleLogin = (value) => {
-    console.log(value);
-  };
+  const handleLogin = (value) => {};
+
   return (
     <div className="login">
       <div className="login__box-form">

@@ -1,4 +1,4 @@
-@import './variable.scss';
+@import "./variable.scss";
 
 html {
   font-size: $font-size-default;
@@ -6,4 +6,10 @@ html {
 
 body {
   user-select: none;
+}
+
+.react-flow {
+  &__attribution {
+    display: none;
+  }
 }

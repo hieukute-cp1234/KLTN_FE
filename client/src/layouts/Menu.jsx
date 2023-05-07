@@ -4,6 +4,7 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  FilePdfOutlined,
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 
@@ -47,12 +48,15 @@ const MENU_ADMIN = [
     label: "Role Process",
     path: "/admin/role",
   },
+  {
+    icon: <FilePdfOutlined />,
+    label: "Workflow",
+    path: "/admin/workflow",
+  },
 ];
 
 const MenuComponent = () => {
-  const selectMenu = ({ key }) => {
-    console.log("key", key);
-  };
+  const selectMenu = ({ key }) => {};
 
   return (
     <Menu

@@ -9,13 +9,9 @@ const { TextArea } = Input;
 
 const CreateAndEditProcess = (props) => {
   const { formCreateEdit } = props;
-  const handleSubmitProcess = (value) => {
-    console.log(value);
-  };
+  const handleSubmitProcess = (value) => {};
 
-  const viewWorkflow = (id) => {
-    console.log(id);
-  };
+  const viewWorkflow = (id) => {};
 
   const renderItemWorkflow = (name, id) => ({
     value: name,
@@ -25,7 +21,7 @@ const CreateAndEditProcess = (props) => {
         <Button
           text={<FileSearchOutlined />}
           classButton="ms-btn-view"
-          click={()=> viewWorkflow(id)}
+          click={() => viewWorkflow(id)}
         />
       </div>
     ),

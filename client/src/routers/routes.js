@@ -3,6 +3,9 @@ import Dashboard from "../pages/Dashboard ";
 import MarKet from "../pages/Market";
 import AdminListProcess from "../pages/Admin/ListProcess";
 import AdminDashboard from "../pages/Admin/Dashboard";
+import AdminWorkflow from "../pages/Admin/Workflow";
+import AdminCreateWorkflow from "../pages/Admin/CreateWorkflow";
+import { ADMIN } from "../constants/routes";
 
 const routersPublic = [
   {
@@ -30,14 +33,24 @@ const routersPrivate = [
   //admin route
   {
     key: "ADMIN",
-    path: "/admin",
+    path: ADMIN.DASHBOARD,
     component: <AdminDashboard />,
     children: [],
   },
   {
     key: "ADMIN_PROCESS",
-    path: "/admin/process",
+    path: ADMIN.PROCESS,
     component: <AdminListProcess />,
+  },
+  {
+    key: "ADMIN_WORKFLOW",
+    path: ADMIN.WORKFLOW,
+    component: <AdminWorkflow />,
+  },
+  {
+    key: "ADMIN_WORKFLOW_CREATE",
+    path: ADMIN.CREATE_WORKFLOW,
+    component: <AdminCreateWorkflow />,
   },
 ];
 

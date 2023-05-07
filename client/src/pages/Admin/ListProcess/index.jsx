@@ -18,13 +18,9 @@ const ListProcess = () => {
     setCreateEdit(true);
   };
 
-  const handleCopyProcess = (key) => {
-    console.log(key);
-  };
+  const handleCopyProcess = (key) => {};
 
-  const handleDeleteProcess = (key) => {
-    console.log(key);
-  };
+  const handleDeleteProcess = (key) => {};
 
   const handleViewWorkflow = (key) => {
     setViewWorkflow(true);
