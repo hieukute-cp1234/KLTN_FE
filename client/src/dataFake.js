@@ -157,7 +157,7 @@ export const listWorkflow = [
 export const diagrams = [
   {
     id: "1",
-    type: "input",
+    type: "circleNode",
     data: {
       label: "Input Node",
     },
@@ -184,7 +184,7 @@ export const diagrams = [
   },
   {
     id: "4",
-    type: "custom",
+    type: "output",
     position: { x: 100, y: 200 },
     data: {
       label: "hieukute",
@@ -226,9 +226,8 @@ export const diagrams = [
     id: "5",
     type: "output",
     data: {
-      label: "custom style",
+      label: "custom",
     },
-    className: "circle",
     style: {
       background: "#2B6CB0",
       color: "white",

@@ -1,0 +1,48 @@
+@import "../../../assets/scss/variable.scss";
+
+.ms-node-circle {
+  border-radius: 50%;
+  width: inherit;
+  height: inherit;
+  min-width: 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  font-size: 10px;
+  padding: 0.5rem;
+}
+
+.ms-node-rectangle {
+  border-radius: 0.5rem;
+  width: inherit;
+  height: inherit;
+  min-width: 100px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  font-size: 10px;
+  padding: 0.5rem;
+}
+
+.ms-node-rhumbus {
+  width: inherit;
+  height: inherit;
+  min-width: 100px;
+  min-height: 100px;
+  /* Rotate */
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  /* Rotate Origin */
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
