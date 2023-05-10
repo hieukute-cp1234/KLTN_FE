@@ -8,7 +8,8 @@ import "./preview.scss";
 const EditMiniSize = (props) => {
   const { changeWorkflow, selectNode } = props;
   const [isMiniSize, setMiniSize] = useState(false);
-  const [color, setColor] = useState('#222');
+
+  const { data: dataNode } = selectNode;
 
   const handleChangeNameWorkflow = (event) => {
     const value = event.target.value;
@@ -26,12 +27,11 @@ const EditMiniSize = (props) => {
 
   const handleChangeNameNode = (event) => {
     const value = event.target.value;
-    changeWorkflow("name", value);
+    changeWorkflow("text", value);
   };
 
   const handleChangeColor = (color) => {
-    setColor(color);
-    changeWorkflow("color", color);
+    changeWorkflow("background", color);
   };
 
   const handleChangeMention = (event) => {
@@ -66,13 +66,14 @@ const EditMiniSize = (props) => {
           />
           <span className="box-editor__full-modal__title">Node Editor</span>
           <Input
-            placeholder="Node name"
-            label="Name"
+            placeholder="Text node"
+            label="Text"
+            value={dataNode?.text || ""}
             onChange={handleChangeNameNode}
           />
           <ColorPicker
             label="Color"
-            color={color}
+            value={dataNode?.background || "#222"}
             onChangeColor={handleChangeColor}
           />
           <Input

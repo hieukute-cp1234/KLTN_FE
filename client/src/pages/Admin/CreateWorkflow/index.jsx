@@ -1,34 +1,53 @@
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 import ReactFlow, {
   Background,
   Controls,
   addEdge,
+  MiniMap,
   useNodesState,
   useEdgesState,
 } from "reactflow";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
-import { diagrams } from "../../../dataFake";
 import { customTypes } from "../../../components/workflow/nodes";
 import EditMiniSize from "../../../components/workflow/ModalPreview/EditMiniSize";
 import "./create-workflow.scss";
 
 export const CreateWorkflowPage = () => {
-  const lines = diagrams.map((diagram) => diagram.edges).flat();
+  const nodeTypes = useMemo(() => customTypes, []);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     []
   );
+
   const [id, setId] = useState(0);
+  const [selectNode, setSelectNode] = useState({});
 
-  const nodeTypes = useMemo(() => customTypes, []);
+  const handleSelectNode = (nodeValue) => {
+    setSelectNode(nodeValue);
+  };
 
-  const handleSelectNode = (nodeValue) => {};
+  useEffect(() => {
+    if (selectNode?.id) {
+      setNodes((nodes) =>
+        nodes.map((node) => {
+          if (node.id === selectNode.id) {
+            node.data = { ...selectNode.data };
+          }
+          return node;
+        })
+      );
+    }
+  }, [selectNode, setNodes]);
 
-  const handleChangeWorkflow = (value) => {
-    console.log(value);
+  const handleChangeWorkflow = (key, value) => {
+    if (!selectNode) return;
+    const newNode = { ...selectNode };
+    newNode.data[key] = value;
+    setSelectNode(newNode);
   };
 
   const handleAddNode = () => {
@@ -48,7 +67,6 @@ export const CreateWorkflowPage = () => {
     };
 
     setNodes([...nodes, newNode]);
-    console.log(nodes);
   };
 
   return (
@@ -68,9 +86,12 @@ export const CreateWorkflowPage = () => {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
-            onNodeClick={(_event, node) => handleSelectNode(node)}
+            onNodeClick={(_, node) => handleSelectNode(node)}
           >
-            <EditMiniSize changeWorkflow={handleChangeWorkflow} selectNode />
+            <EditMiniSize
+              changeWorkflow={handleChangeWorkflow}
+              selectNode={selectNode}
+            />
             <Controls />
             <Background color="#aaa" gap={16} />
           </ReactFlow>

@@ -24,8 +24,10 @@
   align-items: center;
   justify-content: center;
   border: 1px solid black;
+  word-break: break-all;
   font-size: 10px;
   padding: 0.5rem;
+  max-width: 12rem;
 }
 
 .ms-node-rhumbus {

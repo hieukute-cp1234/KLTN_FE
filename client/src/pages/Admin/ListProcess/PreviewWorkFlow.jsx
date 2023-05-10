@@ -80,7 +80,9 @@ const PreviewWorkflow = (props) => {
 
   const handleChangeWorkflow = (key, value) => {};
 
-  const handleSelectNode = (nodeValue) => {};
+  const handleSelectNode = (nodeValue) => {
+    console.log("sdsd");
+  };
 
   return (
     <Modal

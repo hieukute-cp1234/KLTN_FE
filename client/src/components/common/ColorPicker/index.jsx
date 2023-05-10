@@ -3,7 +3,7 @@ import { Sketch } from "@uiw/react-color";
 import "./color-picker.scss";
 
 const ColorPicker = (props) => {
-  const { onChangeColor, color, label } = props;
+  const { onChangeColor, value, label } = props;
 
   const handleChangeColorInput = (event) => {
     const value = event.target.value;
@@ -20,7 +20,7 @@ const ColorPicker = (props) => {
       <div className="ms-color-picker__handle">
         <span className="ms-color-picker__handle__label">{label}</span>
         <Sketch
-          color={color}
+          color={value}
           onChange={handleColorPicker}
           disableAlpha={true}
         />
@@ -29,7 +29,7 @@ const ColorPicker = (props) => {
         <span></span>
         <input
           className="ms-color-picker__result__hex"
-          value={color}
+          value={value}
           onChange={handleChangeColorInput}
         />
       </div>
