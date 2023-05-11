@@ -1,0 +1,17 @@
+@import '../../../assets/scss/variable.scss';
+
+.ms-select {
+    display: flex;
+    gap: 0.75rem;
+
+    &__label {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        width: 30%;
+    }
+
+    .ant-select {
+        width: 100%;
+    }
+}

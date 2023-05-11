@@ -3,10 +3,14 @@ import ReactFlow, {
   Background,
   Controls,
   addEdge,
-  MiniMap,
   useNodesState,
   useEdgesState,
 } from "reactflow";
+import {
+  RollbackOutlined,
+  AppstoreAddOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import { customTypes } from "../../../components/workflow/nodes";
@@ -35,6 +39,7 @@ export const CreateWorkflowPage = () => {
       setNodes((nodes) =>
         nodes.map((node) => {
           if (node.id === selectNode.id) {
+            node.type = selectNode.type;
             node.data = { ...selectNode.data };
           }
           return node;
@@ -46,7 +51,12 @@ export const CreateWorkflowPage = () => {
   const handleChangeWorkflow = (key, value) => {
     if (!selectNode) return;
     const newNode = { ...selectNode };
-    newNode.data[key] = value;
+    if (key === "type") {
+      newNode[key] = value;
+    } else {
+      newNode.data[key] = value;
+    }
+
     setSelectNode(newNode);
   };
 
@@ -73,8 +83,22 @@ export const CreateWorkflowPage = () => {
     <Layout>
       <div className="ms-create-workflow">
         <div className="ms-create-workflow__header">
-          <Button text="back" />
-          <Button text="add node" click={handleAddNode} />
+          <Button
+            text="add node"
+            classButton="ms-btn-edit"
+            beforeIcon={<AppstoreAddOutlined />}
+            click={handleAddNode}
+          />
+          <Button
+            text="create workflow"
+            classButton="ms-btn-submit"
+            beforeIcon={<SaveOutlined />}
+          />
+          <Button
+            text="back"
+            classButton="ms-btn-back"
+            beforeIcon={<RollbackOutlined />}
+          />
         </div>
         <div className="ms-create-workflow__content">
           <ReactFlow

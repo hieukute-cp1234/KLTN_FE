@@ -1,4 +1,4 @@
-@import '../../../assets/scss/variable.scss';
+@import "../../../assets/scss/variable.scss";
 
 .base-btn {
   padding: 0.25rem 0.5rem;
@@ -64,6 +64,13 @@
   &.ms-btn-submit {
     color: $white;
     background-color: $color-main;
+    min-width: 4rem;
+    padding: 0 0.75rem;
+  }
+
+  &.ms-btn-back {
+    color: $white;
+    background-color: $color-default;
     min-width: 4rem;
     padding: 0 0.75rem;
   }

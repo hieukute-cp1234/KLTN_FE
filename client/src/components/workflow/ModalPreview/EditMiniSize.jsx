@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { LineOutlined, FullscreenOutlined } from "@ant-design/icons";
 import Input from "../../common/Input";
 import Button from "../../common/Button";
+import Select from "../../common/Select";
+import Checkbox from "../../common/Checkbox";
 import ColorPicker from "../../common/ColorPicker";
 import "./preview.scss";
 
@@ -10,6 +12,43 @@ const EditMiniSize = (props) => {
   const [isMiniSize, setMiniSize] = useState(false);
 
   const { data: dataNode } = selectNode;
+
+  const listShape = [
+    {
+      value: "circleNode",
+      text: "circle",
+      icon: "",
+    },
+    {
+      value: "rectangleNode",
+      text: "rectangle",
+      icon: "",
+    },
+    {
+      value: 3,
+      text: "rhombus",
+      icon: "",
+    },
+  ];
+
+  const valueHandle = [
+    {
+      label: "Top",
+      value: "top",
+    },
+    {
+      label: "Right",
+      value: "right",
+    },
+    {
+      label: "Bottom",
+      value: "bottom",
+    },
+    {
+      label: "Left",
+      value: "left",
+    },
+  ];
 
   const handleChangeNameWorkflow = (event) => {
     const value = event.target.value;
@@ -37,6 +76,10 @@ const EditMiniSize = (props) => {
   const handleChangeMention = (event) => {
     const value = event.target.value;
     changeWorkflow("mention", value);
+  };
+
+  const handleChangeTypeShape = (value) => {
+    changeWorkflow("type", value);
   };
 
   return (
@@ -76,9 +119,17 @@ const EditMiniSize = (props) => {
             value={dataNode?.background || "#222"}
             onChangeColor={handleChangeColor}
           />
-          <Input
+          <Checkbox label="Target" options={valueHandle} isRadio/>
+          <Select
+            placeholder="Shape"
+            label="Shape"
+            options={listShape}
+            onChange={handleChangeTypeShape}
+          />
+          <Select
             placeholder="Mention role"
             label="Mention"
+            options={listShape}
             onChange={handleChangeMention}
           />
         </div>
