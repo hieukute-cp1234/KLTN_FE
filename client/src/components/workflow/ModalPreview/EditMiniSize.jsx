@@ -5,50 +5,21 @@ import Button from "../../common/Button";
 import Select from "../../common/Select";
 import Checkbox from "../../common/Checkbox";
 import ColorPicker from "../../common/ColorPicker";
+import { valueHandle, listShape } from "../../../constants/options";
 import "./preview.scss";
 
 const EditMiniSize = (props) => {
-  const { changeWorkflow, selectNode } = props;
-  const [isMiniSize, setMiniSize] = useState(false);
+  const {
+    changeWorkflow,
+    changeNodes,
+    changeEdges,
+    selectNode,
+    selectEdge,
+    isSelectEdge,
+  } = props;
+  const [isMiniSize, setMiniSize] = useState(true);
 
   const { data: dataNode } = selectNode;
-
-  const listShape = [
-    {
-      value: "circleNode",
-      text: "circle",
-      icon: "",
-    },
-    {
-      value: "rectangleNode",
-      text: "rectangle",
-      icon: "",
-    },
-    {
-      value: 3,
-      text: "rhombus",
-      icon: "",
-    },
-  ];
-
-  const valueHandle = [
-    {
-      label: "Top",
-      value: "top",
-    },
-    {
-      label: "Right",
-      value: "right",
-    },
-    {
-      label: "Bottom",
-      value: "bottom",
-    },
-    {
-      label: "Left",
-      value: "left",
-    },
-  ];
 
   const handleChangeNameWorkflow = (event) => {
     const value = event.target.value;
@@ -66,20 +37,29 @@ const EditMiniSize = (props) => {
 
   const handleChangeNameNode = (event) => {
     const value = event.target.value;
-    changeWorkflow("text", value);
+    changeNodes("text", value);
   };
 
   const handleChangeColor = (color) => {
-    changeWorkflow("background", color);
+    changeNodes("background", color);
   };
 
   const handleChangeMention = (event) => {
     const value = event.target.value;
-    changeWorkflow("mention", value);
+    changeNodes("mention", value);
   };
 
   const handleChangeTypeShape = (value) => {
-    changeWorkflow("type", value);
+    changeNodes("type", value);
+  };
+
+  const handleChageTarget = (index, value) => {
+    changeNodes("handles", value, index);
+  };
+
+  const handleChangeTextEdge = (event) => {
+    const value = event.target.value;
+    changeEdges("label", value);
   };
 
   return (
@@ -107,31 +87,58 @@ const EditMiniSize = (props) => {
             label="Name"
             onChange={handleChangeNameWorkflow}
           />
-          <span className="box-editor__full-modal__title">Node Editor</span>
-          <Input
-            placeholder="Text node"
-            label="Text"
-            value={dataNode?.text || ""}
-            onChange={handleChangeNameNode}
-          />
-          <ColorPicker
-            label="Color"
-            value={dataNode?.background || "#222"}
-            onChangeColor={handleChangeColor}
-          />
-          <Checkbox label="Target" options={valueHandle} isRadio/>
-          <Select
-            placeholder="Shape"
-            label="Shape"
-            options={listShape}
-            onChange={handleChangeTypeShape}
-          />
-          <Select
-            placeholder="Mention role"
-            label="Mention"
-            options={listShape}
-            onChange={handleChangeMention}
-          />
+          <span className="box-editor__full-modal__title">
+            {isSelectEdge ? "Edge" : "Node"} Editor
+          </span>
+          {isSelectEdge ? (
+            <>
+              <Input
+                placeholder="Text edge"
+                label="Text"
+                value={selectEdge?.label || ""}
+                onChange={handleChangeTextEdge}
+              />
+            </>
+          ) : (
+            <>
+              <Input
+                placeholder="Text node"
+                label="Text"
+                value={dataNode?.text || ""}
+                onChange={handleChangeNameNode}
+              />
+              <ColorPicker
+                label="Color"
+                value={dataNode?.background || "#222"}
+                onChangeColor={handleChangeColor}
+              />
+              <Checkbox
+                label="Handles"
+                options={valueHandle}
+                value={dataNode?.handles || []}
+                onChange={handleChageTarget}
+              />
+              <Checkbox
+                label="Target"
+                options={valueHandle}
+                value={dataNode?.handles || []}
+                onChange={handleChageTarget}
+              />
+              <Select
+                placeholder="Shape"
+                label="Shape"
+                options={listShape}
+                value={selectNode.type}
+                onChange={handleChangeTypeShape}
+              />
+              <Select
+                placeholder="Mention role"
+                label="Mention"
+                options={[]}
+                onChange={handleChangeMention}
+              />
+            </>
+          )}
         </div>
       )}
     </div>

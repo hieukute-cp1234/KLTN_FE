@@ -52,6 +52,11 @@ const routersPrivate = [
     path: ADMIN.CREATE_WORKFLOW,
     component: <AdminCreateWorkflow />,
   },
+  {
+    key: "ADMIN_WORKFLOW_UPDATE",
+    path: ADMIN.UPDATE_WORKFLOW,
+    component: <AdminCreateWorkflow />,
+  },
 ];
 
 export { routersPublic, routersPrivate };

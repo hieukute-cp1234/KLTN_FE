@@ -5,12 +5,15 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
+  MarkerType,
 } from "reactflow";
 import {
   RollbackOutlined,
   AppstoreAddOutlined,
   SaveOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import { customTypes } from "../../../components/workflow/nodes";
@@ -19,19 +22,23 @@ import "./create-workflow.scss";
 
 export const CreateWorkflowPage = () => {
   const nodeTypes = useMemo(() => customTypes, []);
+  const { workflowId } = useParams();
+
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
-
   const [id, setId] = useState(0);
   const [selectNode, setSelectNode] = useState({});
+  const [selectEdge, setSelectEdge] = useState({});
+  const [dataWorkflow, setDataWorkflow] = useState({});
 
+  useEffect(() => {
+    console.log(workflowId);
+  }, []);
+
+  // function handle nodes
   const handleSelectNode = (nodeValue) => {
     setSelectNode(nodeValue);
+    setSelectEdge({});
   };
 
   useEffect(() => {
@@ -48,13 +55,21 @@ export const CreateWorkflowPage = () => {
     }
   }, [selectNode, setNodes]);
 
-  const handleChangeWorkflow = (key, value) => {
-    if (!selectNode) return;
+  const handleChangeNodes = (key, value, index) => {
+    if (!selectNode?.id) return;
     const newNode = { ...selectNode };
-    if (key === "type") {
-      newNode[key] = value;
-    } else {
-      newNode.data[key] = value;
+    switch (key) {
+      case "type":
+        newNode[key] = value;
+        break;
+      case "handles":
+        const newHandles = [...newNode.data[key]];
+        newHandles[index] = value;
+        newNode.data[key] = newHandles;
+        break;
+      default:
+        newNode.data[key] = value;
+        break;
     }
 
     setSelectNode(newNode);
@@ -68,7 +83,7 @@ export const CreateWorkflowPage = () => {
       data: {
         text: "Node Name",
         handles: [true, true, true, true],
-        handleTarget: ["target", "source", "source", "source"],
+        handleTarget: ["target", "target", "source", "source"],
         background: "#ffffff",
         isResize: false,
       },
@@ -79,26 +94,108 @@ export const CreateWorkflowPage = () => {
     setNodes([...nodes, newNode]);
   };
 
+  const handleDeleteNode = () => {
+    if (!selectNode.id) return;
+    const newNodes = nodes.filter((node) => node.id !== selectNode.id);
+    setNodes(newNodes);
+    setSelectNode({});
+  };
+
+  //function handle edge
+  const onConnect = useCallback(
+    (params) => {
+      const newEdge = {
+        ...params,
+        type: "step",
+        label: "",
+        markerEnd: { type: MarkerType.ArrowClosed },
+      };
+      setEdges((eds) => addEdge(newEdge, eds));
+    },
+    [addEdge]
+  );
+
+  const handleSelectEdge = (edge) => {
+    setSelectEdge({ ...edge });
+    setSelectNode({});
+  };
+
+  useEffect(() => {
+    if (selectEdge?.id) {
+      setEdges((edges) =>
+        edges.map((edge) => {
+          if (edge.id === selectEdge.id) {
+            edge.label = selectEdge.label;
+          }
+          return edge;
+        })
+      );
+    }
+  }, [selectEdge, setEdges]);
+
+  const handleChangeEdge = (key, value) => {
+    if (!selectEdge?.id) return;
+    const newEdge = { ...selectEdge };
+    newEdge[key] = value;
+    setSelectEdge(newEdge);
+  };
+
+  //function handle workflow
+  const handleChangeWorkflow = (key, value) => {
+    const workflow = {};
+    workflow[key] = value;
+    setDataWorkflow(workflow);
+  };
+
+  const saveWorkflow = () => {
+    const newWorkflow = { ...dataWorkflow, nodes: nodes, edges: edges };
+    console.log(newWorkflow);
+  };
+
+  const actions = [
+    {
+      text: "Add node",
+      class: "ms-btn-edit",
+      icon: <AppstoreAddOutlined />,
+      disabled: false,
+      function: handleAddNode,
+    },
+    {
+      text: "Delete node",
+      class: "ms-btn-delete",
+      icon: <DeleteOutlined />,
+      disabled: !selectNode?.id,
+      function: handleDeleteNode,
+    },
+    {
+      text: "Create workflow",
+      class: "ms-btn-submit",
+      icon: <SaveOutlined />,
+      disabled: !nodes.length,
+      function: saveWorkflow,
+    },
+    {
+      text: "Back",
+      class: "ms-btn-back",
+      icon: <RollbackOutlined />,
+      disabled: false,
+      function: () => {},
+    },
+  ];
+
   return (
     <Layout>
       <div className="ms-create-workflow">
         <div className="ms-create-workflow__header">
-          <Button
-            text="add node"
-            classButton="ms-btn-edit"
-            beforeIcon={<AppstoreAddOutlined />}
-            click={handleAddNode}
-          />
-          <Button
-            text="create workflow"
-            classButton="ms-btn-submit"
-            beforeIcon={<SaveOutlined />}
-          />
-          <Button
-            text="back"
-            classButton="ms-btn-back"
-            beforeIcon={<RollbackOutlined />}
-          />
+          {actions.map((button) => (
+            <Button
+              text={button.text}
+              classButton={button.class}
+              beforeIcon={button.icon}
+              disabled={button.disabled}
+              click={button.function}
+            />
+          ))}
         </div>
         <div className="ms-create-workflow__content">
           <ReactFlow
@@ -111,13 +208,18 @@ export const CreateWorkflowPage = () => {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onNodeClick={(_, node) => handleSelectNode(node)}
+            onEdgeClick={(_, edge) => handleSelectEdge(edge)}
           >
             <EditMiniSize
-              changeWorkflow={handleChangeWorkflow}
               selectNode={selectNode}
+              selectEdge={selectEdge}
+              isSelectEdge={!!selectEdge?.id}
+              changeNodes={handleChangeNodes}
+              changeEdges={handleChangeEdge}
+              changeWorkflow={handleChangeWorkflow}
             />
             <Controls />
-            <Background color="#aaa" gap={16} />
+            <Background variant="lines" gap={16} />
           </ReactFlow>
         </div>
       </div>

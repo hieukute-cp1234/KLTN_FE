@@ -12,6 +12,7 @@ const CommonButton = (props) => {
     largeSize,
     defaultSize,
     smallSize,
+    disabled,
   } = props;
 
   const size = {
@@ -31,6 +32,7 @@ const CommonButton = (props) => {
     <button
       className={stringClass}
       type={typeButton || "button"}
+      disabled={disabled}
       onClick={click}
     >
       {beforeIcon && <div className="base-btn__before-icon">{beforeIcon}</div>}
