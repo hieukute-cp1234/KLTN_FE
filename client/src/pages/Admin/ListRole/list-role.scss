@@ -1,0 +1,22 @@
+@import "../../../assets/scss/variable.scss";
+
+.role-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  > button {
+    min-height: 2rem;
+  }
+}
+
+.custom-area {
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(#888888, 0.5);
+    border-radius: 999px;
+  }
+}

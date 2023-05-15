@@ -7,6 +7,7 @@ import {
   FilePdfOutlined,
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
+import { ADMIN } from "../constants/routes";
 
 const MENU = [
   {
@@ -35,23 +36,32 @@ const MENU_ADMIN = [
   {
     icon: <UserOutlined />,
     label: "Dashboard",
-    key: "/admin",
-    path: "/admin",
+    key: ADMIN.DASHBOARD,
+    path: ADMIN.DASHBOARD,
   },
   {
     icon: <UserOutlined />,
     label: "List Process",
-    path: "/admin/process",
+    key: ADMIN.PROCESS,
+    path: ADMIN.PROCESS,
   },
   {
     icon: <UserOutlined />,
     label: "Role Process",
-    path: "/admin/role",
+    key: ADMIN.LIST_ROLE,
+    path: ADMIN.LIST_ROLE,
   },
   {
     icon: <FilePdfOutlined />,
     label: "Workflow",
-    path: "/admin/workflow",
+    key: ADMIN.WORKFLOW,
+    path: ADMIN.WORKFLOW,
+  },
+  {
+    icon: <UserOutlined />,
+    label: "Users",
+    key: ADMIN.LIST_USER,
+    path: ADMIN.LIST_USER,
   },
 ];
 

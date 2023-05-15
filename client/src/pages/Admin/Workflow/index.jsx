@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { List } from "antd";
-import { EditOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
+import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import PreviewWorkflow from "../ListProcess/PreviewWorkFlow";
@@ -8,17 +8,9 @@ import { listProcess, diagrams } from "../../../dataFake";
 import "./workflow.scss";
 
 const AdminWorkflowPage = () => {
-
   const [toggleViewWorkflow, setViewWorkflow] = useState(false);
-  const [startModalEdit, setStartModalEdit] = useState(false);
 
   const openDetailWorkflow = (workflow) => {
-    setStartModalEdit(false);
-    setViewWorkflow(true);
-  };
-
-  const openEditWorkflow = (workflow) => {
-    setStartModalEdit(true);
     setViewWorkflow(true);
   };
 
@@ -42,12 +34,6 @@ const AdminWorkflowPage = () => {
               </div>
               <div className="workflow-item__actions">
                 <Button
-                  text="Edit"
-                  classButton="ms-btn-edit"
-                  afterIcon={<EditOutlined />}
-                  click={() => openEditWorkflow(item)}
-                />
-                <Button
                   text="Copy"
                   classButton="ms-btn-copy"
                   afterIcon={<CopyOutlined />}
@@ -68,7 +54,6 @@ const AdminWorkflowPage = () => {
         open={toggleViewWorkflow}
         onCancel={() => setViewWorkflow(false)}
         dataDiagrams={diagrams}
-        startModalEdit={startModalEdit}
       />
     </Layout>
   );

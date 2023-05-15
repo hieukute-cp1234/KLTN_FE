@@ -13,3 +13,10 @@ body {
     display: none;
   }
 }
+
+// custom antd
+.ant-modal-title {
+  text-align: center !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+}

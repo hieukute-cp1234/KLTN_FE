@@ -268,3 +268,42 @@ export const diagrams = [
     position: { x: 150, y: 400 },
   },
 ];
+
+export const roleList = [
+  {
+    id: 1,
+    type: '',
+    name: 'Project manager',
+    description: ''
+  },
+  {
+    id: 2,
+    type: '',
+    name: 'Project manager',
+    description: ''
+  },
+  {
+    id: 3,
+    type: '',
+    name: 'Project manager',
+    description: ''
+  },
+  {
+    id: 4,
+    type: '',
+    name: 'Project manager',
+    description: ''
+  },
+  {
+    id: 5,
+    type: '',
+    name: 'Project manager',
+    description: ''
+  },
+  {
+    id: 6,
+    type: '',
+    name: 'Project manager',
+    description: ''
+  },
+]

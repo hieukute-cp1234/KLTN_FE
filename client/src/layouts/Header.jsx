@@ -5,6 +5,7 @@ import Input from "../components/common/Input";
 import "./layout.scss";
 
 const Header = ({ namePage }) => {
+  const handleAddByPage = () => {};
   return (
     <div className="ms-header">
       <div>{namePage}</div>
@@ -14,6 +15,7 @@ const Header = ({ namePage }) => {
           text="Add"
           classButton="ms-btn-create"
           beforeIcon={<PlusCircleOutlined />}
+          click={handleAddByPage}
         />
       </div>
     </div>
