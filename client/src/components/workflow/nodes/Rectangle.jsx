@@ -20,6 +20,19 @@ const CircleNode = ({ data }) => {
     }
   };
 
+  const renderTypeEffort = (type) => {
+    switch (type) {
+      case 2:
+        return "day";
+      case 3:
+        return "week";
+      case 4:
+        return "mouth";
+      default:
+        return "hour";
+    }
+  };
+
   return (
     <>
       {data.isResize && (
@@ -29,7 +42,17 @@ const CircleNode = ({ data }) => {
         className="ms-node-rectangle"
         style={{ background: data.background }}
       >
-        {data.text}
+        <span className="ms-node-rectangle__title">{data.title}</span>
+        <span>
+          {`Effort: ${data.effortNumber} ${renderTypeEffort(data.effortType)}`}
+        </span>
+        <span>{`Mention: ${data.role}`}</span>
+        <span>{`Input: ${data.input}`}</span>
+        <span>{`Output: ${data.output}`}</span>
+        <div className="ms-node-rectangle__check-list">
+          <p>Check List</p>
+
+        </div>
       </div>
       {data.handles.map((show, index) => (
         <Handle

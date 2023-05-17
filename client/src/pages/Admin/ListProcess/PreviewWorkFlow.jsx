@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Modal } from "antd";
 import { PlusCircleOutlined, EditOutlined } from "@ant-design/icons";
 import ReactFlow, { Background, Controls } from "reactflow";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/common/Button";
 import { ADMIN } from "../../../constants/routes";
+import { customTypes } from "../../../components/workflow/nodes";
 import "./process.scss";
 
 const PreviewWorkflow = (props) => {
+  const nodeTypes = useMemo(() => customTypes, []);
   const { dataDiagrams, open, onCancel } = props;
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ const PreviewWorkflow = (props) => {
       <div className="preview-workflow">
         <ReactFlow
           fitView
+          nodeTypes={nodeTypes}
           attributionPosition="top-right"
           nodes={dataDiagrams}
           edges={lines}

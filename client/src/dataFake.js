@@ -157,9 +157,35 @@ export const listWorkflow = [
 export const diagrams = [
   {
     id: "1",
-    type: "circleNode",
+    type: "rectangleNode",
     data: {
-      label: "Input Node",
+      title: "Text",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: 2,
+      input: "input",
+      output: "output",
+      checkList: [
+        {
+          label: "seft test",
+          value: false,
+        },
+        {
+          label: "code",
+          value: false,
+        },
+        {
+          label: "deploy",
+          value: false,
+        },
+        {
+          label: "push",
+          value: false,
+        },
+      ],
+      effortNumber: 1,
+      effortType: 1,
     },
     position: { x: 250, y: 0 },
     edges: [
@@ -272,38 +298,168 @@ export const diagrams = [
 export const roleList = [
   {
     id: 1,
-    type: '',
-    name: 'Project manager',
-    description: ''
+    type: "",
+    name: "Project manager",
+    description: "",
   },
   {
     id: 2,
-    type: '',
-    name: 'Project manager',
-    description: ''
+    type: "",
+    name: "Project manager",
+    description: "",
   },
   {
     id: 3,
-    type: '',
-    name: 'Project manager',
-    description: ''
+    type: "",
+    name: "Project manager",
+    description: "",
   },
   {
     id: 4,
-    type: '',
-    name: 'Project manager',
-    description: ''
+    type: "",
+    name: "Project manager",
+    description: "",
   },
   {
     id: 5,
-    type: '',
-    name: 'Project manager',
-    description: ''
+    type: "",
+    name: "Project manager",
+    description: "",
   },
   {
     id: 6,
-    type: '',
-    name: 'Project manager',
-    description: ''
+    type: "",
+    name: "Project manager",
+    description: "",
   },
-]
+];
+
+const workflowSample = [
+  {
+    id: 1,
+    type: "rectangleNode",
+    data: {
+      title: "Text",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: "",
+      input: "",
+      output: "",
+      checkList: "",
+      effortNumber: "",
+      effortType: "",
+      isResize: false,
+    },
+    position: { x: 500, y: 500 },
+  },
+  {
+    id: 2,
+    type: "rectangleNode",
+    data: {
+      title: "Text",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: "",
+      input: "",
+      output: "",
+      checkList: "",
+      effortNumber: "",
+      effortType: "",
+      isResize: false,
+    },
+    position: { x: 500, y: 500 },
+  },
+  {
+    id: 3,
+    type: "rectangleNode",
+    data: {
+      title: "Text",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: "",
+      input: "",
+      output: "",
+      checkList: "",
+      effortNumber: "",
+      effortType: "",
+      isResize: false,
+    },
+    position: { x: 500, y: 500 },
+  },
+  {
+    id: 4,
+    type: "rectangleNode",
+    data: {
+      title: "",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: "",
+      input: "",
+      output: "",
+      checkList: "",
+      effortNumber: "",
+      effortType: "",
+      isResize: false,
+    },
+    position: { x: 500, y: 500 },
+  },
+  {
+    id: 5,
+    type: "rectangleNode",
+    data: {
+      title: "Text",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: "",
+      input: "",
+      output: "",
+      checkList: "",
+      effortNumber: "",
+      effortType: "",
+      isResize: false,
+    },
+    position: { x: 500, y: 500 },
+  },
+  {
+    id: 6,
+    type: "rectangleNode",
+    data: {
+      title: "Text",
+      handles: [true, true, true, true],
+      handleTarget: ["target", "target", "source", "source"],
+      background: "#ffffff",
+      role: "",
+      input: "",
+      output: "",
+      checkList: "",
+      effortNumber: "",
+      effortType: "",
+      isResize: false,
+    },
+    position: { x: 500, y: 500 },
+  },
+];
+
+export const dataSampleProcess = [
+  {
+    id: 1,
+    name: "quy trình sản xuất phần mềm",
+    description:
+      "Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+    work_flow: "",
+    list_role: [],
+    create_at: "30/03/1999",
+    update_at: "22/06/2003",
+    projects: [],
+    workflow: {
+      nodes: [],
+      edges: [],
+    },
+    status: 1,
+  },
+];
