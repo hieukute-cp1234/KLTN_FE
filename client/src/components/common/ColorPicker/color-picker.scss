@@ -11,8 +11,8 @@
 
     &__label {
       display: flex;
-      align-items: start;
-      justify-content: end;
+      align-items: flex-start;
+      justify-content: flex-end;
       width: 25%;
     }
   }
@@ -20,7 +20,7 @@
   &__result {
     display: flex;
     gap: 1rem;
-    justify-content: end;
+    justify-content: flex-end;
 
     > span {
       width: 25%;

@@ -33,7 +33,7 @@ export const CreateWorkflowPage = () => {
 
   useEffect(() => {
     console.log(workflowId);
-  }, []);
+  }, [workflowId]);
 
   // function handle nodes
   const handleSelectNode = (nodeValue) => {
@@ -55,25 +55,28 @@ export const CreateWorkflowPage = () => {
     }
   }, [selectNode, setNodes]);
 
-  const handleChangeNodes = (key, value, index) => {
-    if (!selectNode?.id) return;
-    const newNode = { ...selectNode };
-    switch (key) {
-      case "type":
-        newNode[key] = value;
-        break;
-      case "handles":
-        const newHandles = [...newNode.data[key]];
-        newHandles[index] = value;
-        newNode.data[key] = newHandles;
-        break;
-      default:
-        newNode.data[key] = value;
-        break;
-    }
+  const handleChangeNodes = useCallback(
+    (key, value, index) => {
+      if (!selectNode?.id) return;
+      const newNode = { ...selectNode };
+      switch (key) {
+        case "type":
+          newNode[key] = value;
+          break;
+        case "handles":
+          const newHandles = [...newNode.data[key]];
+          newHandles[index] = value;
+          newNode.data[key] = newHandles;
+          break;
+        default:
+          newNode.data[key] = value;
+          break;
+      }
 
-    setSelectNode(newNode);
-  };
+      setSelectNode(newNode);
+    },
+    [selectNode]
+  );
 
   const handleAddNode = () => {
     setId(id + 1);
@@ -81,11 +84,16 @@ export const CreateWorkflowPage = () => {
       id: `${id}`,
       type: "rectangleNode",
       data: {
-        text: "Node Name",
+        title: "Title",
         handles: [true, true, true, true],
         handleTarget: ["target", "target", "source", "source"],
         background: "#ffffff",
-        isResize: false,
+        role: 0,
+        input: "input",
+        output: "output",
+        checkList: [],
+        effortNumber: 0,
+        effortType: 1,
       },
       position: { x: 500, y: 500 },
       edges: [],
@@ -112,7 +120,7 @@ export const CreateWorkflowPage = () => {
       };
       setEdges((eds) => addEdge(newEdge, eds));
     },
-    [addEdge]
+    [setEdges]
   );
 
   const handleSelectEdge = (edge) => {

@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { Handle, Position, NodeResizer } from "reactflow";
+import { Dropdown } from "antd";
 import "./nodes.scss";
 
 const CircleNode = ({ data }) => {
@@ -43,16 +44,29 @@ const CircleNode = ({ data }) => {
         style={{ background: data.background }}
       >
         <span className="ms-node-rectangle__title">{data.title}</span>
-        <span>
-          {`Effort: ${data.effortNumber} ${renderTypeEffort(data.effortType)}`}
-        </span>
-        <span>{`Mention: ${data.role}`}</span>
-        <span>{`Input: ${data.input}`}</span>
-        <span>{`Output: ${data.output}`}</span>
-        <div className="ms-node-rectangle__check-list">
-          <p>Check List</p>
-
-        </div>
+        {!!data.effortType && !!data.effortNumber && (
+          <span>
+            {`Effort: ${data.effortNumber} ${renderTypeEffort(
+              data.effortType
+            )}`}
+          </span>
+        )}
+        {!!data.role && <span>{`Mention: ${data.role}`}</span>}
+        {!!data.input && <span>{`Input: ${data.input}`}</span>}
+        {!!data.output && <span>{`Output: ${data.output}`}</span>}
+        {!!data.checkList.length && (
+          <Dropdown
+            menu={{
+              items: data.checkList,
+            }}
+            placement="bottom"
+            arrow={{
+              pointAtCenter: true,
+            }}
+          >
+            <span>check list</span>
+          </Dropdown>
+        )}
       </div>
       {data.handles.map((show, index) => (
         <Handle

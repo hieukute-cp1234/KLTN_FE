@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List } from "antd";
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import PreviewWorkflow from "../ListProcess/PreviewWorkFlow";
@@ -16,7 +17,14 @@ const AdminWorkflowPage = () => {
 
   const handleCopyWorkflow = (workflow) => {};
 
-  const handleDeleteWorkflow = (workflow) => {};
+  const handleDeleteWorkflow = async (workflow) => {
+    const result = await Swal.fire({
+      icon: "question",
+      text: "Are you sure delete?",
+      showCancelButton: true,
+    });
+    if (!result.isConfirmed) return;
+  };
 
   return (
     <Layout>

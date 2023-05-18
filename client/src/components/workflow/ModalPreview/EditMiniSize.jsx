@@ -35,9 +35,9 @@ const EditMiniSize = (props) => {
     setMiniSize(!isMiniSize);
   };
 
-  const handleChangeNameNode = (event) => {
+  const handleChangeTitle = (event) => {
     const value = event.target.value;
-    changeNodes("text", value);
+    changeNodes("title", value);
   };
 
   const handleChangeColor = (color) => {
@@ -60,6 +60,28 @@ const EditMiniSize = (props) => {
   const handleChangeTextEdge = (event) => {
     const value = event.target.value;
     changeEdges("label", value);
+  };
+
+  const handleChangeInput = (event) => {
+    const value = event.target.value;
+    changeNodes("input", value);
+  };
+
+  const handleChangeOutput = (event) => {
+    const value = event.target.value;
+    changeNodes("output", value);
+  };
+
+  const handleChangeEffortType = (value) => {
+    changeNodes("effortType", value);
+  };
+
+  const handleChangeEffort = (value) => {
+    changeNodes("effortNumber", value);
+  };
+
+  const handleChageChecklist = (index, value) => {
+    changeNodes("checkList", value, index);
   };
 
   return (
@@ -102,11 +124,49 @@ const EditMiniSize = (props) => {
           ) : (
             <>
               <Input
-                placeholder="Text node"
-                label="Text"
-                value={dataNode?.text || ""}
-                onChange={handleChangeNameNode}
+                placeholder="Title node"
+                label="Title"
+                value={dataNode?.title || ""}
+                onChange={handleChangeTitle}
               />
+              <Input
+                placeholder="Input..."
+                label="Input"
+                value={dataNode?.input || ""}
+                onChange={handleChangeInput}
+              />
+              <Input
+                placeholder="Output..."
+                label="Output"
+                value={dataNode?.title || ""}
+                onChange={handleChangeOutput}
+              />
+              <Select
+                placeholder="Mention role"
+                label="Mention"
+                options={[]}
+                onChange={handleChangeMention}
+              />
+              <Select
+                placeholder="Effort..."
+                label="Effort"
+                options={[]}
+                onChange={handleChangeEffortType}
+              />
+              <Select
+                placeholder="Time..."
+                label="Time..."
+                options={[]}
+                onChange={handleChangeEffort}
+              />
+              <Checkbox
+                label="Check list"
+                options={[]}
+                value={[]}
+                onChange={handleChageChecklist}
+              />
+
+              {/* custom css node */}
               <ColorPicker
                 label="Color"
                 value={dataNode?.background || "#222"}
@@ -130,12 +190,6 @@ const EditMiniSize = (props) => {
                 options={listShape}
                 value={selectNode.type}
                 onChange={handleChangeTypeShape}
-              />
-              <Select
-                placeholder="Mention role"
-                label="Mention"
-                options={[]}
-                onChange={handleChangeMention}
               />
             </>
           )}

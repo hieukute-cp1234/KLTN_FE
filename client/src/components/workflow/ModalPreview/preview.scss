@@ -8,7 +8,7 @@
 
   &__minisize-editor {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 
     > button {
       padding: 0.5rem;
@@ -72,7 +72,7 @@
 .preview-workflow-actions {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 1rem 1rem 0 0;
   gap: 1rem;
 
