@@ -14,6 +14,12 @@ const UsersPage = () => {
       width: "25%",
     },
     {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      align: "center",
+    },
+    {
       title: "Description",
       dataIndex: "description",
       key: "description",

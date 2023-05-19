@@ -1,15 +1,30 @@
 import React from "react";
 import { Form, Input } from "antd";
+import { useDispatch } from "react-redux";
+import { login } from "../store/auth";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
-import { Link } from "react-router-dom";
+import { users } from "../DBFake";
 import "../assets/scss/login.scss";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const settingForm = {
     label: { span: 6 },
     container: { span: 24 },
   };
-  const handleLogin = (value) => {};
+
+  const handleLogin = (value) => {
+    const userLogger = users.find((user) => user.email === value.email);
+    if (!userLogger) return;
+
+    if (userLogger.password === value.password) {
+      dispatch(login(userLogger));
+      navigate("/admin");
+    }
+  };
 
   return (
     <div className="login">

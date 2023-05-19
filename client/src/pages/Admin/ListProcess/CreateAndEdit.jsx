@@ -47,7 +47,15 @@ const CreateAndEditProcess = (props) => {
           <Input />
         </Form.Item>
         <Form.Item label="Description" name="description" rules={[]}>
-          <TextArea rows={4} />
+          <TextArea
+            className="custom-area"
+            rows={4}
+            placeholder="Description by role..."
+            maxLength={252}
+            style={{
+              resize: "none",
+            }}
+          />
         </Form.Item>
         <Form.Item label="Work Flow" name="work_flow" rules={[]}>
           <AutoComplete options={options} />
