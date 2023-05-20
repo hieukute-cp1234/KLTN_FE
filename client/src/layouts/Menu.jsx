@@ -83,7 +83,7 @@ const MenuComponent = () => {
       defaultSelectedKeys={location.pathname}
       onSelect={selectMenu}
     >
-      {MENU_ADMIN.filter((menu) => menu.role.includes(user.role)).map(
+      {MENU_ADMIN.map(
         (menuItem) => (
           <Menu.Item
             className="menu-item"
