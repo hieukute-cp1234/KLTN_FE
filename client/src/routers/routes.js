@@ -7,7 +7,8 @@ import AdminWorkflow from "../pages/Admin/Workflow";
 import AdminCreateWorkflow from "../pages/Admin/CreateWorkflow";
 import AdminListRole from "../pages/Admin/ListRole";
 import AdminUsers from "../pages/Admin/ListUser";
-import { ADMIN } from "../constants/routes";
+import UserProfile from "../pages/User/Profile";
+import { ADMIN, USER } from "../constants/routes";
 
 const routersPublic = [
   {
@@ -65,9 +66,14 @@ const routersPrivate = [
     component: <AdminListRole />,
   },
   {
-    key: "ADMIN_LIST_UUSER",
+    key: "ADMIN_LIST_USER",
     path: ADMIN.LIST_USER,
     component: <AdminUsers />,
+  },
+  {
+    key: "USER_PROFILE",
+    path: USER.PROFILE,
+    component: <UserProfile />,
   },
 ];
 

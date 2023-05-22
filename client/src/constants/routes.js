@@ -8,4 +8,6 @@ export const ADMIN = {
   LIST_USER: "/admin/users",
 };
 
-const USER = {};
+export const USER = {
+  PROFILE: "/user/profile/:userId",
+};
