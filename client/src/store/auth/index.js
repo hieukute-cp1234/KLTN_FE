@@ -4,7 +4,7 @@ import { handleLogin } from "./actions";
 const initialState = {
   user: {},
   listUser: [],
-  token: "hieukute",
+  token: "",
 };
 
 const auth = createSlice({
@@ -17,7 +17,8 @@ const auth = createSlice({
   },
   extraReducers: {
     [handleLogin.fulfilled]: (state, { payload }) => {
-      console.log("payload", payload);
+      localStorage.setItem("token", payload.data.token);
+      state.token = payload.data.token;
     },
   },
 });

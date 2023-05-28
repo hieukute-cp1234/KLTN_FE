@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { BASE_URL_API, BASE_URL_LOCAL } from "../constants/config.js";
 
 export const appApi = axios.create({
-  baseURL: BASE_URL_API || BASE_URL_LOCAL,
+  baseURL: BASE_URL_LOCAL,
 });
 
 appApi.interceptors.request.use(

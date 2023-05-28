@@ -5,8 +5,8 @@ export const handleLogin = createAsyncThunk("auth/login", async (user) => {
   try {
     const response = await appApi.post("/login", {
       email: user.email,
-      passwork: user.passwork,
+      password: user.password,
     });
-    console.log(">>>>>>>>", response);
+    return response;
   } catch (error) {}
 });
