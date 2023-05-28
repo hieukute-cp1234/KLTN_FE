@@ -45,6 +45,12 @@ const ProcessItem = (props) => {
             click={() => onCopy("copy")}
           />
           <Button
+            text="Publish"
+            classButton="ms-btn-copy"
+            afterIcon={<CopyOutlined />}
+            click={() => onCopy("copy")}
+          />
+          <Button
             text="Delete"
             classButton="ms-btn-delete"
             afterIcon={<DeleteOutlined />}

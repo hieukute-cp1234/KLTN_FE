@@ -14,7 +14,7 @@ const auth = createSlice({
     login: (state, action) => {
       state.user = action.payload;
     },
-  },
+  },  
   extraReducers: {
     [handleLogin.fulfilled]: (state, { payload }) => {
       localStorage.setItem("token", payload.data.token);

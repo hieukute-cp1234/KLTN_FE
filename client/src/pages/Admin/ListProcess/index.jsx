@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { List, Modal, Form } from "antd";
+import { List } from "antd";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../../layouts";
 import ProcessItem from "./ProcessItem";
-import CreateAndEditProcess from "./CreateAndEdit";
 import PreviewWorkflow from "./PreviewWorkFlow";
 import { listProcess, diagrams } from "../../../dataFake";
 import "./process.scss";
 
 const ListProcess = () => {
-  const [toggleCreateEdit, setCreateEdit] = useState(false);
+  const navigate = useNavigate();
   const [toggleViewWorkflow, setViewWorkflow] = useState(false);
 
-  const [formCreate] = Form.useForm();
-
   const handleEditProcess = (process) => {
-    formCreate.setFieldsValue(process);
-    setCreateEdit(true);
+    navigate(`/admin/process/update/${process.id}`);
   };
 
   const handleCopyProcess = (key) => {};
@@ -24,10 +21,6 @@ const ListProcess = () => {
 
   const handleViewWorkflow = (key) => {
     setViewWorkflow(true);
-  };
-
-  const handleSubmitForm = () => {
-    formCreate.submit();
   };
 
   return (
@@ -46,14 +39,6 @@ const ListProcess = () => {
           </List.Item>
         )}
       />
-      <Modal
-        title="edit process"
-        open={toggleCreateEdit}
-        onCancel={() => setCreateEdit(false)}
-        onOk={handleSubmitForm}
-      >
-        <CreateAndEditProcess formCreateEdit={formCreate} />
-      </Modal>
       <PreviewWorkflow
         open={toggleViewWorkflow}
         onCancel={() => setViewWorkflow(false)}

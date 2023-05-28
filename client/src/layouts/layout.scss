@@ -12,7 +12,12 @@
   &__search {
     display: flex;
     max-height: 70%;
+    width: 40%;
     gap: 0.625rem;
+
+    > div {
+      flex: 1;
+    }
   }
 }
 

@@ -20,7 +20,7 @@ import { customTypes } from "../../../components/workflow/nodes";
 import EditMiniSize from "../../../components/workflow/ModalPreview/EditMiniSize";
 import "./create-workflow.scss";
 
-export const CreateWorkflowPage = () => {
+export const CreateProcessPage = () => {
   const nodeTypes = useMemo(() => customTypes, []);
   const { workflowId } = useParams();
 
@@ -195,8 +195,9 @@ export const CreateWorkflowPage = () => {
     <Layout>
       <div className="ms-create-workflow">
         <div className="ms-create-workflow__header">
-          {actions.map((button) => (
+          {actions.map((button, index) => (
             <Button
+              key={index}
               text={button.text}
               classButton={button.class}
               beforeIcon={button.icon}
@@ -235,4 +236,4 @@ export const CreateWorkflowPage = () => {
   );
 };
 
-export default CreateWorkflowPage;
+export default CreateProcessPage;

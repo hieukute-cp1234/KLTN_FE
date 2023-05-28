@@ -26,9 +26,8 @@ const EditMiniSize = (props) => {
     changeWorkflow("workflow_name", value);
   };
 
-  const handleChangeListRole = (event) => {
-    const value = event.target.value;
-    changeWorkflow("list_role", value);
+  const handleChangeListRole = (value) => {
+    changeNodes("listRole", value);
   };
 
   const handleMiniSize = () => {
@@ -84,6 +83,10 @@ const EditMiniSize = (props) => {
     changeNodes("checkList", value, index);
   };
 
+  const handleChangeRoleNode = (value) => {
+    changeNodes("role", value);
+  }
+
   return (
     <div className="box-editor">
       {isMiniSize ? (
@@ -98,16 +101,17 @@ const EditMiniSize = (props) => {
           >
             <Button text={<LineOutlined />} />
           </span>
-          <span className="box-editor__full-modal__title">Workflow Editor</span>
+          <span className="box-editor__full-modal__title">Process Editor</span>
           <Input
-            placeholder="Node name"
-            label="List role"
-            onChange={handleChangeListRole}
-          />
-          <Input
-            placeholder="Workflow name"
+            placeholder="Process name..."
             label="Name"
             onChange={handleChangeNameWorkflow}
+          />
+          <Select
+            placeholder="Select role"
+            label="Roles"
+            options={[]}
+            onChange={handleChangeListRole}
           />
           <span className="box-editor__full-modal__title">
             {isSelectEdge ? "Edge" : "Node"} Editor
@@ -128,6 +132,12 @@ const EditMiniSize = (props) => {
                 label="Title"
                 value={dataNode?.title || ""}
                 onChange={handleChangeTitle}
+              />
+              <Select
+                placeholder="Select role"
+                label="Role"
+                options={[]}
+                onChange={handleChangeRoleNode}
               />
               <Input
                 placeholder="Input..."
@@ -155,7 +165,7 @@ const EditMiniSize = (props) => {
               />
               <Select
                 placeholder="Time..."
-                label="Time..."
+                label="Time"
                 options={[]}
                 onChange={handleChangeEffort}
               />

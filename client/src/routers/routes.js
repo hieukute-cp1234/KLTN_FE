@@ -3,8 +3,7 @@ import Dashboard from "../pages/Dashboard ";
 import MarKet from "../pages/Market";
 import AdminListProcess from "../pages/Admin/ListProcess";
 import AdminDashboard from "../pages/Admin/Dashboard";
-import AdminWorkflow from "../pages/Admin/Workflow";
-import AdminCreateWorkflow from "../pages/Admin/CreateWorkflow";
+import AdminCreateProcess from "../pages/Admin/CreateProcess";
 import AdminListRole from "../pages/Admin/ListRole";
 import AdminUsers from "../pages/Admin/ListUser";
 import UserProfile from "../pages/User/Profile";
@@ -46,19 +45,14 @@ const routersPrivate = [
     component: <AdminListProcess />,
   },
   {
-    key: "ADMIN_WORKFLOW",
-    path: ADMIN.WORKFLOW,
-    component: <AdminWorkflow />,
+    key: "ADMIN_PROCESS_CREATE",
+    path: ADMIN.CREATE_PROCESS,
+    component: <AdminCreateProcess />,
   },
   {
-    key: "ADMIN_WORKFLOW_CREATE",
-    path: ADMIN.CREATE_WORKFLOW,
-    component: <AdminCreateWorkflow />,
-  },
-  {
-    key: "ADMIN_WORKFLOW_UPDATE",
-    path: ADMIN.UPDATE_WORKFLOW,
-    component: <AdminCreateWorkflow />,
+    key: "ADMIN_PROCESS_UPDATE",
+    path: ADMIN.UPDATE_PROCESS,
+    component: <AdminCreateProcess />,
   },
   {
     key: "ADMIN_LIST_ROLE",

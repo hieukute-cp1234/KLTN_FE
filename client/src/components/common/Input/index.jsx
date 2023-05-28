@@ -6,7 +6,7 @@ const CommonInput = (props) => {
   const { placeholder, label, beforeIcon, afterIcon, onChange, value } = props;
   return (
     <div className="ms-input">
-      <span className="ms-input__label">{label}</span>
+      {label && <span className="ms-input__label">{label}</span>}
       <Input
         classNames="ms-input__custom"
         placeholder={placeholder}

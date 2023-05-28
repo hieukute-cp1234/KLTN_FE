@@ -16,11 +16,11 @@ const PreviewWorkflow = (props) => {
   const lines = dataDiagrams.map((diagram) => diagram.edges).flat();
 
   const redirectCreate = () => {
-    navigate(ADMIN.CREATE_WORKFLOW);
+    navigate(ADMIN.CREATE_PROCESS);
   };
 
   const redirectEdit = () => {
-    navigate(`${ADMIN.WORKFLOW}/update/${dataDiagrams.id}`);
+    navigate(`${ADMIN.PROCESS}/update/${dataDiagrams.id}`);
   };
 
   const buttonActions = [

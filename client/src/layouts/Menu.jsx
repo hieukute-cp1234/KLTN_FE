@@ -56,13 +56,6 @@ const MENU_ADMIN = [
     role: [1],
   },
   {
-    icon: <FilePdfOutlined />,
-    label: "Workflow",
-    key: ADMIN.WORKFLOW,
-    path: ADMIN.WORKFLOW,
-    role: [1],
-  },
-  {
     icon: <UserOutlined />,
     label: "Users",
     key: ADMIN.LIST_USER,

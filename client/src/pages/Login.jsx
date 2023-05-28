@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../store/auth/actions";
 import Button from "../components/common/Button";
-import { appApi } from "../configs/axios";
 import "../assets/scss/login.scss";
 
 const LoginPage = () => {
@@ -17,8 +16,15 @@ const LoginPage = () => {
   };
 
   const submit = async (value) => {
-    console.log(value)
-    dispatch(handleLogin(value));
+    console.log(value);
+    dispatch(
+      handleLogin(value, {
+        success: () => {},
+        error: () => {
+          console.log("error");
+        },
+      })
+    );
     // navigate("/admin");
   };
 
