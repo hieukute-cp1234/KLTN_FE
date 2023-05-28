@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { handleLogin } from "./actions";
 
 const initialState = {
   user: {},
@@ -12,6 +13,11 @@ const auth = createSlice({
   reducers: {
     login: (state, action) => {
       state.user = action.payload;
+    },
+  },
+  extraReducers: {
+    [handleLogin.fulfilled]: (state, { payload }) => {
+      console.log("payload", payload);
     },
   },
 });

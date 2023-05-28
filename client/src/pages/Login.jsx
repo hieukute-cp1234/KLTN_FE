@@ -1,10 +1,10 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { useDispatch } from "react-redux";
-import { login } from "../store/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { handleLogin } from "../store/auth/actions";
 import Button from "../components/common/Button";
-import { users } from "../DBFake";
+import { appApi } from "../configs/axios";
 import "../assets/scss/login.scss";
 
 const LoginPage = () => {
@@ -16,14 +16,10 @@ const LoginPage = () => {
     container: { span: 24 },
   };
 
-  const handleLogin = (value) => {
-    const userLogger = users.find((user) => user.email === value.email);
-    if (!userLogger) return;
-
-    if (userLogger.password === value.password) {
-      dispatch(login(userLogger));
-      navigate("/admin");
-    }
+  const submit = async (value) => {
+    console.log(value)
+    dispatch(handleLogin(value));
+    // navigate("/admin");
   };
 
   return (
@@ -38,7 +34,7 @@ const LoginPage = () => {
           <Form
             labelCol={settingForm.label}
             wrapperCol={settingForm.container}
-            onFinish={handleLogin}
+            onFinish={submit}
           >
             <Form.Item label="Email" name="email">
               <Input />
