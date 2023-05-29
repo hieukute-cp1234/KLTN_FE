@@ -60,8 +60,9 @@ const PreviewWorkflow = (props) => {
         </ReactFlow>
       </div>
       <div className="preview-workflow-actions">
-        {buttonActions.map((button) => (
+        {buttonActions.map((button, index) => (
           <Button
+            key={index}
             text={button.text}
             classButton={button.class}
             beforeIcon={button.icon}

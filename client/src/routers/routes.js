@@ -1,5 +1,5 @@
 import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard ";
+import Dashboard from "../pages/Dashboard";
 import MarKet from "../pages/Market";
 import AdminListProcess from "../pages/Admin/ListProcess";
 import AdminDashboard from "../pages/Admin/Dashboard";

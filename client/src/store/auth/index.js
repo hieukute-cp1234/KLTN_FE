@@ -5,6 +5,7 @@ const initialState = {
   user: {},
   listUser: [],
   token: "",
+  isAddUser: false,
 };
 
 const auth = createSlice({
@@ -14,7 +15,10 @@ const auth = createSlice({
     login: (state, action) => {
       state.user = action.payload;
     },
-  },  
+    toggleModalAddUser: (state, action) => {
+      state.isAddUser = action.payload;
+    },
+  },
   extraReducers: {
     [handleLogin.fulfilled]: (state, { payload }) => {
       localStorage.setItem("token", payload.data.token);
@@ -25,5 +29,5 @@ const auth = createSlice({
 
 const { reducer, actions } = auth;
 
-export const { login } = actions;
+export const { login, toggleModalAddUser } = actions;
 export default reducer;

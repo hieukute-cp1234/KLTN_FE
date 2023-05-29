@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { Table, Modal, Form, Input, Button, Select } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModalAddRole } from "../../../store/role";
 import Layout from "../../../layouts";
 import ButtonComon from "../../../components/common/Button";
 import { roleList } from "../../../dataFake";
 import "./list-role.scss";
 
 const ListRolePage = () => {
-  const [toggleEdit, setToggleEdit] = useState(false);
-  const [selectRole, setSelectRole] = useState({});
+  const dispatch = useDispatch();
+  const toggleAddRole = useSelector((state) => state.role.isAddRole);
+
+  const [isEdit, setEdit] = useState(false);
 
   const openModalEdit = () => {
-    setToggleEdit(true);
+    setEdit(true);
+    dispatch(toggleModalAddRole(true));
   };
 
   const handelClose = () => {
-    setToggleEdit(false);
+    setEdit(false);
+    dispatch(toggleModalAddRole(false));
   };
 
   const handleDeleteRole = () => {};
@@ -80,9 +86,9 @@ const ListRolePage = () => {
     <Layout>
       <Table columns={columns} dataSource={roleList} />
       <Modal
-        title="Edit Role"
+        title={`${isEdit ? 'Update' : 'Create'} role`}
         footer={null}
-        open={toggleEdit}
+        open={toggleAddRole}
         onCancel={handelClose}
       >
         <Form
