@@ -10,4 +10,6 @@ export const ADMIN = {
 
 export const USER = {
   PROFILE: "/user/profile/:userId",
+  DETAIL: "user/detail/:userId",
+  MY_PROJECT: "user/my-project",
 };

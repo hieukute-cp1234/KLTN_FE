@@ -85,4 +85,13 @@
     min-width: 4rem;
     padding: 0 0.75rem;
   }
+
+  &.btn-login-google {
+    color: $text-color;
+    background-color: $white;
+    border-radius: 5px;
+    border: 1px solid rgba($color: #000000, $alpha: 0.2);
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
 }

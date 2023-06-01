@@ -14,6 +14,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import { customTypes } from "../../../components/workflow/nodes";

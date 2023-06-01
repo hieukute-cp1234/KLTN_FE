@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../../layouts";
 
 const PageProfile = () => {
-  return <Layout>profile</Layout>;
+  return <Layout></Layout>;
 };
 
 export default PageProfile;

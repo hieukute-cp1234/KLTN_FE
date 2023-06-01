@@ -1,28 +1,24 @@
 import React, { useState } from "react";
 import { Table, Modal, Form, Input, Button, Select } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { toggleModalAddRole } from "../../../store/role";
 import Layout from "../../../layouts";
 import ButtonComon from "../../../components/common/Button";
-import { roleList } from "../../../dataFake";
-import "./list-role.scss";
+import { listProject } from "../../../dataFake";
+import "./my-project.scss";
 
-const ListRolePage = () => {
-  const dispatch = useDispatch();
-  const toggleAddRole = useSelector((state) => state.role.isAddRole);
-
+const PageMyProject = () => {
   const [isEdit, setEdit] = useState(false);
+  const [toggleAddProject, setAddProject] = useState(false);
 
   const openModalEdit = () => {
     setEdit(true);
-    dispatch(toggleModalAddRole(true));
+    setAddProject(true);
   };
 
   const handelClose = () => {
     setEdit(false);
-    dispatch(toggleModalAddRole(false));
+    setAddProject(false);
   };
 
   const handleDeleteRole = () => {
@@ -54,12 +50,29 @@ const ListRolePage = () => {
       dataIndex: "name",
       key: "name",
       align: "center",
-      width: "25%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      align: "center",
+    },
+    {
+      title: "Start",
+      dataIndex: "startDate",
+      key: "startDate",
+      align: "center",
+    },
+    {
+      title: "End",
+      dataIndex: "endDate",
+      key: "enđate",
+      align: "center",
+    },
+    {
+      title: "status",
+      dataIndex: "status",
+      key: "status",
       align: "center",
     },
     {
@@ -91,11 +104,11 @@ const ListRolePage = () => {
 
   return (
     <Layout>
-      <Table columns={columns} dataSource={roleList} />
+      <Table columns={columns} dataSource={listProject} />
       <Modal
         title={`${isEdit ? "Update" : "Create"} role`}
         footer={null}
-        open={toggleAddRole}
+        open={toggleAddProject}
         onCancel={handelClose}
       >
         <Form
@@ -177,4 +190,4 @@ const ListRolePage = () => {
   );
 };
 
-export default ListRolePage;
+export default PageMyProject;

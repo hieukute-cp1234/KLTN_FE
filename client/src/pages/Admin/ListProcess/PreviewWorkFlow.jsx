@@ -40,7 +40,7 @@ const PreviewWorkflow = (props) => {
 
   return (
     <Modal
-      title="name work flow"
+      title="Quy trình codeing dự án"
       style={{ top: 20 }}
       open={open}
       width="90vw"

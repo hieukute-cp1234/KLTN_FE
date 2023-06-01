@@ -1,17 +1,26 @@
 import React from "react";
 import { Table } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import ButtonComon from "../../../components/common/Button";
 import Layout from "../../../layouts";
-import { roleList } from "../../../dataFake";
+import { listUser } from "../../../dataFake";
 import "./user.scss";
 
 const UsersPage = () => {
+  const openModalEdit = () => {};
+  const handleDeleteRole = () => {};
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
       align: "center",
-      width: "25%",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      align: "center",
     },
     {
       title: "Role",
@@ -20,9 +29,21 @@ const UsersPage = () => {
       align: "center",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Project",
+      dataIndex: "project",
+      key: "project",
+      align: "center",
+    },
+    {
+      title: "process by user",
+      dataIndex: "processCreated",
+      key: "processCreated",
+      align: "center",
+    },
+    {
+      title: "process used",
+      dataIndex: "processUse",
+      key: "processUse",
       align: "center",
     },
     {
@@ -30,13 +51,22 @@ const UsersPage = () => {
       dataIndex: "id",
       key: "id",
       align: "center",
-      width: "20%",
+      render: (role) => (
+        <div className="role-actions">
+          <ButtonComon
+            text="Detail"
+            classButton="ms-btn-edit"
+            afterIcon={<EditOutlined />}
+            click={() => openModalEdit(role)}
+          />
+        </div>
+      ),
     },
   ];
 
   return (
     <Layout>
-      <Table columns={columns} dataSource={roleList} />
+      <Table columns={columns} dataSource={listUser} />
     </Layout>
   );
 };

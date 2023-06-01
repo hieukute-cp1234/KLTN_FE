@@ -1,3 +1,4 @@
+import { MarkerType } from "reactflow";
 export const listProcess = [
   {
     id: 1,
@@ -159,13 +160,13 @@ export const diagrams = [
     id: "1",
     type: "rectangleNode",
     data: {
-      title: "Text",
+      title: "create spec",
       handles: [true, true, true, true],
       handleTarget: ["target", "target", "source", "source"],
       background: "#ffffff",
-      role: 2,
-      input: "input",
-      output: "output",
+      role: "BA",
+      input: "Thông tin dự án",
+      output: "file spec chi tiết chức nằng",
       checkList: [
         {
           label: "seft test",
@@ -189,31 +190,39 @@ export const diagrams = [
     },
     position: { x: 250, y: 0 },
     edges: [
-      { id: "e1-2", source: "1", target: "2", label: "this is an edge label" },
+      { id: "e1-2", source: "1", target: "2", label: "sau khi tạo spec" },
       { id: "e1-3", source: "1", target: "3", animated: true },
     ],
   },
   {
     id: "2",
     data: {
-      label: "Default Node",
+      label: "Viết detail design",
     },
-    position: { x: 100, y: 100 },
+    position: { x: 100, y: 200 },
+    edges: [
+      { id: "e1-2", source: "2", target: "4", label: "Dựa trên DD" },
+      { id: "e1-3", source: "1", target: "3", animated: true },
+    ],
   },
   {
     id: "3",
-    type: "output",
+    type: "default",
     data: {
-      label: "Output Node1",
+      label: "Thiết kế giao diện",
     },
-    position: { x: 400, y: 100 },
+    position: { x: 400, y: 150 },
+    edges: [
+      { id: "e1-2", source: "3", target: "5", label: "Dựa trên design" },
+      { id: "e1-3", source: "1", target: "3", animated: true },
+    ],
   },
   {
     id: "4",
     type: "output",
-    position: { x: 100, y: 200 },
+    position: { x: 100, y: 300 },
     data: {
-      label: "hieukute",
+      label: "codeing",
       selects: {
         "handle-0": "smoothstep",
         "handle-1": "smoothstep",
@@ -229,9 +238,7 @@ export const diagrams = [
         data: {
           selectIndex: 0,
         },
-        // markerEnd: {
-        //   type: MarkerType.ArrowClosed,
-        // },
+        markerEnd: { type: MarkerType.ArrowClosed },
       },
       {
         id: "e4-6",
@@ -242,9 +249,7 @@ export const diagrams = [
         data: {
           selectIndex: 1,
         },
-        // markerEnd: {
-        //   type: MarkerType.ArrowClosed,
-        // },
+        markerEnd: { type: MarkerType.ArrowClosed },
       },
     ],
   },
@@ -252,13 +257,13 @@ export const diagrams = [
     id: "5",
     type: "output",
     data: {
-      label: "custom",
+      label: "codeing",
     },
     style: {
       background: "#2B6CB0",
       color: "white",
     },
-    position: { x: 400, y: 200 },
+    position: { x: 400, y: 250 },
     // sourcePosition: Position.Right,
     // targetPosition: Position.Left,
   },
@@ -271,7 +276,7 @@ export const diagrams = [
       width: 100,
     },
     data: {
-      label: "Node",
+      label: "close",
     },
     position: { x: 400, y: 325 },
     // sourcePosition: Position.Right,
@@ -282,12 +287,7 @@ export const diagrams = [
     type: "default",
     className: "annotation",
     data: {
-      label: (
-        <>
-          On the bottom left you see the <strong>Controls</strong> and the
-          bottom right the <strong>MiniMap</strong>. This is also just a node 🥳
-        </>
-      ),
+      label: <>chú ý: khi xong cần chuyển trạng tahis cho người tiếp theo</>,
     },
     draggable: false,
     selectable: false,
@@ -300,37 +300,55 @@ export const roleList = [
     id: 1,
     type: "",
     name: "Project manager",
-    description: "",
+    code: "PM",
+    description:
+      "Quản lý cấp cao nhất của một dự án, có quyền quyết đinh các hành động trong dự án đó",
   },
   {
     id: 2,
     type: "",
-    name: "Project manager",
-    description: "",
+    name: "Business Analyst",
+    code: "BM",
+    description:
+      "Những người làm BA có trách nhiệm phân tích quá trình kinh doanh của công ty",
   },
   {
     id: 3,
     type: "",
-    name: "Project manager",
-    description: "",
+    name: "Developer Frontend",
+    code: "FE",
+    description:
+      "Những người thiết kế giao diện của trang web (đảm nhiệm phần client)",
   },
   {
     id: 4,
     type: "",
-    name: "Project manager",
-    description: "",
+    name: "Developer Backend",
+    code: "BE",
+    description:
+      "Những người thiết kế data base của một dự án (đảm nhiệm phần server)",
   },
   {
     id: 5,
     type: "",
-    name: "Project manager",
-    description: "",
+    name: "Tester",
+    code: "TEST",
+    description:
+      "Những người đẩm nhiện việc test sản phẩn trước khi bần giao cho khách",
   },
   {
     id: 6,
     type: "",
-    name: "Project manager",
-    description: "",
+    name: "Comtor",
+    code: "COMTOR",
+    description: "Những người phiên dịch tài liệu từ khách hàng nước ngoài",
+  },
+  {
+    id: 7,
+    type: "",
+    name: "Management",
+    code: "MANAGE",
+    description: "Những người quản lý trực tiếp một bộ phận",
   },
 ];
 
@@ -461,5 +479,140 @@ export const dataSampleProcess = [
       edges: [],
     },
     status: 1,
+  },
+];
+
+export const listUser = [
+  {
+    id: 1,
+    name: "hieuvm",
+    email: "hieuvm@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "sonpc",
+    email: "sonpc@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "dieppv",
+    email: "dieppv@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "nguyetlta",
+    email: "nguyetlta@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "nhuntq",
+    email: "nhuntq@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "manhtk",
+    email: "manhtk@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "tungnt",
+    email: "tungnt@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "kiennt",
+    email: "kiennt@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+  {
+    id: 1,
+    name: "tridv",
+    email: "tridv@vnext.vn",
+    role: 1,
+    project: 3,
+    processCreated: 4,
+    processUse: 5,
+  },
+];
+
+export const listProject = [
+  {
+    id: 1,
+    name: "LisB",
+    description:
+      "dự án làm app cho khách hàng Nhật về việc chụp ảnh ở công trường",
+    startDate: "12/12/2022",
+    endDate: "12/06/2023",
+    processing: "",
+    users: [],
+    processId: "",
+    status: "processing",
+  },
+  {
+    id: 1,
+    name: "LEAK MKT",
+    description:
+      "dự án làm app cho khách hàng Nhật về việc quảng cáo các sản phẩm và page",
+    startDate: "12/12/2022",
+    endDate: "12/06/2023",
+    processing: "",
+    users: [],
+    processId: "",
+    status: "processing",
+  },
+  {
+    id: 1,
+    name: "LTRA",
+    description:
+      "dự án làm app cho khách hàng Nhật về việc live stream",
+    startDate: "12/12/2022",
+    endDate: "12/06/2023",
+    processing: "",
+    users: [],
+    processId: "",
+    status: "processing",
+  },
+  {
+    id: 1,
+    name: "Three For 3",
+    description:
+      "dự án làm app cho khách hàng Nhật về việc cá cược bacarat",
+    startDate: "12/12/2022",
+    endDate: "12/06/2023",
+    processing: "",
+    users: [],
+    processId: "",
+    status: "maintain",
   },
 ];

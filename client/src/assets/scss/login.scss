@@ -12,14 +12,14 @@
   &__box-form {
     display: flex;
     overflow: hidden;
-    width: 50%;
+    width: 35%;
     height: 500px;
     border-radius: 1rem;
     box-shadow: 0 0 15px -5px;
 
     &__left {
       flex: 1;
-      background-color: red;
+      background-image: url('../images/pain-left.jpg');
     }
 
     &__right {
@@ -31,23 +31,18 @@
       background-color: $white;
       padding: 2rem;
 
+      .full-width {
+        min-height: 40px;
+      }
+
       &__logo {
-        font-weight: 900;
-        font-size: 2rem;
+        width: 10rem;
       }
 
       &__action {
         display: flex;
         justify-content: space-between;
-        padding: 2rem;
         gap: 4rem;
-      }
-
-      > form {
-      }
-
-      &__other {
-        display: flex;
       }
     }
   }
