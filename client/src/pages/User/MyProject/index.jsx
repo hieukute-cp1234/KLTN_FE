@@ -1,15 +1,27 @@
 import React, { useState } from "react";
-import { Table, Modal, Form, Input, Button, Select } from "antd";
+import {
+  Table,
+  Modal,
+  Form,
+  Input,
+  Button,
+  Select,
+  DatePicker,
+  AutoComplete,
+} from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
+import { NavLink } from "react-router-dom";
 import Layout from "../../../layouts";
 import ButtonComon from "../../../components/common/Button";
 import { listProject } from "../../../dataFake";
+import { USER } from "../../../constants/routes";
 import "./my-project.scss";
 
 const PageMyProject = () => {
   const [isEdit, setEdit] = useState(false);
   const [toggleAddProject, setAddProject] = useState(false);
+  const [toggleDropWorkflow, setToggleDropWorkflow] = useState(false);
 
   const openModalEdit = () => {
     setEdit(true);
@@ -44,12 +56,40 @@ const PageMyProject = () => {
     },
   ];
 
+  const previewWorkflow = (value) => {
+    console.timeLog(value);
+  };
+
+  const renderItemWorkflow = (value) => {
+    return (
+      <div>
+        {value} <button onClick={() => previewWorkflow(value)}>click</button>
+      </div>
+    );
+  };
+
+  const optionWorkflow = [
+    {
+      label: renderItemWorkflow("hieu"),
+    },
+    {
+      label: renderItemWorkflow("hieu2"),
+    },
+    {
+      label: renderItemWorkflow("hieu3"),
+    },
+  ];
+
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
       align: "center",
+      width: "20%",
+      render: (name, data) => (
+        <NavLink to={`${USER.MY_PROJECT}/${data.id}`}>{name}</NavLink>
+      ),
     },
     {
       title: "Description",
@@ -106,7 +146,7 @@ const PageMyProject = () => {
     <Layout>
       <Table columns={columns} dataSource={listProject} />
       <Modal
-        title={`${isEdit ? "Update" : "Create"} role`}
+        title={`${isEdit ? "Update" : "Create"} process`}
         footer={null}
         open={toggleAddProject}
         onCancel={handelClose}
@@ -122,7 +162,7 @@ const PageMyProject = () => {
         >
           <Form.Item
             label="Name"
-            name="role_name"
+            name="project_name"
             rules={[
               {
                 required: true,
@@ -130,12 +170,12 @@ const PageMyProject = () => {
               },
             ]}
           >
-            <Input placeholder="Role name..." />
+            <Input placeholder="project name..." />
           </Form.Item>
 
           <Form.Item
             label="Description"
-            name="role_description"
+            name="project_description"
             rules={[
               {
                 required: true,
@@ -146,7 +186,7 @@ const PageMyProject = () => {
             <Input.TextArea
               className="custom-area"
               rows={4}
-              placeholder="Description by role..."
+              placeholder="Description by project..."
               maxLength={252}
               style={{
                 resize: "none",
@@ -155,16 +195,48 @@ const PageMyProject = () => {
           </Form.Item>
 
           <Form.Item
-            label="Level"
-            name="level"
+            label="Member"
+            name="member"
             rules={[
               {
                 required: true,
-                message: "Please input your description!",
+                message: "Please input your user!",
               },
             ]}
           >
-            <Select options={optionLevels} defaultValue={1} />
+            <Select mode="multiple" options={optionLevels} defaultValue={1} />
+          </Form.Item>
+
+          <Form.Item
+            label="Process"
+            name="member"
+            rules={[
+              {
+                required: true,
+                message: "Please input your user!",
+              },
+            ]}
+          >
+            <AutoComplete
+              options={optionWorkflow}
+              placeholder="try to type `b`"
+              onDropdownVisibleChange={() => {
+                setToggleDropWorkflow(true);
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="End Date"
+            name="end_date"
+            rules={[
+              {
+                required: true,
+                message: "Please input your user!",
+              },
+            ]}
+          >
+            <DatePicker />
           </Form.Item>
 
           <Form.Item

@@ -1,0 +1,17 @@
+@import '../../../assets/scss/variable.scss';
+
+.project {
+    &__name {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    &__detail {
+        margin: 1rem 0;
+    }
+}
+
+.custom-tree {
+    background-color: transparent !important;
+}

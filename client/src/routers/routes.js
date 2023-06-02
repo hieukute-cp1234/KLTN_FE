@@ -7,8 +7,8 @@ import AdminCreateProcess from "../pages/Admin/CreateProcess";
 import AdminListRole from "../pages/Admin/ListRole";
 import AdminUsers from "../pages/Admin/ListUser";
 import UserProfile from "../pages/User/Profile";
-import UserDetail from '../pages/User/Profile';
-import MyProject from '../pages/User/MyProject';
+import ProjectDetail from "../pages/User/DetailProject";
+import MyProject from "../pages/User/MyProject";
 import { ADMIN, USER } from "../constants/routes";
 
 const routersPublic = [
@@ -72,9 +72,9 @@ const routersPrivate = [
     component: <UserProfile />,
   },
   {
-    key: "USER_DETAIL",
-    path: USER.DETAIL,
-    component: <UserDetail />,
+    key: "PROJECT_DETAIL",
+    path: USER.DETAIL_PROJECT,
+    component: <ProjectDetail />,
   },
   {
     key: "MY_PROJECT",
