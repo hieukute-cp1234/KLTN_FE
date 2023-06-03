@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = ({ route }) => {
-  const token = "my_token";
+  const token = localStorage.getItem('token') || "token";
   return token ? <Outlet /> : <Navigate to="/login" />;
 };
 

@@ -8,30 +8,7 @@ import {
 } from "@ant-design/icons";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ADMIN } from "../constants/routes";
-
-const MENU = [
-  {
-    key: "1",
-    icon: <UserOutlined />,
-    label: "Inbox",
-  },
-  {
-    key: "2",
-    icon: <VideoCameraOutlined />,
-    label: "My issues",
-  },
-  {
-    key: "3",
-    icon: <UploadOutlined />,
-    label: "Views",
-  },
-  {
-    key: "4",
-    icon: <UploadOutlined />,
-    label: "Roadmaps",
-  },
-];
+import { ADMIN, USER } from "../constants/routes";
 
 const MENU_ADMIN = [
   {
@@ -60,6 +37,13 @@ const MENU_ADMIN = [
     label: "Users",
     key: ADMIN.LIST_USER,
     path: ADMIN.LIST_USER,
+    role: [1, 2],
+  },
+  {
+    icon: <UserOutlined />,
+    label: "My Project",
+    key: USER.MY_PROJECT,
+    path: USER.MY_PROJECT,
     role: [1, 2],
   },
 ];
