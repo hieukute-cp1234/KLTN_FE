@@ -1,0 +1,11 @@
+.item-option-process {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  > span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
