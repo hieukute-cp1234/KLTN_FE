@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout, Dropdown } from "antd";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getMe } from "../store/auth/actions";
 import Menu from "./Menu";
 import Header from "./Header";
 import "./layout.scss";
@@ -9,20 +10,29 @@ import "./layout.scss";
 const { Sider, Content } = Layout;
 
 const LayoutComponent = ({ children }) => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
   const getAvatar = (name) => {
-    return name[0];
-  }
+    return name ? name[0] : "";
+  };
 
   const menuUser = [
     {
-      label: <NavLink to="">Profile</NavLink>,
+      label: <NavLink to="">{user?.email || ""}</NavLink>,
       key: 0,
     },
     {
-      label: <NavLink to="">logout</NavLink>,
+      label: <NavLink to="">Profile</NavLink>,
       key: 1,
+    },
+    {
+      label: <NavLink to="">logout</NavLink>,
+      key: 2,
     },
   ];
 
@@ -30,21 +40,23 @@ const LayoutComponent = ({ children }) => {
     <Layout className="ms-layout">
       <Sider trigger={null} collapsible>
         <div className="ms-layout__user">
-          <div className="ms-layout__user__avatar">{getAvatar('hieukute')}</div>
+          <div className="ms-layout__user__avatar">
+            {getAvatar(user?.userName)}
+          </div>
           <div>
             <Dropdown
               menu={{ items: menuUser }}
               trigger={["click"]}
               placement="bottom"
             >
-              <span className="ms-layout__user__menu">hieukute</span>
+              <span className="ms-layout__user__menu">{user?.userName}</span>
             </Dropdown>
           </div>
         </div>
         <Menu />
       </Sider>
       <Layout className="site-layout">
-        <Header namePage/>
+        <Header namePage />
         <Content className="ms-layout__content">{children}</Content>
       </Layout>
     </Layout>

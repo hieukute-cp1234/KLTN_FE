@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import { GooglePlusOutlined } from "@ant-design/icons";
 import { handleLogin } from "../store/auth/actions";
 import Button from "../components/common/Button";
+import { ADMIN } from "../constants/routes";
 import "../assets/scss/login.scss";
 import logo from "../assets/images/logo.svg";
 
@@ -13,22 +14,37 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
+
   const settingForm = {
     label: { span: 6 },
     container: { span: 24 },
   };
 
+  useEffect(() => {
+    if (token) {
+      if (user.role === 1) {
+        navigate(ADMIN.PROCESS);
+      } else {
+        navigate(ADMIN.PROCESS);
+      }
+    }
+  }, [token, user, navigate]);
+
   const submit = async (value) => {
-    console.log(value);
     dispatch(
-      handleLogin(value, {
-        success: () => {},
-        error: () => {
-          console.log("error");
+      handleLogin({
+        user: value,
+        actions: {
+          success: (token) => {
+            localStorage.setItem("token", token);
+            navigate("/admin");
+          },
+          error: () => {},
         },
       })
     );
-    // navigate("/admin");
   };
 
   const loginGoogle = () => {};

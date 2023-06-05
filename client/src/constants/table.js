@@ -65,3 +65,51 @@ export const columnMyProject = (params) => {
     },
   ];
 };
+
+export const columnRole = (params) => {
+  const { onUpdate, onDelete } = params;
+  return [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+      width: "25%",
+    },
+    {
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
+      align: "center",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      align: "center",
+    },
+    {
+      title: "Actions",
+      dataIndex: "id",
+      key: "id",
+      align: "center",
+      width: "20%",
+      render: (id, role) => (
+        <div className="role-actions">
+          <Button
+            text="Edit"
+            classButton="ms-btn-edit"
+            afterIcon={<EditOutlined />}
+            click={() => onUpdate(role)}
+          />
+          <Button
+            text="Delete"
+            classButton="ms-btn-delete"
+            afterIcon={<DeleteOutlined />}
+            click={() => onDelete(id)}
+          />
+        </div>
+      ),
+    },
+  ];
+};

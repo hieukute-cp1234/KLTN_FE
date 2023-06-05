@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { BASE_URL_API, BASE_URL_LOCAL } from "../constants/config.js";
+import { BASE_URL_LOCAL } from "../constants/config.js";
 
 export const appApi = axios.create({
   baseURL: BASE_URL_LOCAL,
@@ -20,7 +20,16 @@ appApi.interceptors.request.use(
 );
 
 appApi.interceptors.response.use(
-  (response) => response?.data,
+  (response) => {
+    if (response?.data?.message) {
+      Swal.fire({
+        icon: "success",
+        text: response?.data?.message || "success!",
+        showCancelButton: true,
+      });
+    }
+    return response?.data?.data;
+  },
   async (error) => {
     if (error.response?.data?.message) {
       Swal.fire({

@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleLogin } from "./actions";
+import { handleLogin, getMe } from "./actions";
 
 const initialState = {
   user: {},
   listUser: [],
-  token: "",
+  token: localStorage.getItem("token") || "",
   isAddUser: false,
 };
 
@@ -12,17 +12,16 @@ const auth = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action) => {
-      state.user = action.payload;
-    },
     toggleModalAddUser: (state, action) => {
       state.isAddUser = action.payload;
     },
   },
   extraReducers: {
     [handleLogin.fulfilled]: (state, { payload }) => {
-      localStorage.setItem("token", payload.data.token);
-      state.token = payload.data.token;
+      state.token = payload.token;
+    },
+    [getMe.fulfilled]: (state, { payload }) => {
+      state.user = payload;
     },
   },
 });

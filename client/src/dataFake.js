@@ -295,174 +295,6 @@ export const diagrams = [
   },
 ];
 
-export const roleList = [
-  {
-    id: 1,
-    type: "",
-    name: "Project manager",
-    code: "PM",
-    description:
-      "Quản lý cấp cao nhất của một dự án, có quyền quyết đinh các hành động trong dự án đó",
-  },
-  {
-    id: 2,
-    type: "",
-    name: "Business Analyst",
-    code: "BM",
-    description:
-      "Những người làm BA có trách nhiệm phân tích quá trình kinh doanh của công ty",
-  },
-  {
-    id: 3,
-    type: "",
-    name: "Developer Frontend",
-    code: "FE",
-    description:
-      "Những người thiết kế giao diện của trang web (đảm nhiệm phần client)",
-  },
-  {
-    id: 4,
-    type: "",
-    name: "Developer Backend",
-    code: "BE",
-    description:
-      "Những người thiết kế data base của một dự án (đảm nhiệm phần server)",
-  },
-  {
-    id: 5,
-    type: "",
-    name: "Tester",
-    code: "TEST",
-    description:
-      "Những người đẩm nhiện việc test sản phẩn trước khi bần giao cho khách",
-  },
-  {
-    id: 6,
-    type: "",
-    name: "Comtor",
-    code: "COMTOR",
-    description: "Những người phiên dịch tài liệu từ khách hàng nước ngoài",
-  },
-  {
-    id: 7,
-    type: "",
-    name: "Management",
-    code: "MANAGE",
-    description: "Những người quản lý trực tiếp một bộ phận",
-  },
-];
-
-const workflowSample = [
-  {
-    id: 1,
-    type: "rectangleNode",
-    data: {
-      title: "Text",
-      handles: [true, true, true, true],
-      handleTarget: ["target", "target", "source", "source"],
-      background: "#ffffff",
-      role: "",
-      input: "",
-      output: "",
-      checkList: "",
-      effortNumber: "",
-      effortType: "",
-      isResize: false,
-    },
-    position: { x: 500, y: 500 },
-  },
-  {
-    id: 2,
-    type: "rectangleNode",
-    data: {
-      title: "Text",
-      handles: [true, true, true, true],
-      handleTarget: ["target", "target", "source", "source"],
-      background: "#ffffff",
-      role: "",
-      input: "",
-      output: "",
-      checkList: "",
-      effortNumber: "",
-      effortType: "",
-      isResize: false,
-    },
-    position: { x: 500, y: 500 },
-  },
-  {
-    id: 3,
-    type: "rectangleNode",
-    data: {
-      title: "Text",
-      handles: [true, true, true, true],
-      handleTarget: ["target", "target", "source", "source"],
-      background: "#ffffff",
-      role: "",
-      input: "",
-      output: "",
-      checkList: "",
-      effortNumber: "",
-      effortType: "",
-      isResize: false,
-    },
-    position: { x: 500, y: 500 },
-  },
-  {
-    id: 4,
-    type: "rectangleNode",
-    data: {
-      title: "",
-      handles: [true, true, true, true],
-      handleTarget: ["target", "target", "source", "source"],
-      background: "#ffffff",
-      role: "",
-      input: "",
-      output: "",
-      checkList: "",
-      effortNumber: "",
-      effortType: "",
-      isResize: false,
-    },
-    position: { x: 500, y: 500 },
-  },
-  {
-    id: 5,
-    type: "rectangleNode",
-    data: {
-      title: "Text",
-      handles: [true, true, true, true],
-      handleTarget: ["target", "target", "source", "source"],
-      background: "#ffffff",
-      role: "",
-      input: "",
-      output: "",
-      checkList: "",
-      effortNumber: "",
-      effortType: "",
-      isResize: false,
-    },
-    position: { x: 500, y: 500 },
-  },
-  {
-    id: 6,
-    type: "rectangleNode",
-    data: {
-      title: "Text",
-      handles: [true, true, true, true],
-      handleTarget: ["target", "target", "source", "source"],
-      background: "#ffffff",
-      role: "",
-      input: "",
-      output: "",
-      checkList: "",
-      effortNumber: "",
-      effortType: "",
-      isResize: false,
-    },
-    position: { x: 500, y: 500 },
-  },
-];
-
 export const dataSampleProcess = [
   {
     id: 1,
@@ -594,8 +426,7 @@ export const listProject = [
   {
     id: 1,
     name: "LTRA",
-    description:
-      "dự án làm app cho khách hàng Nhật về việc live stream",
+    description: "dự án làm app cho khách hàng Nhật về việc live stream",
     startDate: "12/12/2022",
     endDate: "12/06/2023",
     processing: "",
@@ -606,8 +437,7 @@ export const listProject = [
   {
     id: 1,
     name: "Three For 3",
-    description:
-      "dự án làm app cho khách hàng Nhật về việc cá cược bacarat",
+    description: "dự án làm app cho khách hàng Nhật về việc cá cược bacarat",
     startDate: "12/12/2022",
     endDate: "12/06/2023",
     processing: "",
