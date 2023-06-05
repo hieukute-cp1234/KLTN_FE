@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  listProcess: [],
-  isAddProcess: false,
+  listproject: [],
+  isAddProject: false,
 };
 
 const auth = createSlice({
-  name: "process",
+  name: "project",
   initialState,
   reducers: {
-    toggleModalAddProcess: (state, action) => {
-      state.isAddProcess = action.payload;
+    toggleModalAddProject: (state, action) => {
+      state.isAddProject = action.payload;
     },
   },
   extraReducers: {},
@@ -18,5 +18,5 @@ const auth = createSlice({
 
 const { reducer, actions } = auth;
 
-export const { toggleModalAddProcess } = actions;
+export const { toggleModalAddProject } = actions;
 export default reducer;

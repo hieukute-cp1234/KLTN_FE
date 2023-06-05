@@ -5,13 +5,14 @@ import "./select.scss";
 const { Option } = Select;
 
 const CommonSelect = (props) => {
-  const { placeholder, label, options = [], onChange, value } = props;
+  const { placeholder, label, options = [], onChange, value, multiple } = props;
 
   return (
     <div className="ms-select">
       <span className="ms-select__label">{label}</span>
       <Select
         classNames="ms-select__custom"
+        mode={multiple ? "multiple" : ""}
         placeholder={placeholder}
         onChange={onChange}
         value={value}

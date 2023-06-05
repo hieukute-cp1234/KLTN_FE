@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LineOutlined, FullscreenOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRoles } from "../../../store/role/actions";
 import Input from "../../common/Input";
 import Button from "../../common/Button";
 import Select from "../../common/Select";
 import Checkbox from "../../common/Checkbox";
 import ColorPicker from "../../common/ColorPicker";
-import { valueHandle, listShape } from "../../../constants/options";
+import { valueHandle, listShape, typeEffort } from "../../../constants/options";
+import { convertEffortByType } from "../../../helpers";
 import "./preview.scss";
 
 const EditMiniSize = (props) => {
@@ -17,7 +20,19 @@ const EditMiniSize = (props) => {
     selectEdge,
     isSelectEdge,
   } = props;
+  const dispatch = useDispatch();
+
   const [isMiniSize, setMiniSize] = useState(true);
+  const [valueEffort, setValueEffort] = useState(0);
+  const [valueOnlyRole, setValueOnlyRole] = useState([]);
+
+  const listRole = useSelector((state) => state.role.listRole);
+
+  useEffect(() => {
+    if (!listRole?.length) {
+      dispatch(fetchRoles({ actions: { success: () => {} } }));
+    }
+  }, [dispatch, listRole]);
 
   const { data: dataNode } = selectNode;
 
@@ -27,6 +42,8 @@ const EditMiniSize = (props) => {
   };
 
   const handleChangeListRole = (value) => {
+    const newRoleProcess = listRole.filter((role) => value.includes(role.id));
+    setValueOnlyRole(newRoleProcess);
     changeNodes("listRole", value);
   };
 
@@ -41,11 +58,6 @@ const EditMiniSize = (props) => {
 
   const handleChangeColor = (color) => {
     changeNodes("background", color);
-  };
-
-  const handleChangeMention = (event) => {
-    const value = event.target.value;
-    changeNodes("mention", value);
   };
 
   const handleChangeTypeShape = (value) => {
@@ -72,6 +84,7 @@ const EditMiniSize = (props) => {
   };
 
   const handleChangeEffortType = (value) => {
+    setValueEffort(value);
     changeNodes("effortType", value);
   };
 
@@ -85,7 +98,7 @@ const EditMiniSize = (props) => {
 
   const handleChangeRoleNode = (value) => {
     changeNodes("role", value);
-  }
+  };
 
   return (
     <div className="box-editor">
@@ -110,7 +123,11 @@ const EditMiniSize = (props) => {
           <Select
             placeholder="Select role"
             label="Roles"
-            options={[]}
+            multiple
+            options={listRole.map((role) => ({
+              text: role.code,
+              value: role.id,
+            }))}
             onChange={handleChangeListRole}
           />
           <span className="box-editor__full-modal__title">
@@ -136,7 +153,10 @@ const EditMiniSize = (props) => {
               <Select
                 placeholder="Select role"
                 label="Role"
-                options={[]}
+                options={valueOnlyRole.map((role) => ({
+                  text: role.code,
+                  value: role.id,
+                }))}
                 onChange={handleChangeRoleNode}
               />
               <Input
@@ -152,29 +172,23 @@ const EditMiniSize = (props) => {
                 onChange={handleChangeOutput}
               />
               <Select
-                placeholder="Mention role"
-                label="Mention"
-                options={[]}
-                onChange={handleChangeMention}
-              />
-              <Select
                 placeholder="Effort..."
                 label="Effort"
-                options={[]}
+                options={typeEffort}
                 onChange={handleChangeEffortType}
               />
               <Select
                 placeholder="Time..."
                 label="Time"
-                options={[]}
+                options={convertEffortByType(valueEffort)}
                 onChange={handleChangeEffort}
               />
-              <Checkbox
+              {/* <Checkbox
                 label="Check list"
                 options={[]}
                 value={[]}
                 onChange={handleChageChecklist}
-              />
+              /> */}
 
               {/* custom css node */}
               <ColorPicker

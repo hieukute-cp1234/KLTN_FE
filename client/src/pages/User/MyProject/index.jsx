@@ -7,7 +7,7 @@ import CreateProject from "./CreateProject";
 import PreviewProcess from "../../../components/workflow/ModalPreview";
 import { listProject } from "../../../dataFake";
 import { columnMyProject } from "../../../constants/table";
-import { toggleModalAddProcess } from "../../../store/project";
+import { toggleModalAddProject } from "../../../store/project";
 import { diagrams } from "../../../dataFake";
 import "./my-project.scss";
 
@@ -16,16 +16,16 @@ const PageMyProject = () => {
   const [isEdit, setEdit] = useState(false);
   const [togglePreviewProcess, setTogglePreviewProcess] = useState(false);
 
-  const isModalAddProcess = useSelector((state) => state.project.isAddProcess);
+  const isModalAddProcess = useSelector((state) => state.project.isAddProject);
 
   const openModalEdit = () => {
     setEdit(true);
-    dispatch(toggleModalAddProcess(true));
+    dispatch(toggleModalAddProject(true));
   };
 
   const handelClose = () => {
     setEdit(false);
-    dispatch(toggleModalAddProcess(false));
+    dispatch(toggleModalAddProject(false));
   };
 
   const handleDeleteRole = () => {

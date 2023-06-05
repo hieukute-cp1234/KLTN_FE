@@ -1,3 +1,5 @@
+import { TYPE_TIME_EFFORT } from "./";
+
 export const valueHandle = [
   {
     label: "Top",
@@ -47,5 +49,24 @@ export const optionLevels = [
   {
     label: "3",
     value: 3,
+  },
+];
+
+export const typeEffort = [
+  {
+    text: "Hour",
+    value: TYPE_TIME_EFFORT.HOUR,
+  },
+  {
+    text: "Day",
+    value: TYPE_TIME_EFFORT.DAY,
+  },
+  {
+    text: "Week",
+    value: TYPE_TIME_EFFORT.WEEK,
+  },
+  {
+    text: "Month",
+    value: TYPE_TIME_EFFORT.MONTH,
   },
 ];

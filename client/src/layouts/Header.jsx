@@ -4,7 +4,7 @@ import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { toggleModalAddRole } from "../store/role";
 import { toggleModalAddUser } from "../store/auth";
-import { toggleModalAddProcess } from "../store/project";
+import { toggleModalAddProject } from "../store/project";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
 import { ADMIN, USER } from "../constants/routes";
@@ -26,7 +26,7 @@ const Header = ({ namePage }) => {
         dispatch(toggleModalAddUser(true));
         return;
       case isProject:
-        dispatch(toggleModalAddProcess(true));
+        dispatch(toggleModalAddProject(true));
         return;
       default:
         navigate(ADMIN.CREATE_PROCESS);

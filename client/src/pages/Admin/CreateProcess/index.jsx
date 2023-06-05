@@ -14,7 +14,8 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { getRandomId } from "../../../store/process/actions";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import { customTypes } from "../../../components/workflow/nodes";
@@ -22,12 +23,12 @@ import EditMiniSize from "../../../components/workflow/ModalPreview/EditMiniSize
 import "./create-workflow.scss";
 
 export const CreateProcessPage = () => {
+  const dispatch = useDispatch();
   const nodeTypes = useMemo(() => customTypes, []);
   const { workflowId } = useParams();
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [id, setId] = useState(0);
   const [selectNode, setSelectNode] = useState({});
   const [selectEdge, setSelectEdge] = useState({});
   const [dataWorkflow, setDataWorkflow] = useState({});
@@ -79,10 +80,10 @@ export const CreateProcessPage = () => {
     [selectNode]
   );
 
-  const handleAddNode = () => {
-    setId(id + 1);
+  const handleAddNode = async () => {
+    const newId = await getRandomId();
     const newNode = {
-      id: `${id}`,
+      id: `${newId}`,
       type: "rectangleNode",
       data: {
         title: "Title",
@@ -99,7 +100,6 @@ export const CreateProcessPage = () => {
       position: { x: 500, y: 500 },
       edges: [],
     };
-
     setNodes([...nodes, newNode]);
   };
 
