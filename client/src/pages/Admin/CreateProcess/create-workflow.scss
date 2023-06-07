@@ -16,6 +16,13 @@
     > button {
       height: 2rem;
     }
+
+    &__name {
+      flex: 1;
+      padding: 0 1rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
   }
 
   &__content {

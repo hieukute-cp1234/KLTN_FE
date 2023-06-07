@@ -11,7 +11,8 @@ import { STATUS_PROCESS } from "../../../constants";
 import "./process.scss";
 
 const ProcessItem = (props) => {
-  const { processData, onEdit, onCopy, onDelete, onViewWorkflow } = props;
+  const { processData, onEdit, onCopy, onDelete, onViewWorkflow, onPublish } =
+    props;
   const [toggleDescription, setDescription] = useState(false);
 
   const renderStatus = () => {
@@ -36,25 +37,25 @@ const ProcessItem = (props) => {
             text="Edit"
             classButton="ms-btn-edit"
             afterIcon={<EditOutlined />}
-            click={() => onEdit(processData)}
+            click={() => onEdit(processData.id)}
           />
           <Button
             text="Copy"
             classButton="ms-btn-copy"
             afterIcon={<CopyOutlined />}
-            click={() => onCopy("copy")}
+            click={() => onCopy(processData.id)}
           />
           <Button
-            text="Publish"
+            text={processData.publish ? "Unpub" : "Publish"}
             classButton="ms-btn-copy"
             afterIcon={<CopyOutlined />}
-            click={() => onCopy("copy")}
+            click={() => onPublish(processData)}
           />
           <Button
             text="Delete"
             classButton="ms-btn-delete"
             afterIcon={<DeleteOutlined />}
-            click={() => onDelete("delete")}
+            click={() => onDelete(processData.id)}
           />
         </div>
       </div>
@@ -69,20 +70,20 @@ const ProcessItem = (props) => {
                 text="view"
                 classButton="ms-btn-view"
                 afterIcon={<FileSearchOutlined />}
-                click={() => onViewWorkflow("view")}
+                click={() => onViewWorkflow(processData)}
               />
             </Descriptions.Item>
             <Descriptions.Item label="List Role">
-              {processData.list_role.join(", ")}
+              {processData.roles.join(", ")}
             </Descriptions.Item>
             <Descriptions.Item label="Status">
               <Badge status={renderStatus()} text={renderStatus()} />
             </Descriptions.Item>
             <Descriptions.Item label="Create at">
-              {processData.create_at}
+              {processData.createdAt}
             </Descriptions.Item>
             <Descriptions.Item label="Update at">
-              {processData.update_at}
+              {processData.updatedAt}
             </Descriptions.Item>
           </Descriptions>
         </div>

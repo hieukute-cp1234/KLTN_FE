@@ -13,7 +13,7 @@ import "./preview.scss";
 
 const EditMiniSize = (props) => {
   const {
-    changeWorkflow,
+    changeProcess,
     changeNodes,
     changeEdges,
     selectNode,
@@ -36,15 +36,15 @@ const EditMiniSize = (props) => {
 
   const { data: dataNode } = selectNode;
 
-  const handleChangeNameWorkflow = (event) => {
+  const handleChangeNameProcess = (event) => {
     const value = event.target.value;
-    changeWorkflow("workflow_name", value);
+    changeProcess("name", value);
   };
 
   const handleChangeListRole = (value) => {
     const newRoleProcess = listRole.filter((role) => value.includes(role.id));
     setValueOnlyRole(newRoleProcess);
-    changeNodes("listRole", value);
+    changeProcess("roles", value);
   };
 
   const handleMiniSize = () => {
@@ -97,7 +97,8 @@ const EditMiniSize = (props) => {
   };
 
   const handleChangeRoleNode = (value) => {
-    changeNodes("role", value);
+    const role = listRole.find((role) => role.id === value);
+    changeNodes("role", role?.code || "");
   };
 
   return (
@@ -118,7 +119,7 @@ const EditMiniSize = (props) => {
           <Input
             placeholder="Process name..."
             label="Name"
-            onChange={handleChangeNameWorkflow}
+            onChange={handleChangeNameProcess}
           />
           <Select
             placeholder="Select role"
@@ -147,12 +148,14 @@ const EditMiniSize = (props) => {
               <Input
                 placeholder="Title node"
                 label="Title"
+                disabled={!selectNode?.id}
                 value={dataNode?.title || ""}
                 onChange={handleChangeTitle}
               />
               <Select
                 placeholder="Select role"
                 label="Role"
+                disabled={!selectNode?.id}
                 options={valueOnlyRole.map((role) => ({
                   text: role.code,
                   value: role.id,
@@ -162,24 +165,28 @@ const EditMiniSize = (props) => {
               <Input
                 placeholder="Input..."
                 label="Input"
+                disabled={!selectNode?.id}
                 value={dataNode?.input || ""}
                 onChange={handleChangeInput}
               />
               <Input
                 placeholder="Output..."
                 label="Output"
-                value={dataNode?.title || ""}
+                disabled={!selectNode?.id}
+                value={dataNode?.output || ""}
                 onChange={handleChangeOutput}
               />
               <Select
                 placeholder="Effort..."
                 label="Effort"
+                disabled={!selectNode?.id}
                 options={typeEffort}
                 onChange={handleChangeEffortType}
               />
               <Select
                 placeholder="Time..."
                 label="Time"
+                disabled={!selectNode?.id}
                 options={convertEffortByType(valueEffort)}
                 onChange={handleChangeEffort}
               />
@@ -211,6 +218,7 @@ const EditMiniSize = (props) => {
               <Select
                 placeholder="Shape"
                 label="Shape"
+                disabled={!selectNode?.id}
                 options={listShape}
                 value={selectNode.type}
                 onChange={handleChangeTypeShape}

@@ -9,7 +9,7 @@ export const handleLogin = createAsyncThunk(
         email: user.email,
         password: user.password,
       });
-      actions.success(response.data.token);
+      actions.success(response.token);
       return response;
     } catch (error) {
       actions.error();
@@ -21,6 +21,5 @@ export const getMe = createAsyncThunk("auth/getMe", async () => {
   try {
     const response = await appApi.get("/me");
     return response;
-  } catch (error) {
-  }
+  } catch (error) {}
 });

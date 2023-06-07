@@ -18,6 +18,7 @@ const auth = createSlice({
   },
   extraReducers: {
     [handleLogin.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.token = payload.token;
     },
     [getMe.fulfilled]: (state, { payload }) => {

@@ -13,29 +13,55 @@ import {
   SaveOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getRandomId } from "../../../store/process/actions";
+import {
+  getRandomId,
+  createProcess,
+  updateProcess,
+  fetchProcessById,
+} from "../../../store/process/actions";
 import Layout from "../../../layouts";
 import Button from "../../../components/common/Button";
 import { customTypes } from "../../../components/workflow/nodes";
 import EditMiniSize from "../../../components/workflow/ModalPreview/EditMiniSize";
+import { ADMIN } from "../../../constants/routes";
 import "./create-workflow.scss";
 
 export const CreateProcessPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const nodeTypes = useMemo(() => customTypes, []);
-  const { workflowId } = useParams();
+  const { processId } = useParams();
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectNode, setSelectNode] = useState({});
   const [selectEdge, setSelectEdge] = useState({});
-  const [dataWorkflow, setDataWorkflow] = useState({});
+  const [dataProcess, setDataProcess] = useState({});
+  const [processName, setProcessName] = useState("");
 
   useEffect(() => {
-    console.log(workflowId);
-  }, [workflowId]);
+    if (processId) {
+      fetchDetailProcess();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchDetailProcess = () => {
+    dispatch(
+      fetchProcessById({
+        id: processId,
+        actions: {
+          success: (data) => {
+            setNodes(data.nodes || []);
+            setEdges(data.edges || []);
+            setProcessName(data.name);
+          },
+        },
+      })
+    );
+  };
 
   // function handle nodes
   const handleSelectNode = (nodeValue) => {
@@ -98,7 +124,6 @@ export const CreateProcessPage = () => {
         effortType: 1,
       },
       position: { x: 500, y: 500 },
-      edges: [],
     };
     setNodes([...nodes, newNode]);
   };
@@ -112,9 +137,11 @@ export const CreateProcessPage = () => {
 
   //function handle edge
   const onConnect = useCallback(
-    (params) => {
+    async (params) => {
+      const newId = await getRandomId();
       const newEdge = {
         ...params,
+        id: newId,
         type: "step",
         label: "",
         markerEnd: { type: MarkerType.ArrowClosed },
@@ -150,15 +177,41 @@ export const CreateProcessPage = () => {
   };
 
   //function handle workflow
-  const handleChangeWorkflow = (key, value) => {
-    const workflow = {};
-    workflow[key] = value;
-    setDataWorkflow(workflow);
+  const handleChangeProcess = (key, value) => {
+    const process = {};
+    process[key] = value;
+    if (key === "name") {
+      setProcessName(value);
+    }
+    setDataProcess({ ...dataProcess, ...process });
   };
 
-  const saveWorkflow = () => {
-    const newWorkflow = { ...dataWorkflow, nodes: nodes, edges: edges };
-    console.log(newWorkflow);
+  const saveProcess = () => {
+    const newProcess = { ...dataProcess, nodes: nodes, edges: edges };
+    if (processId) {
+      dispatch(
+        updateProcess({
+          id: processId,
+          data: newProcess,
+          actions: {
+            success: () => {
+              fetchDetailProcess();
+            },
+          },
+        })
+      );
+      return;
+    }
+    dispatch(
+      createProcess({
+        data: newProcess,
+        actions: {
+          success: () => {
+            navigate(ADMIN.PROCESS);
+          },
+        },
+      })
+    );
   };
 
   const actions = [
@@ -177,11 +230,11 @@ export const CreateProcessPage = () => {
       function: handleDeleteNode,
     },
     {
-      text: "Create workflow",
+      text: "Create Process",
       class: "ms-btn-submit",
       icon: <SaveOutlined />,
       disabled: !nodes.length,
-      function: saveWorkflow,
+      function: saveProcess,
     },
     {
       text: "Back",
@@ -196,6 +249,7 @@ export const CreateProcessPage = () => {
     <Layout>
       <div className="ms-create-workflow">
         <div className="ms-create-workflow__header">
+          <div className="ms-create-workflow__header__name">{processName}</div>
           {actions.map((button, index) => (
             <Button
               key={index}
@@ -226,7 +280,7 @@ export const CreateProcessPage = () => {
               isSelectEdge={!!selectEdge?.id}
               changeNodes={handleChangeNodes}
               changeEdges={handleChangeEdge}
-              changeWorkflow={handleChangeWorkflow}
+              changeProcess={handleChangeProcess}
             />
             <Controls />
             <Background variant="lines" gap={16} />

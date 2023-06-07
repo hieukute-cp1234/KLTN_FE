@@ -1,32 +1,83 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { List } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import Layout from "../../../layouts";
 import ProcessItem from "./ProcessItem";
 import PreviewWorkflow from "./PreviewWorkFlow";
-import { listProcess, diagrams } from "../../../dataFake";
+import {
+  fetchListProcess,
+  copyProcess,
+  publishProcess,
+  deleteProcess,
+} from "../../../store/process/actions";
 import "./process.scss";
 
 const ListProcess = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [toggleViewWorkflow, setViewWorkflow] = useState(false);
+  const [process, setProcess] = useState({});
 
-  const handleEditProcess = (process) => {
-    navigate(`/admin/process/update/${process.id}`);
+  const listProcess = useSelector((state) => state.process.listProcess);
+
+  useEffect(() => {
+    dispatch(fetchListProcess({ params: {} }));
+  }, [dispatch]);
+
+  const handleEditProcess = (processId) => {
+    navigate(`/admin/process/update/${processId}`);
   };
 
-  const handleCopyProcess = (key) => {};
+  const handleCopyProcess = (processId) => {
+    dispatch(
+      copyProcess({
+        id: processId,
+        actions: {
+          success: () => {
+            dispatch(fetchListProcess({ params: {} }));
+          },
+        },
+      })
+    );
+  };
 
-  const handleDeleteProcess = (key) => {
-    Swal.fire({
+  const handlePublishProcess = (process) => {
+    dispatch(
+      publishProcess({
+        id: process.id,
+        publish: process.publish === 1 ? 0 : 1,
+        actions: {
+          success: () => {
+            console.log("success");
+          },
+        },
+      })
+    );
+  };
+
+  const handleDeleteProcess = async (id) => {
+    const result = await Swal.fire({
       icon: "question",
       text: "Bạn có chắc chắn xóa!",
       showCancelButton: true,
     });
+    if (!result.isConfirmed) return;
+    dispatch(
+      deleteProcess({
+        id,
+        actions: {
+          success: () => {
+            dispatch(fetchListProcess({ params: {} }));
+          },
+        },
+      })
+    );
   };
 
-  const handleViewWorkflow = (key) => {
+  const handleViewWorkflow = (process) => {
+    setProcess(process);
     setViewWorkflow(true);
   };
 
@@ -41,6 +92,7 @@ const ListProcess = () => {
               onEdit={handleEditProcess}
               onCopy={handleCopyProcess}
               onDelete={handleDeleteProcess}
+              onPublish={handlePublishProcess}
               onViewWorkflow={handleViewWorkflow}
             />
           </List.Item>
@@ -48,8 +100,9 @@ const ListProcess = () => {
       />
       <PreviewWorkflow
         open={toggleViewWorkflow}
+        name={process.name}
+        dataDiagrams={{ nodes: process.nodes, edges: process.edges }}
         onCancel={() => setViewWorkflow(false)}
-        dataDiagrams={diagrams}
       />
     </Layout>
   );
