@@ -47,7 +47,9 @@ const LoginPage = () => {
     );
   };
 
-  const loginGoogle = () => {};
+  const loginGoogle = (response) => {
+    console.log("google", response);
+  };
 
   return (
     <div className="login">

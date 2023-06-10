@@ -113,3 +113,61 @@ export const columnRole = (params) => {
     },
   ];
 };
+
+export const columnUser = (params) => {
+  const { onEdit } = params;
+  return [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      align: "center",
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      align: "center",
+    },
+    {
+      title: "Project",
+      dataIndex: "project",
+      key: "project",
+      align: "center",
+    },
+    {
+      title: "process by user",
+      dataIndex: "processCreated",
+      key: "processCreated",
+      align: "center",
+    },
+    {
+      title: "process used",
+      dataIndex: "processUse",
+      key: "processUse",
+      align: "center",
+    },
+    {
+      title: "Actions",
+      dataIndex: "id",
+      key: "id",
+      align: "center",
+      render: (id) => (
+        <div className="role-actions">
+          <Button
+            text="Detail"
+            classButton="ms-btn-edit"
+            afterIcon={<EditOutlined />}
+            click={() => onEdit(id)}
+          />
+        </div>
+      ),
+    },
+  ];
+};

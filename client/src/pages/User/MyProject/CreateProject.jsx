@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Button, Select, DatePicker, AutoComplete } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 import ButtonCommon from "../../../components/common/Button";
+import { createProject } from "../../../store/project/actions";
+import { fetchListUser } from "../../../store/auth/actions";
+import { fetchListProcess } from "../../../store/process/actions";
 
 const CreateProject = (props) => {
   const { onCancel, onViewProcess } = props;
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.listUser);
+  const listProcess = useSelector((state) => state.process.listProcess);
 
-  const abc = [
-    {
-      name: "process 1process 1process 1process 1process 1process 1",
-      id: 1,
-    },
-    {
-      name: "process 2",
-      id: 2,
-    },
-  ];
+  useEffect(() => {
+    if (!user.length) {
+      dispatch(fetchListUser({ isUser: true }));
+    }
 
-  const [listUser, setListUser] = useState([]);
-  const [searchListProcess, setSearchListProcess] = useState(abc);
+    if (!listProcess.length) {
+      dispatch(fetchListProcess({ params: {} }));
+    }
+
+    const newOptionProcess = listProcess.map((process) => ({
+      label: renderItemWorkflow(process),
+      value: process.name,
+    }));
+
+    setSearchListProcess(newOptionProcess);
+  }, []);
+
+  const [searchListProcess, setSearchListProcess] = useState([]);
 
   const renderItemWorkflow = (process) => {
     return (
@@ -34,23 +46,31 @@ const CreateProject = (props) => {
     );
   };
 
-  useEffect(() => {
-    const newOptionProcess = searchListProcess.map((process) => ({
-      label: renderItemWorkflow(process),
-      value: process.name,
-    }));
-
-    setSearchListProcess(newOptionProcess);
-  }, []);
-
-  const handleSubmit = (value) => {
-    console.log("submit", value);
+  const handleSubmit = async (value) => {
+    const newProject = {
+      ...value,
+      process: listProcess.fin((process) => process.name === value.process),
+    };
+    console.log(newProject);
+    // await createProject({
+    //   data: value,
+    //   actions: {
+    //     success: () => {},
+    //   },
+    // });
   };
 
-  const handleSelect = (value) => {};
-
   const handleSearch = (text) => {
-    console.log("text", text);
+    const newSearch = listProcess
+      .filter((process) =>
+        process.name.toLowerCase().includes(text.toLowerCase())
+      )
+      .map((process) => ({
+        label: renderItemWorkflow(process),
+        value: process.name,
+      }));
+
+    setSearchListProcess(newSearch);
   };
 
   return (
@@ -65,7 +85,7 @@ const CreateProject = (props) => {
     >
       <Form.Item
         label="Name"
-        name="project_name"
+        name="name"
         rules={[
           {
             required: true,
@@ -78,7 +98,7 @@ const CreateProject = (props) => {
 
       <Form.Item
         label="Description"
-        name="project_description"
+        name="description"
         rules={[
           {
             required: true,
@@ -100,14 +120,18 @@ const CreateProject = (props) => {
       <Form.Item
         label="Member"
         name="member"
-        // rules={[
-        //   {
-        //     required: true,
-        //     message: "Please input your user!",
-        //   },
-        // ]}
+        rules={[
+          {
+            required: true,
+            message: "Please input your user!",
+          },
+        ]}
       >
-        <Select mode="multiple" options={listUser} defaultValue={1} />
+        <Select
+          mode="multiple"
+          placeholder="select user..."
+          options={user.map((user) => ({ label: user.email, value: user.id }))}
+        />
       </Form.Item>
 
       <Form.Item
@@ -123,14 +147,13 @@ const CreateProject = (props) => {
         <AutoComplete
           placeholder="select process..."
           options={searchListProcess}
-          onSelect={handleSelect}
           onSearch={handleSearch}
         />
       </Form.Item>
 
       <Form.Item
         label="End Date"
-        name="end_date"
+        name="endDate"
         rules={[
           {
             required: true,

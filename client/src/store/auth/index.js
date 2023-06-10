@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleLogin, getMe } from "./actions";
+import { handleLogin, getMe, fetchListUser } from "./actions";
 
 const initialState = {
   user: {},
@@ -24,10 +24,13 @@ const auth = createSlice({
     [getMe.fulfilled]: (state, { payload }) => {
       state.user = payload;
     },
+    [fetchListUser.fulfilled]: (state, { payload }) => {
+      state.listUser = payload;
+    },
   },
 });
 
 const { reducer, actions } = auth;
 
-export const { login, toggleModalAddUser } = actions;
+export const { toggleModalAddUser } = actions;
 export default reducer;

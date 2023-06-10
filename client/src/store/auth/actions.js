@@ -23,3 +23,13 @@ export const getMe = createAsyncThunk("auth/getMe", async () => {
     return response;
   } catch (error) {}
 });
+
+export const fetchListUser = createAsyncThunk(
+  "auth/getUser",
+  async (params) => {
+    try {
+      const res = await appApi.get("/user", { params });
+      return res;
+    } catch (error) {}
+  }
+);
