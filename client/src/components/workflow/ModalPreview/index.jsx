@@ -13,8 +13,6 @@ const PreviewWorkflow = (props) => {
   const { dataDiagrams, open, onCancel } = props;
   const navigate = useNavigate();
 
-  const lines = dataDiagrams.map((diagram) => diagram.edges).flat();
-
   const redirectCreate = () => {
     navigate(ADMIN.CREATE_PROCESS);
   };
@@ -40,7 +38,7 @@ const PreviewWorkflow = (props) => {
 
   return (
     <Modal
-      title="Quy trình codeing dự án"
+      title={dataDiagrams.name}
       style={{ top: 20 }}
       open={open}
       width="90vw"
@@ -52,8 +50,8 @@ const PreviewWorkflow = (props) => {
           fitView
           nodeTypes={nodeTypes}
           attributionPosition="top-right"
-          nodes={dataDiagrams}
-          edges={lines}
+          nodes={dataDiagrams.nodes}
+          edges={dataDiagrams.edges}
         >
           <Controls />
           <Background variant="lines" gap={16} />

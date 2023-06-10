@@ -15,3 +15,5 @@ export const HOUR_OF_HOUR = [2, 4, 6, 8];
 export const DAY_OF_DAY = [1, 2, 3, 4, 5];
 export const WEED_OF_WEEK = [1, 2, 3];
 export const MONTH_OF_MONTH = [1, 2, 3];
+
+export const FORMAT_DAY = "YYYY/MM/DD";

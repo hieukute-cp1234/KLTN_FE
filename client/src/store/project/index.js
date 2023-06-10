@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchAllProject } from "./actions";
 
 const initialState = {
-  listproject: [],
+  listProject: [],
   isAddProject: false,
 };
 
@@ -13,7 +14,11 @@ const auth = createSlice({
       state.isAddProject = action.payload;
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [fetchAllProject.fulfilled]: (state, { payload }) => {
+      state.listProject = payload;
+    },
+  },
 });
 
 const { reducer, actions } = auth;

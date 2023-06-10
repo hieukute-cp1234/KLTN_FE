@@ -1,9 +1,11 @@
+import dayjs from "dayjs";
 import {
   TYPE_TIME_EFFORT,
   HOUR_OF_HOUR,
   DAY_OF_DAY,
   WEED_OF_WEEK,
   MONTH_OF_MONTH,
+  FORMAT_DAY,
 } from "../constants";
 
 export const convertEffortByType = (typeEffort) => {
@@ -19,4 +21,8 @@ export const convertEffortByType = (typeEffort) => {
     default:
       return [];
   }
+};
+
+export const convertDate = (date) => {
+  return date ? dayjs(date, FORMAT_DAY) : "";
 };

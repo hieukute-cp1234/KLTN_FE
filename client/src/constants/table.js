@@ -17,21 +17,16 @@ export const columnMyProject = (params) => {
       ),
     },
     {
+      title: "Manager",
+      dataIndex: "manager",
+      key: "manager",
+      align: "center",
+      render: (manager) => manager.userName,
+    },
+    {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      align: "center",
-    },
-    {
-      title: "Start",
-      dataIndex: "startDate",
-      key: "startDate",
-      align: "center",
-    },
-    {
-      title: "End",
-      dataIndex: "endDate",
-      key: "enđate",
       align: "center",
     },
     {
@@ -46,19 +41,19 @@ export const columnMyProject = (params) => {
       key: "id",
       align: "center",
       width: "20%",
-      render: (role) => (
+      render: (id, data) => (
         <div className="role-actions">
           <Button
             text="Edit"
             classButton="ms-btn-edit"
             afterIcon={<EditOutlined />}
-            click={() => onEdit(role)}
+            click={() => onEdit(data)}
           />
           <Button
             text="Delete"
             classButton="ms-btn-delete"
             afterIcon={<DeleteOutlined />}
-            click={() => onDelete(role.id)}
+            click={() => onDelete(id)}
           />
         </div>
       ),

@@ -3,13 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Button, Select, DatePicker, AutoComplete } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 import ButtonCommon from "../../../components/common/Button";
-import { createProject } from "../../../store/project/actions";
+import {
+  createProject,
+  fetchAllProject,
+  updateProject,
+} from "../../../store/project/actions";
 import { fetchListUser } from "../../../store/auth/actions";
-import { fetchListProcess } from "../../../store/process/actions";
+import { FORMAT_DAY } from "../../../constants";
 
 const CreateProject = (props) => {
-  const { onCancel, onViewProcess } = props;
+  const { onCancel, onViewProcess, form, editor, projectSelected } = props;
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.auth.listUser);
   const listProcess = useSelector((state) => state.process.listProcess);
 
@@ -18,16 +23,13 @@ const CreateProject = (props) => {
       dispatch(fetchListUser({ isUser: true }));
     }
 
-    if (!listProcess.length) {
-      dispatch(fetchListProcess({ params: {} }));
-    }
-
     const newOptionProcess = listProcess.map((process) => ({
       label: renderItemWorkflow(process),
       value: process.name,
     }));
 
     setSearchListProcess(newOptionProcess);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [searchListProcess, setSearchListProcess] = useState([]);
@@ -47,17 +49,38 @@ const CreateProject = (props) => {
   };
 
   const handleSubmit = async (value) => {
+    const processSelected = listProcess.find(
+      (process) => process.name === value.process
+    );
+    if (!processSelected) return;
+
     const newProject = {
       ...value,
-      process: listProcess.fin((process) => process.name === value.process),
+      endDate: value.endDate.format(FORMAT_DAY),
+      process: processSelected.id,
     };
-    console.log(newProject);
-    // await createProject({
-    //   data: value,
-    //   actions: {
-    //     success: () => {},
-    //   },
-    // });
+
+    if (editor) {
+      await updateProject({
+        id: projectSelected,
+        data: newProject,
+        success: () => {
+          dispatch(fetchAllProject());
+          onCancel();
+        },
+      });
+      return;
+    }
+
+    await createProject({
+      data: newProject,
+      actions: {
+        success: () => {
+          dispatch(fetchAllProject());
+          onCancel();
+        },
+      },
+    });
   };
 
   const handleSearch = (text) => {
@@ -81,6 +104,7 @@ const CreateProject = (props) => {
       wrapperCol={{
         span: 16,
       }}
+      form={form}
       onFinish={handleSubmit}
     >
       <Form.Item
@@ -119,7 +143,7 @@ const CreateProject = (props) => {
 
       <Form.Item
         label="Member"
-        name="member"
+        name="members"
         rules={[
           {
             required: true,
@@ -161,7 +185,7 @@ const CreateProject = (props) => {
           },
         ]}
       >
-        <DatePicker />
+        <DatePicker format={FORMAT_DAY} />
       </Form.Item>
 
       <Form.Item
@@ -171,7 +195,7 @@ const CreateProject = (props) => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          Create
+          {editor ? "update" : "Create"}
         </Button>
         <Button type="primary" style={{ marginLeft: 10 }} onClick={onCancel}>
           Cancel
