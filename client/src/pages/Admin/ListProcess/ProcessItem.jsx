@@ -26,6 +26,41 @@ const ProcessItem = (props) => {
     }
   };
 
+  const actions = [
+    {
+      text: "Edit",
+      class: "ms-btn-edit",
+      action: () => onEdit(processData.id),
+      icon: <EditOutlined />,
+      show: true,
+      disable: false,
+    },
+    {
+      text: "Copy",
+      class: "ms-btn-copy",
+      action: () => onCopy(processData.id),
+      icon: <CopyOutlined />,
+      show: true,
+      disable: false,
+    },
+    {
+      text: `${processData.publish ? "Unpub" : "Publish"}`,
+      class: "ms-btn-copy",
+      action: () => onPublish(processData),
+      icon: <CopyOutlined />,
+      show: true,
+      disable: false,
+    },
+    {
+      text: "Delete",
+      class: "ms-btn-delete",
+      action: () => onDelete(processData.id),
+      icon: <DeleteOutlined />,
+      show: true,
+      disable: false,
+    },
+  ];
+
   return (
     <div className="process-item">
       <div className="process-item__title">
@@ -33,37 +68,25 @@ const ProcessItem = (props) => {
           {processData.name}
         </div>
         <div className="process-item__title__actions">
-          <Button
-            text="Edit"
-            classButton="ms-btn-edit"
-            afterIcon={<EditOutlined />}
-            click={() => onEdit(processData.id)}
-          />
-          <Button
-            text="Copy"
-            classButton="ms-btn-copy"
-            afterIcon={<CopyOutlined />}
-            click={() => onCopy(processData.id)}
-          />
-          <Button
-            text={processData.publish ? "Unpub" : "Publish"}
-            classButton="ms-btn-copy"
-            afterIcon={<CopyOutlined />}
-            click={() => onPublish(processData)}
-          />
-          <Button
-            text="Delete"
-            classButton="ms-btn-delete"
-            afterIcon={<DeleteOutlined />}
-            click={() => onDelete(processData.id)}
-          />
+          {actions.map((button) => (
+            <Button
+              text={button.text}
+              classButton={button.class}
+              afterIcon={button.icon}
+              click={button.action}
+              disabled={button.disable}
+            />
+          ))}
         </div>
       </div>
       {toggleDescription && (
         <div className="process-item__description">
           <Descriptions>
-            <Descriptions.Item label="Description" span={3}>
+            <Descriptions.Item label="Description" span={2}>
               {processData.description}
+            </Descriptions.Item>
+            <Descriptions.Item label="Create by" span={1}>
+              {processData.createByUser?.email || ""}
             </Descriptions.Item>
             <Descriptions.Item label="Work Flow">
               <Button

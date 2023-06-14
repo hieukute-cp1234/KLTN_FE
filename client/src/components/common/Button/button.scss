@@ -95,6 +95,12 @@
     font-size: 1rem;
   }
 
+  &.ms-btn-icon {
+    border-radius: 999px;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+  }
+
   &.min-100 {
     min-width: 100px;
   }

@@ -1,67 +1,66 @@
-import React, { useState } from "react";
-import { Tabs, Descriptions, Badge, Tree } from "antd";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Descriptions, Badge, Modal } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 import Layout from "../../../layouts";
+import ProcessTask from "./ProcessTask";
 import Button from "../../../components/common/Button";
+import PreviewProcess from "../../../components/workflow/ModalPreview";
+import AddTask from "./AddTask";
+import PreviewMembers from "./ListMember";
+import { fetchDetailProject } from "../../../store/project/actions";
+import { fetchTaskByProject } from "../../../store/task/actions";
 import "./detail.scss";
 
-const initialItems = [
-  {
-    label: "Tab 1",
-    children: <div style={{ color: "red", minHeight: 400, width: '100%' }}>hieukute</div>,
-    key: "1",
-  },
-  {
-    label: "Tab 2",
-    children: "Content of Tab 2",
-    key: "2",
-  },
-  {
-    label: "Tab 3",
-    children: "Content of Tab 3",
-    key: "3",
-    closable: false,
-  },
-];
+const PageDetailProject = () => {
+  const dispatch = useDispatch();
+  const { projectId } = useParams();
 
-const treeData = [
-  {
-    title: "Design",
-    key: "0-0",
-    children: [
-      {
-        title: "Admin",
-        key: "0-0-0",
-      },
-      {
-        title: "User",
-        key: "0-0-1",
-      },
-    ],
-  },
-  {
-    title: "Data Base",
-    key: "0-1",
-    children: [
-      {
-        title: "Spec",
-        key: "0-1-0",
-      },
-      {
-        title: "Doc API",
-        key: "0-1-1",
-      },
-    ],
-  },
-];
+  const [toggleAddTask, setToggleAddTask] = useState(false);
+  const [togglePreviewProcess, setTogglePreviewProcess] = useState(false);
+  const [toggleViewMember, setToggleViewMember] = useState(false);
+  const [nodeSelected, setNodeSelected] = useState("");
+  const [listTask, setListTask] = useState([]);
 
-const renderContent = (props, DefaultTabBar) => {
-  console.log(props, DefaultTabBar);
-  return <div>hieukute</div>;
-};
+  const detailProject = useSelector((state) => state.project.detailProject);
 
-const PageDetailUser = () => {
-  const onViewWorkflow = () => {};
+  useEffect(() => {
+    dispatch(fetchDetailProject({ id: projectId }));
+    const fetchTask = async () => {
+      await getTask({ projectId });
+    };
+    fetchTask();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getTask = async (params = {}) => {
+    await fetchTaskByProject({
+      params: { ...params },
+      actions: {
+        success: (data) => {
+          setListTask(data);
+        },
+      },
+    });
+  };
+
+  const onViewWorkflow = () => {
+    setTogglePreviewProcess(true);
+  };
+
+  const onViewMember = () => {
+    setToggleViewMember(true);
+  };
+
+  const handleCancel = () => {
+    setToggleAddTask(false);
+  };
+
+  const openModalAddTask = (nodeId) => {
+    setNodeSelected(nodeId);
+    setToggleAddTask(true);
+  };
 
   return (
     <Layout>
@@ -73,42 +72,66 @@ const PageDetailUser = () => {
               text="view"
               classButton="ms-btn-view"
               afterIcon={<FileSearchOutlined />}
-              click={() => onViewWorkflow("view")}
+              click={() => onViewWorkflow()}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Member" span={1}>
+          <Descriptions.Item label="Status" span={2}>
+            <Badge status="success" text="start" />
+          </Descriptions.Item>
+          <Descriptions.Item label="Member" span={3}>
             <Button
               text="view"
               classButton="ms-btn-view"
               afterIcon={<FileSearchOutlined />}
-              click={() => onViewWorkflow("view")}
+              click={() => onViewMember()}
             />
-          </Descriptions.Item>
-          <Descriptions.Item label="Status" span={1}>
-            <Badge status="success" text="start" />
           </Descriptions.Item>
           <Descriptions.Item label="Description" span={3}>
-            abc
+            {detailProject.descriptions}
           </Descriptions.Item>
-          <Descriptions.Item label="Document" span={3}>
-            <Tree
-              multiple
-              showLine
-              rootClassName="custom-tree"
-              // onSelect={onSelect}
-              // onExpand={onExpand}
-              treeData={treeData}
-            />
+          <Descriptions.Item label="Start at">
+            {detailProject.createdAt}
           </Descriptions.Item>
-          <Descriptions.Item label="Start at">dsdsd</Descriptions.Item>
-          <Descriptions.Item label="End at">sdsdsds</Descriptions.Item>
+          <Descriptions.Item label="End at">
+            {detailProject.endDate}
+          </Descriptions.Item>
         </Descriptions>
       </div>
       <div className="project__process">
-        <Tabs items={initialItems} />
+        <ProcessTask
+          tasks={listTask}
+          nodes={detailProject.process?.nodes}
+          onAddTask={openModalAddTask}
+        />
       </div>
+      <Modal
+        title="add task"
+        open={toggleAddTask}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <AddTask
+          onCancel={handleCancel}
+          members={detailProject.members}
+          node={nodeSelected}
+          project={projectId}
+        />
+      </Modal>
+      <Modal
+        title="Members"
+        open={toggleViewMember}
+        footer={null}
+        onCancel={() => setToggleViewMember(false)}
+      >
+        <PreviewMembers members={detailProject.members} />
+      </Modal>
+      <PreviewProcess
+        open={togglePreviewProcess}
+        dataDiagrams={detailProject?.process || {}}
+        onCancel={() => setTogglePreviewProcess(false)}
+      />
     </Layout>
   );
 };
 
-export default PageDetailUser;
+export default PageDetailProject;

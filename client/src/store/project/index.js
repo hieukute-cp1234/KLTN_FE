@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllProject } from "./actions";
+import { fetchAllProject, fetchDetailProject } from "./actions";
 
 const initialState = {
   listProject: [],
   isAddProject: false,
+  detailProject: {},
 };
 
 const auth = createSlice({
@@ -17,6 +18,9 @@ const auth = createSlice({
   extraReducers: {
     [fetchAllProject.fulfilled]: (state, { payload }) => {
       state.listProject = payload;
+    },
+    [fetchDetailProject.fulfilled]: (state, { payload }) => {
+      state.detailProject = payload;
     },
   },
 });

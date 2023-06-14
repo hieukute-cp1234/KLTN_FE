@@ -18,6 +18,16 @@ export const fetchAllProject = createAsyncThunk(
   }
 );
 
+export const fetchDetailProject = createAsyncThunk(
+  "project/detail",
+  async ({ id }) => {
+    try {
+      const res = await appApi.get(`/project/${id}`);
+      return res;
+    } catch (error) {}
+  }
+);
+
 export const updateProject = async ({ id, data, success }) => {
   try {
     await appApi.put(`/project/${id}`, data);
