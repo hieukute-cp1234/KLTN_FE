@@ -25,7 +25,6 @@ appApi.interceptors.response.use(
       Swal.fire({
         icon: "success",
         text: response?.data?.message || "success!",
-        showCancelButton: true,
       });
     }
     return response?.data?.data;

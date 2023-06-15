@@ -15,10 +15,12 @@ const auth = createSlice({
     toggleModalAddUser: (state, action) => {
       state.isAddUser = action.payload;
     },
+    clearToken: (state) => {
+      state.token = "";
+    },
   },
   extraReducers: {
     [handleLogin.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       state.token = payload.token;
     },
     [getMe.fulfilled]: (state, { payload }) => {
@@ -32,5 +34,5 @@ const auth = createSlice({
 
 const { reducer, actions } = auth;
 
-export const { toggleModalAddUser } = actions;
+export const { toggleModalAddUser, clearToken } = actions;
 export default reducer;

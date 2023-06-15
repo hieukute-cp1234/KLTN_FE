@@ -13,4 +13,5 @@ export const USER = {
   DETAIL: "/user/detail/:userId",
   MY_PROJECT: "/user/my-project",
   DETAIL_PROJECT: "/user/my-project/:projectId",
+  MY_TASK: "/user/my-task",
 };

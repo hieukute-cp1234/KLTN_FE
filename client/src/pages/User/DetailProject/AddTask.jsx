@@ -6,7 +6,7 @@ import { convertEffortByType } from "../../../helpers";
 import { createTask } from "../../../store/task/actions";
 
 const CreateTask = (props) => {
-  const { onCancel, form, editor, members, project, node } = props;
+  const { onCancel, form, editor, members, project, node, reload } = props;
 
   const [valueTypeEffort, setValueTypeEffort] = useState(0);
 
@@ -29,6 +29,7 @@ const CreateTask = (props) => {
       data: newTask,
       actions: {
         success: (res) => {
+          reload();
           onCancel();
         },
       },
@@ -56,23 +57,17 @@ const CreateTask = (props) => {
           },
         ]}
       >
-        <Input placeholder="project name..." />
+        <Input placeholder="task name..." />
       </Form.Item>
 
       <Form.Item
         label="Description"
         name="description"
-        rules={[
-          {
-            required: true,
-            message: "Please input your description!",
-          },
-        ]}
       >
         <Input.TextArea
           className="custom-area"
           rows={4}
-          placeholder="Description by project..."
+          placeholder="Description by task..."
           maxLength={252}
           style={{
             resize: "none",
@@ -91,7 +86,7 @@ const CreateTask = (props) => {
         ]}
       >
         <Select
-          placeholder="select user..."
+          placeholder="select member..."
           options={members.map((member) => ({
             label: member.email,
             value: member.id,
@@ -110,7 +105,7 @@ const CreateTask = (props) => {
         ]}
       >
         <Select
-          placeholder="select user..."
+          placeholder="select type..."
           options={typeEffort.map((type) => ({
             value: type.value,
             label: type.text,
@@ -130,7 +125,7 @@ const CreateTask = (props) => {
         ]}
       >
         <Select
-          placeholder="select user..."
+          placeholder="select effort..."
           options={convertEffortByType(valueTypeEffort)}
         />
       </Form.Item>

@@ -64,7 +64,7 @@ const PageDetailProject = () => {
 
   return (
     <Layout>
-      <p className="project__name">LisB</p>
+      <p className="project__name">{detailProject.name}</p>
       <div className="project__detail">
         <Descriptions>
           <Descriptions.Item label="Work Flow" span={1}>
@@ -112,6 +112,7 @@ const PageDetailProject = () => {
       >
         <AddTask
           onCancel={handleCancel}
+          reload={getTask}
           members={detailProject.members}
           node={nodeSelected}
           project={projectId}

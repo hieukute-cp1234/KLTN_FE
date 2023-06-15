@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Descriptions, Badge } from "antd";
 import {
   EditOutlined,
@@ -13,7 +14,9 @@ import "./process.scss";
 const ProcessItem = (props) => {
   const { processData, onEdit, onCopy, onDelete, onViewWorkflow, onPublish } =
     props;
+
   const [toggleDescription, setDescription] = useState(false);
+  const user = useSelector((state) => state.auth.user);
 
   const renderStatus = () => {
     switch (processData.status) {
@@ -32,7 +35,6 @@ const ProcessItem = (props) => {
       class: "ms-btn-edit",
       action: () => onEdit(processData.id),
       icon: <EditOutlined />,
-      show: true,
       disable: false,
     },
     {
@@ -40,7 +42,6 @@ const ProcessItem = (props) => {
       class: "ms-btn-copy",
       action: () => onCopy(processData.id),
       icon: <CopyOutlined />,
-      show: true,
       disable: false,
     },
     {
@@ -48,15 +49,13 @@ const ProcessItem = (props) => {
       class: "ms-btn-copy",
       action: () => onPublish(processData),
       icon: <CopyOutlined />,
-      show: true,
-      disable: false,
+      disable: processData.createByUser?.id !== user.id,
     },
     {
       text: "Delete",
       class: "ms-btn-delete",
       action: () => onDelete(processData.id),
       icon: <DeleteOutlined />,
-      show: true,
       disable: false,
     },
   ];
@@ -97,7 +96,7 @@ const ProcessItem = (props) => {
               />
             </Descriptions.Item>
             <Descriptions.Item label="List Role">
-              {processData.roles.join(", ")}
+              {processData.roles.map((role) => role.name).join(", ")}
             </Descriptions.Item>
             <Descriptions.Item label="Status">
               <Badge status={renderStatus()} text={renderStatus()} />

@@ -1,10 +1,25 @@
 import React from "react";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import Button from "../../../components/common/Button";
+import { deleteTask } from "../../../store/task/actions";
+import { renderTypeEffort } from "../../../helpers";
 import "./detail.scss";
+import Swal from "sweetalert2";
 
 const ProcessTask = (props) => {
   const { nodes = [], tasks = [], onAddTask } = props;
+
+  const onDeleteTask = async (id) => {
+    const result = await Swal.fire({
+      icon: "question",
+      text: "Bạn có chắc chắn xóa!",
+      showCancelButton: true,
+    });
+
+    if (!result.isConfirmed) return;
+    await deleteTask({ id });
+  };
+
   return (
     <div className="process-task">
       {nodes.map((node) => (
@@ -23,7 +38,7 @@ const ProcessTask = (props) => {
             />
           </div>
           <div className="process-task__item__wrapper-task">
-            {tasks.length ? (
+            {tasks.filter((task) => task.processStep === node.id).length ? (
               tasks
                 .filter((task) => task.processStep === node.id)
                 .map((task) => (
@@ -37,10 +52,19 @@ const ProcessTask = (props) => {
                       <Button
                         text={<DeleteOutlined />}
                         classButton="ms-btn-icon"
-                        click={() => onAddTask(node.id)}
+                        click={() => onDeleteTask(task.id)}
                       />
                     </div>
-                    {task.name}
+                    <div className="process-task__item__wrapper-task__task__name">
+                      {task.name}
+                    </div>
+                    <div className="process-task__item__wrapper-task__task__mention">
+                      Mention: {task.mention.userName}
+                    </div>
+                    <div className="process-task__item__wrapper-task__task__mention">
+                      Effort:{" "}
+                      {`${task.effort} ${renderTypeEffort(task.effortType)}`}
+                    </div>
                   </div>
                 ))
             ) : (

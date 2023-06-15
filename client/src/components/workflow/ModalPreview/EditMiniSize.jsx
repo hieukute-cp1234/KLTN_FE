@@ -19,12 +19,18 @@ const EditMiniSize = (props) => {
     selectNode,
     selectEdge,
     isSelectEdge,
+    dataProcess,
   } = props;
   const dispatch = useDispatch();
 
   const [isMiniSize, setMiniSize] = useState(true);
   const [valueEffort, setValueEffort] = useState(0);
   const [valueOnlyRole, setValueOnlyRole] = useState([]);
+  const [allRole, setAllRole] = useState([]);
+
+  useEffect(() => {
+    setAllRole(dataProcess.roles || []);
+  }, [isMiniSize]);
 
   const listRole = useSelector((state) => state.role.listRole);
 
@@ -36,13 +42,9 @@ const EditMiniSize = (props) => {
 
   const { data: dataNode } = selectNode;
 
-  const handleChangeNameProcess = (event) => {
-    const value = event.target.value;
-    changeProcess("name", value);
-  };
-
   const handleChangeListRole = (value) => {
     const newRoleProcess = listRole.filter((role) => value.includes(role.id));
+    setAllRole(value);
     setValueOnlyRole(newRoleProcess);
     changeProcess("roles", value);
   };
@@ -64,8 +66,12 @@ const EditMiniSize = (props) => {
     changeNodes("type", value);
   };
 
-  const handleChageTarget = (index, value) => {
+  const handleChageHandles = (index, value) => {
     changeNodes("handles", value, index);
+  };
+
+  const handleChageTarget = (index, value) => {
+    changeNodes("handleTarget", value ? 'source' : 'target', index);
   };
 
   const handleChangeTextEdge = (event) => {
@@ -115,18 +121,14 @@ const EditMiniSize = (props) => {
           >
             <Button text={<LineOutlined />} />
           </span>
-          <span className="box-editor__full-modal__title">Process Editor</span>
-          <Input
-            placeholder="Process name..."
-            label="Name"
-            onChange={handleChangeNameProcess}
-          />
+          <span className="box-editor__full-modal__title">List role</span>
           <Select
             placeholder="Select role"
             label="Roles"
             multiple
+            value={allRole}
             options={listRole.map((role) => ({
-              text: role.code,
+              text: role.name,
               value: role.id,
             }))}
             onChange={handleChangeListRole}
@@ -179,6 +181,7 @@ const EditMiniSize = (props) => {
               <Select
                 placeholder="Effort..."
                 label="Effort"
+                value={dataNode?.effortType}
                 disabled={!selectNode?.id}
                 options={typeEffort}
                 onChange={handleChangeEffortType}
@@ -186,6 +189,7 @@ const EditMiniSize = (props) => {
               <Select
                 placeholder="Time..."
                 label="Time"
+                value={dataNode?.effortNumber}
                 disabled={!selectNode?.id}
                 options={convertEffortByType(valueEffort)}
                 onChange={handleChangeEffort}
@@ -207,12 +211,16 @@ const EditMiniSize = (props) => {
                 label="Handles"
                 options={valueHandle}
                 value={dataNode?.handles || []}
-                onChange={handleChageTarget}
+                onChange={handleChageHandles}
               />
               <Checkbox
                 label="Target"
                 options={valueHandle}
-                value={dataNode?.handles || []}
+                value={
+                  dataNode?.handleTarget?.map(
+                    (target) => target === "source"
+                  ) || []
+                }
                 onChange={handleChageTarget}
               />
               <Select

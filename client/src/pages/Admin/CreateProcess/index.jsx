@@ -8,7 +8,6 @@ import ReactFlow, {
   MarkerType,
 } from "reactflow";
 import {
-  RollbackOutlined,
   AppstoreAddOutlined,
   SaveOutlined,
   DeleteOutlined,
@@ -92,6 +91,7 @@ export const CreateProcessPage = () => {
           newNode[key] = value;
           break;
         case "handles":
+        case "handleTarget":
           const newHandles = [...newNode.data[key]];
           newHandles[index] = value;
           newNode.data[key] = newHandles;
@@ -114,7 +114,7 @@ export const CreateProcessPage = () => {
       data: {
         title: "Title",
         handles: [true, true, true, true],
-        handleTarget: ["target", "target", "source", "source"],
+        handleTarget: ["target", "source", "source", "target"],
         background: "#ffffff",
         role: 0,
         input: "input",
@@ -129,10 +129,21 @@ export const CreateProcessPage = () => {
   };
 
   const handleDeleteNode = () => {
-    if (!selectNode.id) return;
-    const newNodes = nodes.filter((node) => node.id !== selectNode.id);
-    setNodes(newNodes);
-    setSelectNode({});
+    if (selectNode.id) {
+      const newNodes = nodes.filter((node) => node.id !== selectNode.id);
+      const newEdges = edges.filter(
+        (edge) => edge.source !== selectNode.id || edge.target !== selectNode.id
+      );
+      setEdges(newEdges);
+      setNodes(newNodes);
+      setSelectNode({});
+    }
+
+    if (selectEdge.id) {
+      const newEdges = edges.filter((edge) => edge.id !== selectEdge.id);
+      setEdges(newEdges);
+      setSelectEdge({});
+    }
   };
 
   //function handle edge
@@ -180,14 +191,22 @@ export const CreateProcessPage = () => {
   const handleChangeProcess = (key, value) => {
     const process = {};
     process[key] = value;
-    if (key === "name") {
-      setProcessName(value);
-    }
     setDataProcess({ ...dataProcess, ...process });
   };
 
+  const handleChangeNameProcess = (e) => {
+    const value = e.target.value;
+    setProcessName(value);
+  };
+
   const saveProcess = () => {
-    const newProcess = { ...dataProcess, nodes: nodes, edges: edges };
+    const newProcess = {
+      ...dataProcess,
+      name: processName,
+      nodes: nodes,
+      edges: edges,
+    };
+
     if (processId) {
       dispatch(
         updateProcess({
@@ -226,22 +245,15 @@ export const CreateProcessPage = () => {
       text: "Delete node",
       class: "ms-btn-delete",
       icon: <DeleteOutlined />,
-      disabled: !selectNode?.id,
+      disabled: !selectNode?.id && !selectEdge?.id,
       function: handleDeleteNode,
     },
     {
-      text: "Create Process",
+      text: `${processId ? "Update" : "Create"} Process`,
       class: "ms-btn-submit",
       icon: <SaveOutlined />,
       disabled: !nodes.length,
       function: saveProcess,
-    },
-    {
-      text: "Back",
-      class: "ms-btn-back",
-      icon: <RollbackOutlined />,
-      disabled: false,
-      function: () => {},
     },
   ];
 
@@ -249,7 +261,12 @@ export const CreateProcessPage = () => {
     <Layout>
       <div className="ms-create-workflow">
         <div className="ms-create-workflow__header">
-          <div className="ms-create-workflow__header__name">{processName}</div>
+          <input
+            className="ms-create-workflow__header__name"
+            placeholder="process name..."
+            value={processName}
+            onChange={handleChangeNameProcess}
+          />
           {actions.map((button, index) => (
             <Button
               key={index}
@@ -277,6 +294,7 @@ export const CreateProcessPage = () => {
             <EditMiniSize
               selectNode={selectNode}
               selectEdge={selectEdge}
+              dataProcess={dataProcess}
               isSelectEdge={!!selectEdge?.id}
               changeNodes={handleChangeNodes}
               changeEdges={handleChangeEdge}

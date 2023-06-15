@@ -20,3 +20,15 @@ body {
   font-weight: 700 !important;
   font-size: 1.25rem !important;
 }
+
+.ant-select-multiple {
+  .ant-select-selector {
+    max-width: 15rem !important;
+    max-height: 6rem !important;
+    overflow: auto !important;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

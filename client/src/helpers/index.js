@@ -26,3 +26,16 @@ export const convertEffortByType = (typeEffort) => {
 export const convertDate = (date) => {
   return date ? dayjs(date, FORMAT_DAY) : "";
 };
+
+export const renderTypeEffort = (type) => {
+  switch (type) {
+    case 2:
+      return "day";
+    case 3:
+      return "week";
+    case 4:
+      return "mouth";
+    default:
+      return "hour";
+  }
+};

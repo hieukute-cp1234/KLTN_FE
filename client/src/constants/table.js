@@ -114,7 +114,7 @@ export const columnUser = (params) => {
   return [
     {
       title: "Name",
-      dataIndex: "name",
+      dataIndex: "userName",
       key: "name",
       align: "center",
     },
@@ -135,18 +135,14 @@ export const columnUser = (params) => {
       dataIndex: "project",
       key: "project",
       align: "center",
+      render: (project) => <NavLink>{project.length}</NavLink>,
     },
     {
       title: "process by user",
       dataIndex: "processCreated",
       key: "processCreated",
       align: "center",
-    },
-    {
-      title: "process used",
-      dataIndex: "processUse",
-      key: "processUse",
-      align: "center",
+      render: (processCreated) => <NavLink>{processCreated.length}</NavLink>,
     },
     {
       title: "Actions",

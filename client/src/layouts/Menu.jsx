@@ -13,38 +13,38 @@ import { ADMIN, USER } from "../constants/routes";
 const MENU_ADMIN = [
   {
     icon: <UserOutlined />,
-    label: "Dashboard",
-    key: ADMIN.DASHBOARD,
-    path: ADMIN.DASHBOARD,
-    role: [1],
+    label: "My Task",
+    key: USER.MY_TASK,
+    path: USER.MY_TASK,
+    role: [2],
   },
   {
     icon: <UserOutlined />,
     label: "List Process",
     key: ADMIN.PROCESS,
     path: ADMIN.PROCESS,
-    role: [1],
+    role: [1, 2],
   },
   {
     icon: <UserOutlined />,
     label: "Role Process",
     key: ADMIN.LIST_ROLE,
     path: ADMIN.LIST_ROLE,
-    role: [1],
+    role: [1, 2],
   },
   {
     icon: <UserOutlined />,
     label: "Users",
     key: ADMIN.LIST_USER,
     path: ADMIN.LIST_USER,
-    role: [1, 2],
+    role: [1],
   },
   {
     icon: <UserOutlined />,
     label: "My Project",
     key: USER.MY_PROJECT,
     path: USER.MY_PROJECT,
-    role: [1, 2],
+    role: [2],
   },
 ];
 
@@ -60,7 +60,7 @@ const MenuComponent = () => {
       defaultSelectedKeys={location.pathname}
       onSelect={selectMenu}
     >
-      {MENU_ADMIN.map(
+      {MENU_ADMIN.filter((menu) => menu.role.includes(user.role)).map(
         (menuItem) => (
           <Menu.Item
             className="menu-item"

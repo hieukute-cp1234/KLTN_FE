@@ -101,7 +101,7 @@ const ListProcess = () => {
       <PreviewWorkflow
         open={toggleViewWorkflow}
         name={process.name}
-        dataDiagrams={{ nodes: process.nodes, edges: process.edges }}
+        dataDiagrams={process}
         onCancel={() => setViewWorkflow(false)}
       />
     </Layout>

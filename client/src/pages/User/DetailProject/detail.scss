@@ -88,7 +88,7 @@
 
       &__task {
         min-height: 5rem;
-        background-color: blue;
+        background-color: #d3f261;
         margin: 0.5rem;
         border-radius: 0.5rem;
         cursor: pointer;
@@ -112,6 +112,16 @@
               background-color: $color-edit;
             }
           }
+        }
+
+        &__name {
+          width: 70%;
+          font-size: 1rem;
+          font-weight: 600;
+        }
+
+        &__mention {
+          width: 70%;
         }
       }
 

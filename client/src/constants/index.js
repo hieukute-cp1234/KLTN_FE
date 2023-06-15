@@ -17,3 +17,17 @@ export const WEED_OF_WEEK = [1, 2, 3];
 export const MONTH_OF_MONTH = [1, 2, 3];
 
 export const FORMAT_DAY = "YYYY/MM/DD";
+
+export const STATUS_TASK = {
+  OPEN: 1,
+  INPROGRESS: 2,
+  VERIFY: 3,
+  CLOSE: 4,
+};
+
+export const KEY_TAB_TASK = {
+  OPEN: "OPEN",
+  INPROGRESS: "INPROGRESS",
+  VERIFY: "VERIFY",
+  CLOSE: "CLOSE",
+};

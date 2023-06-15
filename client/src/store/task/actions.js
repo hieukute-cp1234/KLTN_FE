@@ -13,3 +13,15 @@ export const createTask = async ({ data, actions }) => {
     actions.success(res);
   } catch (error) {}
 };
+
+export const deleteTask = async ({ id }) => {
+  try {
+    await appApi.delete(`/task/${id}`);
+  } catch (error) {}
+};
+
+export const updateStatusTask = async ({ id, data }) => {
+  try {
+    await appApi.put(`/status-task/${id}`, data);
+  } catch (error) {}
+};

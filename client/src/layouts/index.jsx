@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Layout, Dropdown } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../store/auth/actions";
+import { clearToken } from "../store/auth";
 import Menu from "./Menu";
 import Header from "./Header";
 import "./layout.scss";
@@ -11,6 +12,7 @@ const { Sider, Content } = Layout;
 
 const LayoutComponent = ({ children }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
@@ -19,6 +21,12 @@ const LayoutComponent = ({ children }) => {
 
   const getAvatar = (name) => {
     return name ? name[0] : "";
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(clearToken());
+    navigate("/login");
   };
 
   const menuUser = [
@@ -31,7 +39,7 @@ const LayoutComponent = ({ children }) => {
       key: 1,
     },
     {
-      label: <NavLink to="">logout</NavLink>,
+      label: <span onClick={handleLogout}>logout</span>,
       key: 2,
     },
   ];
