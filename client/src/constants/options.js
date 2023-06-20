@@ -70,3 +70,18 @@ export const typeEffort = [
     value: TYPE_TIME_EFFORT.MONTH,
   },
 ];
+
+export const optionTypeTask = [
+  {
+    label: "Task",
+    value: 1,
+  },
+  {
+    label: "Issue",
+    value: 2,
+  },
+  {
+    label: "Bug",
+    value: 3,
+  },
+];

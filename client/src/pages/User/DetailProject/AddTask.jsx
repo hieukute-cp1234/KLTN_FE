@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Form, Input, Button, Select } from "antd";
-import { typeEffort } from "../../../constants/options";
+import { typeEffort, optionTypeTask } from "../../../constants/options";
 import { convertEffortByType } from "../../../helpers";
 import { createTask } from "../../../store/task/actions";
 
@@ -58,6 +58,22 @@ const CreateTask = (props) => {
         ]}
       >
         <Input placeholder="task name..." />
+      </Form.Item>
+
+      <Form.Item
+        label="Type"
+        name="type"
+        rules={[
+          {
+            required: true,
+            message: "Please input your type!",
+          },
+        ]}
+      >
+        <Select
+          placeholder="select type..."
+          options={optionTypeTask}
+        />
       </Form.Item>
 
       <Form.Item

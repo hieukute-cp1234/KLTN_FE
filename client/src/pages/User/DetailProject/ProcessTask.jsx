@@ -3,11 +3,12 @@ import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import Button from "../../../components/common/Button";
 import { deleteTask } from "../../../store/task/actions";
 import { renderTypeEffort } from "../../../helpers";
+import { STATUS_TASK, TYPE_TASK } from "../../../constants";
 import "./detail.scss";
 import Swal from "sweetalert2";
 
 const ProcessTask = (props) => {
-  const { nodes = [], tasks = [], onAddTask } = props;
+  const { nodes = [], tasks = [], onAddTask, onEditTask } = props;
 
   const onDeleteTask = async (id) => {
     const result = await Swal.fire({
@@ -18,6 +19,51 @@ const ProcessTask = (props) => {
 
     if (!result.isConfirmed) return;
     await deleteTask({ id });
+  };
+
+  const styleStatus = (status) => {
+    switch (status) {
+      case STATUS_TASK.OPEN:
+        return {
+          background: "#ff9c6e",
+          text: "Open",
+        };
+      case STATUS_TASK.INPROGRESS:
+        return {
+          background: "#69b1ff",
+          text: "Inprogress",
+        };
+      case STATUS_TASK.VERIFY:
+        return {
+          background: "#fff566",
+          text: "Verify",
+        };
+      default:
+        return {
+          background: "#d9d9d9",
+          text: "Close",
+        };
+    }
+  };
+
+  const styleType = (type) => {
+    switch (type) {
+      case TYPE_TASK.TASK:
+        return {
+          background: "#bae637",
+          text: "Task",
+        };
+      case TYPE_TASK.ISSUE:
+        return {
+          background: "#ffa940",
+          text: "Issue",
+        };
+      default:
+        return {
+          background: "#ff4d4f",
+          text: "Bug",
+        };
+    }
   };
 
   return (
@@ -44,16 +90,36 @@ const ProcessTask = (props) => {
                 .map((task) => (
                   <div className="process-task__item__wrapper-task__task">
                     <div className="process-task__item__wrapper-task__task__actions">
-                      <Button
-                        text={<EditOutlined />}
-                        classButton="ms-btn-icon"
-                        click={() => onAddTask(node.id)}
-                      />
-                      <Button
-                        text={<DeleteOutlined />}
-                        classButton="ms-btn-icon"
-                        click={() => onDeleteTask(task.id)}
-                      />
+                      <div>
+                        <span
+                          style={{
+                            backgroundColor: styleType(task.type)
+                              .background,
+                          }}
+                        >
+                          {styleType(task.type).text}
+                        </span>
+                        <span
+                          style={{
+                            backgroundColor: styleStatus(task.status)
+                              .background,
+                          }}
+                        >
+                          {styleStatus(task.status).text}
+                        </span>
+                      </div>
+                      <div>
+                        <Button
+                          text={<EditOutlined />}
+                          classButton="ms-btn-icon"
+                          click={() => onEditTask(task)}
+                        />
+                        <Button
+                          text={<DeleteOutlined />}
+                          classButton="ms-btn-icon"
+                          click={() => onDeleteTask(task.id)}
+                        />
+                      </div>
                     </div>
                     <div className="process-task__item__wrapper-task__task__name">
                       {task.name}
@@ -69,7 +135,7 @@ const ProcessTask = (props) => {
                 ))
             ) : (
               <div className="process-task__item__wrapper-task__no-data">
-                Chưa có công việc nào trong step này
+                There is no work in this step!
               </div>
             )}
           </div>

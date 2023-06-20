@@ -41,3 +41,10 @@ export const deleteProject = async ({ id, success }) => {
     success();
   } catch (error) {}
 };
+
+export const fetchProjectForUser = async ({ success }) => {
+  try {
+    const res = await appApi.get(`/project-user`);
+    success(res);
+  } catch (error) {}
+};

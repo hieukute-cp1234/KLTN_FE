@@ -30,6 +30,11 @@ appApi.interceptors.response.use(
     return response?.data?.data;
   },
   async (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem("token");
+      window.location = "/login";
+    }
+
     if (error.response?.data?.message) {
       Swal.fire({
         icon: "error",

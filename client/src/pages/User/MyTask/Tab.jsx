@@ -10,7 +10,7 @@ const TabComponenet = (props) => {
   const renderColorBackground = (tab) => {
     switch (tab) {
       case KEY_TAB_TASK.OPEN:
-        return "#bae637";
+        return "#ff9c6e";
       case KEY_TAB_TASK.INPROGRESS:
         return "#69b1ff";
       case KEY_TAB_TASK.VERIFY:

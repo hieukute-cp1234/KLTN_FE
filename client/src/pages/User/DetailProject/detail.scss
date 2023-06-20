@@ -88,28 +88,37 @@
 
       &__task {
         min-height: 5rem;
-        background-color: #d3f261;
+        background-color: $white;
         margin: 0.5rem;
         border-radius: 0.5rem;
         cursor: pointer;
-        position: relative;
         padding: 0.5rem;
 
         &__actions {
-          position: absolute;
           display: flex;
-          gap: 0.5rem;
-          right: 0.5rem;
+          justify-content: space-between;
 
-          > button {
-            color: $white;
+          > div {
+            display: flex;
+            gap: 0.5rem;
 
-            &:nth-child(2) {
-              background-color: $color-delete;
+            > span {
+              padding: 0.2rem 0.5rem 0 0.5rem;
+              border-radius: 5rem;
+              font-size: 0.75rem;
+              font-weight: 500;
             }
 
-            &:nth-child(1) {
-              background-color: $color-edit;
+            > button {
+              color: $white;
+
+              &:nth-child(2) {
+                background-color: $color-delete;
+              }
+
+              &:nth-child(1) {
+                background-color: $color-edit;
+              }
             }
           }
         }
@@ -142,10 +151,5 @@
 
   > :last-child {
     margin-right: 0;
-  }
-}
-
-.list-member {
-  &__item {
   }
 }

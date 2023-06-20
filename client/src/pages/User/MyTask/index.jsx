@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
+import { Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { fetchProjectForUser } from "../../../store/project/actions";
 import Layout from "../../../layouts";
 import Tab from "./Tab";
 import {
@@ -11,10 +15,35 @@ import "./my-task.scss";
 
 const PageMyTask = () => {
   const [listTask, setListTask] = useState({});
+  const [listProject, setListProject] = useState([]);
+  const [projectSelected, setProjectSelectde] = useState("");
+
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    getTask();
-  }, []);
+    const fetchData = async () => {
+      await getProjectForMe();
+      if (projectSelected && user.id) {
+        await getTask({ projectId: projectSelected, userId: user.id });
+      }
+    };
+    fetchData();
+  }, [projectSelected, user]);
+
+  const getProjectForMe = async () => {
+    await fetchProjectForUser({
+      success: (data) => {
+        const newData = data.map((project) => ({
+          label: project.name,
+          key: project.id,
+        }));
+        if (newData.length) {
+          setProjectSelectde(newData[0].key);
+        }
+        setListProject(newData);
+      },
+    });
+  };
 
   const getTask = async (params = {}) => {
     await fetchTaskByProject({
@@ -55,6 +84,7 @@ const PageMyTask = () => {
   };
 
   const updateTaskByStatus = (oleKey, newKey, taskId) => {
+    if (oleKey === newKey) return;
     const taskDraged = listTask[oleKey].find((task) => task.id === taskId);
     const newTask = { ...listTask };
     newTask[oleKey] = listTask[oleKey].filter((task) => task.id !== taskId);
@@ -75,8 +105,33 @@ const PageMyTask = () => {
     }
   };
 
+  const renderProjectName = (id) => {
+    const projectSelected = listProject.find((project) => project.key === id);
+    return projectSelected ? projectSelected.label : "No Project";
+  };
+
+  const selectProject = ({ key }) => {
+    setProjectSelectde(key);
+  };
+
   return (
     <Layout>
+      <div className="header">
+        <span>Project:</span>
+        <div className="header__dropdown">
+          <Dropdown
+            menu={{
+              items: listProject,
+              onClick: selectProject,
+            }}
+            trigger={["click"]}
+          >
+            <div>
+              {renderProjectName(projectSelected)} <DownOutlined />
+            </div>
+          </Dropdown>
+        </div>
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="wrapper-tab">
           <Tab

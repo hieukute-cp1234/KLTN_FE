@@ -31,3 +31,9 @@ export const KEY_TAB_TASK = {
   VERIFY: "VERIFY",
   CLOSE: "CLOSE",
 };
+
+export const TYPE_TASK = {
+  TASK: 1,
+  ISSUE: 2,
+  BUG: 3,
+};

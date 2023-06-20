@@ -20,7 +20,6 @@ const auth = createSlice({
       state.listProject = payload;
     },
     [fetchDetailProject.fulfilled]: (state, { payload }) => {
-      console.log(payload)
       state.detailProject = payload;
     },
   },

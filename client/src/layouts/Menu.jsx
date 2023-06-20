@@ -13,21 +13,21 @@ import { ADMIN, USER } from "../constants/routes";
 const MENU_ADMIN = [
   {
     icon: <UserOutlined />,
-    label: "My Task",
+    label: "Workspace",
     key: USER.MY_TASK,
     path: USER.MY_TASK,
     role: [2],
   },
   {
     icon: <UserOutlined />,
-    label: "List Process",
+    label: "Processes",
     key: ADMIN.PROCESS,
     path: ADMIN.PROCESS,
     role: [1, 2],
   },
   {
     icon: <UserOutlined />,
-    label: "Role Process",
+    label: "Roles",
     key: ADMIN.LIST_ROLE,
     path: ADMIN.LIST_ROLE,
     role: [1, 2],
@@ -41,7 +41,7 @@ const MENU_ADMIN = [
   },
   {
     icon: <UserOutlined />,
-    label: "My Project",
+    label: "Projects",
     key: USER.MY_PROJECT,
     path: USER.MY_PROJECT,
     role: [2],

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Descriptions, Badge, Modal } from "antd";
+import { Descriptions, Badge, Modal, Form } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import Layout from "../../../layouts";
@@ -15,13 +15,16 @@ import "./detail.scss";
 
 const PageDetailProject = () => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const { projectId } = useParams();
 
   const [toggleAddTask, setToggleAddTask] = useState(false);
   const [togglePreviewProcess, setTogglePreviewProcess] = useState(false);
   const [toggleViewMember, setToggleViewMember] = useState(false);
   const [nodeSelected, setNodeSelected] = useState("");
+  const [taskSelected, setTaskSelected] = useState({});
   const [listTask, setListTask] = useState([]);
+  const [editor, setEditor] = useState(false);
 
   const detailProject = useSelector((state) => state.project.detailProject);
 
@@ -59,6 +62,20 @@ const PageDetailProject = () => {
 
   const openModalAddTask = (nodeId) => {
     setNodeSelected(nodeId);
+    form.resetFields();
+    setEditor(false);
+    setToggleAddTask(true);
+  };
+
+  const openModalEditTask = (task) => {
+    const value = {
+      ...task,
+      mention: task.mention.id,
+    };
+
+    setTaskSelected(task);
+    setEditor(true);
+    form.setFieldsValue(value);
     setToggleAddTask(true);
   };
 
@@ -102,15 +119,18 @@ const PageDetailProject = () => {
           tasks={listTask}
           nodes={detailProject.process?.nodes}
           onAddTask={openModalAddTask}
+          onEditTask={openModalEditTask}
         />
       </div>
       <Modal
-        title="add task"
+        title={`${editor ? "Update" : "Create"} task`}
         open={toggleAddTask}
         footer={null}
         onCancel={handleCancel}
       >
         <AddTask
+          form={form}
+          editor={editor}
           onCancel={handleCancel}
           reload={getTask}
           members={detailProject.members}
