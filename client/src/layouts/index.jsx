@@ -35,10 +35,6 @@ const LayoutComponent = ({ children }) => {
       key: 0,
     },
     {
-      label: <NavLink to="">Profile</NavLink>,
-      key: 1,
-    },
-    {
       label: <span onClick={handleLogout}>logout</span>,
       key: 2,
     },

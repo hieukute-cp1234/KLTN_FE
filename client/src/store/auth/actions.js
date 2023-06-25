@@ -33,3 +33,10 @@ export const fetchListUser = createAsyncThunk(
     } catch (error) {}
   }
 );
+
+export const createUser = async ({ data, success }) => {
+  try {
+    await appApi.post("/register", data);
+    success();
+  } catch (_error) {}
+};

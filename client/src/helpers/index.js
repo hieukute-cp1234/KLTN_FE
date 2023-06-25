@@ -6,7 +6,9 @@ import {
   WEED_OF_WEEK,
   MONTH_OF_MONTH,
   FORMAT_DAY,
+  DATE_TIME,
 } from "../constants";
+import { BASE_URL_FILE } from "../constants/config";
 
 export const convertEffortByType = (typeEffort) => {
   switch (typeEffort) {
@@ -27,6 +29,14 @@ export const convertDate = (date) => {
   return date ? dayjs(date, FORMAT_DAY) : "";
 };
 
+export const formatDate = (date) => {
+  return date ? dayjs(date).format(FORMAT_DAY) : "";
+};
+
+export const formatTime = (time) => {
+  return time ? dayjs(time).format(DATE_TIME) : "";
+};
+
 export const renderTypeEffort = (type) => {
   switch (type) {
     case 2:
@@ -39,3 +49,5 @@ export const renderTypeEffort = (type) => {
       return "hour";
   }
 };
+
+export const getUrl = (name) => `${BASE_URL_FILE}${name}`;

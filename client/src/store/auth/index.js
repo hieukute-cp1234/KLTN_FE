@@ -6,6 +6,7 @@ const initialState = {
   listUser: [],
   token: localStorage.getItem("token") || "",
   isAddUser: false,
+  keySearch: "",
 };
 
 const auth = createSlice({
@@ -17,6 +18,9 @@ const auth = createSlice({
     },
     clearToken: (state) => {
       state.token = "";
+    },
+    changeKeySearch: (state, action) => {
+      state.keySearch = action.payload;
     },
   },
   extraReducers: {
@@ -34,5 +38,5 @@ const auth = createSlice({
 
 const { reducer, actions } = auth;
 
-export const { toggleModalAddUser, clearToken } = actions;
+export const { toggleModalAddUser, clearToken, changeKeySearch } = actions;
 export default reducer;

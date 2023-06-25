@@ -11,9 +11,14 @@
 
   &__search {
     display: flex;
+    justify-content: flex-end;
     max-height: 70%;
     width: 40%;
     gap: 0.625rem;
+
+    > button {
+      min-height: 2rem;
+    }
 
     > div {
       flex: 1;

@@ -9,7 +9,8 @@ import AdminUsers from "../pages/Admin/ListUser";
 import UserProfile from "../pages/User/Profile";
 import ProjectDetail from "../pages/User/DetailProject";
 import MyProject from "../pages/User/MyProject";
-import MyTask from '../pages/User/MyTask';
+import MyTask from "../pages/User/MyTask";
+import DetailTask from "../pages/User/DetailTask";
 import { ADMIN, USER } from "../constants/routes";
 
 const routersPublic = [
@@ -86,6 +87,11 @@ const routersPrivate = [
     key: "MY_TASK",
     path: USER.MY_TASK,
     component: <MyTask />,
+  },
+  {
+    key: "DETAIL_TASK",
+    path: USER.DETAIL_TASK,
+    component: <DetailTask />,
   },
 ];
 

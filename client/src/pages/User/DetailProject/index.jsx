@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { io } from "socket.io-client";
 import { Descriptions, Badge, Modal, Form } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
@@ -9,8 +10,11 @@ import Button from "../../../components/common/Button";
 import PreviewProcess from "../../../components/workflow/ModalPreview";
 import AddTask from "./AddTask";
 import PreviewMembers from "./ListMember";
+import Documents from "./Documents";
+import AddDocument from "./AddDocument";
 import { fetchDetailProject } from "../../../store/project/actions";
 import { fetchTaskByProject } from "../../../store/task/actions";
+import { SOCKET_HOST } from "../../../constants/config";
 import "./detail.scss";
 
 const PageDetailProject = () => {
@@ -25,11 +29,39 @@ const PageDetailProject = () => {
   const [taskSelected, setTaskSelected] = useState({});
   const [listTask, setListTask] = useState([]);
   const [editor, setEditor] = useState(false);
+  const [editorDocument, setEditorDocument] = useState(false);
+  const [toggleDocument, setToggleDocument] = useState(false);
+  const [listDocument, setListDocument] = useState([]);
 
   const detailProject = useSelector((state) => state.project.detailProject);
 
+  const socketRef = useRef();
+
   useEffect(() => {
-    dispatch(fetchDetailProject({ id: projectId }));
+    socketRef.current = io(SOCKET_HOST);
+    socketRef.current.connect();
+
+    socketRef.current.on("updateTask", (taskSocket) => {
+      setListTask((tasks) =>
+        tasks.map((task) => {
+          if (task.id === taskSocket.id) {
+            return { ...task, status: taskSocket.status };
+          }
+          return task;
+        })
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(
+      fetchDetailProject({
+        id: projectId,
+        success: (data) => {
+          setListDocument(data.documents);
+        },
+      })
+    );
     const fetchTask = async () => {
       await getTask({ projectId });
     };
@@ -58,6 +90,7 @@ const PageDetailProject = () => {
 
   const handleCancel = () => {
     setToggleAddTask(false);
+    setToggleDocument(false);
   };
 
   const openModalAddTask = (nodeId) => {
@@ -77,6 +110,15 @@ const PageDetailProject = () => {
     setEditor(true);
     form.setFieldsValue(value);
     setToggleAddTask(true);
+  };
+
+  const openModalAddDocument = () => {
+    setEditorDocument(false);
+    setToggleDocument(true);
+  };
+
+  const refetchDocument = (document) => {
+    setListDocument([...listDocument, document]);
   };
 
   return (
@@ -105,6 +147,12 @@ const PageDetailProject = () => {
           </Descriptions.Item>
           <Descriptions.Item label="Description" span={3}>
             {detailProject.descriptions}
+          </Descriptions.Item>
+          <Descriptions.Item label="Documents" span={3}>
+            <Documents
+              documents={listDocument}
+              onAddDocument={openModalAddDocument}
+            />
           </Descriptions.Item>
           <Descriptions.Item label="Start at">
             {detailProject.createdAt}
@@ -136,6 +184,19 @@ const PageDetailProject = () => {
           members={detailProject.members}
           node={nodeSelected}
           project={projectId}
+        />
+      </Modal>
+      <Modal
+        title={`${editorDocument ? "Update" : "Create"} Document`}
+        open={toggleDocument}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <AddDocument
+          form={form}
+          editor={editorDocument}
+          onCancel={handleCancel}
+          updateDocument={refetchDocument}
         />
       </Modal>
       <Modal

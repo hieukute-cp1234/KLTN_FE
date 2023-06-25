@@ -1,9 +1,11 @@
 import React from "react";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
 import Button from "../../../components/common/Button";
 import { deleteTask } from "../../../store/task/actions";
 import { renderTypeEffort } from "../../../helpers";
-import { STATUS_TASK, TYPE_TASK } from "../../../constants";
+import { styleType, styleStatus } from "../../../helpers/status";
+import { USER } from "../../../constants/routes";
 import "./detail.scss";
 import Swal from "sweetalert2";
 
@@ -19,51 +21,6 @@ const ProcessTask = (props) => {
 
     if (!result.isConfirmed) return;
     await deleteTask({ id });
-  };
-
-  const styleStatus = (status) => {
-    switch (status) {
-      case STATUS_TASK.OPEN:
-        return {
-          background: "#ff9c6e",
-          text: "Open",
-        };
-      case STATUS_TASK.INPROGRESS:
-        return {
-          background: "#69b1ff",
-          text: "Inprogress",
-        };
-      case STATUS_TASK.VERIFY:
-        return {
-          background: "#fff566",
-          text: "Verify",
-        };
-      default:
-        return {
-          background: "#d9d9d9",
-          text: "Close",
-        };
-    }
-  };
-
-  const styleType = (type) => {
-    switch (type) {
-      case TYPE_TASK.TASK:
-        return {
-          background: "#bae637",
-          text: "Task",
-        };
-      case TYPE_TASK.ISSUE:
-        return {
-          background: "#ffa940",
-          text: "Issue",
-        };
-      default:
-        return {
-          background: "#ff4d4f",
-          text: "Bug",
-        };
-    }
   };
 
   return (
@@ -93,8 +50,7 @@ const ProcessTask = (props) => {
                       <div>
                         <span
                           style={{
-                            backgroundColor: styleType(task.type)
-                              .background,
+                            backgroundColor: styleType(task.type).background,
                           }}
                         >
                           {styleType(task.type).text}
@@ -122,7 +78,9 @@ const ProcessTask = (props) => {
                       </div>
                     </div>
                     <div className="process-task__item__wrapper-task__task__name">
-                      {task.name}
+                      <NavLink to={`${USER.MY_TASK}/${task.id}`}>
+                        {task.name}
+                      </NavLink>
                     </div>
                     <div className="process-task__item__wrapper-task__task__mention">
                       Mention: {task.mention.userName}

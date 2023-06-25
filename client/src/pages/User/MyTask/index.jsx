@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { io } from "socket.io-client";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -11,12 +12,20 @@ import {
   updateStatusTask,
 } from "../../../store/task/actions";
 import { KEY_TAB_TASK, STATUS_TASK } from "../../../constants";
+import { SOCKET_HOST } from "../../../constants/config";
 import "./my-task.scss";
 
 const PageMyTask = () => {
   const [listTask, setListTask] = useState({});
   const [listProject, setListProject] = useState([]);
   const [projectSelected, setProjectSelectde] = useState("");
+
+  const socketRef = useRef();
+
+  useEffect(() => {
+    socketRef.current = io(SOCKET_HOST);
+    socketRef.current.connect();
+  }, []);
 
   const user = useSelector((state) => state.auth.user);
 
@@ -92,6 +101,7 @@ const PageMyTask = () => {
     setListTask(newTask);
     const status = getStatus(newKey);
     updateStatusTask({ id: taskDraged.id, data: { status } });
+    socketRef.current.emit("statusTask", { id: taskDraged.id, status });
   };
 
   const onDragEnd = (result) => {

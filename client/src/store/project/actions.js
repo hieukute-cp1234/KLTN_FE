@@ -20,9 +20,10 @@ export const fetchAllProject = createAsyncThunk(
 
 export const fetchDetailProject = createAsyncThunk(
   "project/detail",
-  async ({ id }) => {
+  async ({ id, success = () => {} }) => {
     try {
       const res = await appApi.get(`/project/${id}`);
+      success(res);
       return res;
     } catch (error) {}
   }

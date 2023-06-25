@@ -3,7 +3,7 @@ import { Input } from "antd";
 import "./input.scss";
 
 const CommonInput = (props) => {
-  const { placeholder, label, beforeIcon, afterIcon, onChange, value } = props;
+  const { placeholder, label, beforeIcon, afterIcon, onChange, value, onKeyDown } = props;
   return (
     <div className="ms-input">
       {label && <span className="ms-input__label">{label}</span>}
@@ -13,6 +13,7 @@ const CommonInput = (props) => {
         prefix={beforeIcon}
         suffix={afterIcon}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         value={value}
       />
     </div>

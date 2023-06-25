@@ -27,12 +27,14 @@ const PreviewWorkflow = (props) => {
       icon: <EditOutlined />,
       function: redirectEdit,
       class: "ms-btn-edit",
+      disable: dataDiagrams.isDisabled,
     },
     {
       text: "Create",
       icon: <PlusCircleOutlined />,
       function: redirectCreate,
       class: "ms-btn-copy",
+      disable: dataDiagrams.isDisabled,
     },
   ];
 
@@ -62,6 +64,7 @@ const PreviewWorkflow = (props) => {
           <Button
             key={index}
             text={button.text}
+            disabled={button.disable}
             classButton={button.class}
             beforeIcon={button.icon}
             click={button.function}

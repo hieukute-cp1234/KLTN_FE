@@ -35,14 +35,15 @@ const ProcessItem = (props) => {
       class: "ms-btn-edit",
       action: () => onEdit(processData.id),
       icon: <EditOutlined />,
-      disable: false,
+      disable:
+        processData.isDisabled || processData.createByUser?.id !== user.id,
     },
     {
       text: "Copy",
       class: "ms-btn-copy",
       action: () => onCopy(processData.id),
       icon: <CopyOutlined />,
-      disable: false,
+      disable: processData.isDisabled,
     },
     {
       text: `${processData.publish ? "Unpub" : "Publish"}`,
@@ -56,7 +57,8 @@ const ProcessItem = (props) => {
       class: "ms-btn-delete",
       action: () => onDelete(processData.id),
       icon: <DeleteOutlined />,
-      disable: false,
+      disable:
+        processData.isDisabled || processData.createByUser?.id !== user.id,
     },
   ];
 

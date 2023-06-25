@@ -7,6 +7,13 @@ export const fetchTaskByProject = async ({ params, actions }) => {
   } catch (error) {}
 };
 
+export const fetchTaskById = async ({ id, success }) => {
+  try {
+    const res = await appApi.get(`/task/${id}`);
+    success(res);
+  } catch (error) {}
+};
+
 export const createTask = async ({ data, actions }) => {
   try {
     const res = await appApi.post("/task", data);
@@ -23,5 +30,19 @@ export const deleteTask = async ({ id }) => {
 export const updateStatusTask = async ({ id, data }) => {
   try {
     await appApi.put(`/status-task/${id}`, data);
+  } catch (error) {}
+};
+
+export const uploadFile = async ({ data, success }) => {
+  try {
+    const res = await appApi.post(`/upload`, data);
+    success(res);
+  } catch (error) {}
+};
+
+export const deleteFile = async ({ id, success }) => {
+  try {
+    const res = await appApi.delete(`/upload/${id}`);
+    success(res);
   } catch (error) {}
 };

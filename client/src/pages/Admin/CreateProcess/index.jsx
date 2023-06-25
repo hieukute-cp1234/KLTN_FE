@@ -122,6 +122,7 @@ export const CreateProcessPage = () => {
         checkList: [],
         effortNumber: 0,
         effortType: 1,
+        step: 0,
       },
       position: { x: 500, y: 500 },
     };
@@ -149,6 +150,7 @@ export const CreateProcessPage = () => {
   //function handle edge
   const onConnect = useCallback(
     async (params) => {
+      const { source, target } = params;
       const newId = await getRandomId();
       const newEdge = {
         ...params,
@@ -158,8 +160,27 @@ export const CreateProcessPage = () => {
         markerEnd: { type: MarkerType.ArrowClosed },
       };
       setEdges((eds) => addEdge(newEdge, eds));
+
+      const { data = {} } = nodes.find((node) => node.id === source);
+
+      setNodes((nodes) =>
+        nodes.map((node) => {
+          if (node.id === target) {
+            console.log(node);
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                input: data.output,
+                step: data.step + 1,
+              },
+            };
+          }
+          return node;
+        })
+      );
     },
-    [setEdges]
+    [setEdges, setNodes, nodes]
   );
 
   const handleSelectEdge = (edge) => {

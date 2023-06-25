@@ -1,0 +1,17 @@
+@import "../../../assets/scss/variable.scss";
+
+.file {
+  display: flex;
+  gap: 0.5rem;
+
+  > button {
+    color: $white;
+    background-color: $color-copy;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+}
