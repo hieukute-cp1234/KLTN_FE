@@ -40,9 +40,23 @@ export const uploadFile = async ({ data, success }) => {
   } catch (error) {}
 };
 
+export const uploadMultipleFile = async ({ data, success }) => {
+  try {
+    const res = await appApi.post(`/upload-multiple`, data);
+    success(res);
+  } catch (error) {}
+};
+
 export const deleteFile = async ({ id, success }) => {
   try {
-    const res = await appApi.delete(`/upload/${id}`);
+    const res = await appApi.delete(`/document/${id}`);
+    success(res);
+  } catch (error) {}
+};
+
+export const updateTask = async ({ id, data, success }) => {
+  try {
+    const res = await appApi.put(`/task/${id}`, data);
     success(res);
   } catch (error) {}
 };

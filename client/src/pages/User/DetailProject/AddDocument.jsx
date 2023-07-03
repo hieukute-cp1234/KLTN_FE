@@ -13,8 +13,8 @@ const CreateTask = (props) => {
   const handleSubmit = async (value) => {
     const formData = new FormData();
     formData.append("label", value.name);
-    formData.append("file", dataFile.file);
-    formData.append("link", dataFile.link);
+    formData.append("file", dataFile.file || '');
+    formData.append("link", dataFile.link || '');
     formData.append("projectId", projectId);
     await uploadFile({
       data: formData,

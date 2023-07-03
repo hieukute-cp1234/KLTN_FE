@@ -23,7 +23,6 @@ const AddUser = (props) => {
   }, []);
 
   const handleSubmit = async (value) => {
-    console.log(value);
     try {
       await createUser({
         data: value,
@@ -63,12 +62,6 @@ const AddUser = (props) => {
         <Form.Item
           label="Password"
           name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
         >
           <Input placeholder="123456" defaultValue="123456" />
         </Form.Item>

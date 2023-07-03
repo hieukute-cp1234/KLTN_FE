@@ -27,9 +27,12 @@ const Header = ({ namePage }) => {
   const pageCreateProcess = !!useMatch(ADMIN.CREATE_PROCESS);
   const pageTask = !!useMatch(USER.MY_TASK);
   const pageDetailProject = !!useMatch(USER.DETAIL_PROJECT);
+  const pageDetailTask = !!useMatch(USER.DETAIL_TASK);
 
   const routeNotSearch =
-    pageUpdateProcess || pageCreateProcess || pageTask || pageDetailProject;
+    pageUpdateProcess || pageCreateProcess;
+
+  const routeNotAdd = pageDetailTask || pageTask || pageDetailProject;
 
   const handleAddByPage = () => {
     switch (true) {
@@ -70,23 +73,25 @@ const Header = ({ namePage }) => {
   return (
     <div className="ms-header">
       <div>{namePage}</div>
-      <div className="ms-header__search">
-        {!routeNotSearch && (
-          <Input
-            placeholder="search..."
-            value={search}
-            beforeIcon={<SearchOutlined />}
-            onChange={handleChangeKeySearch}
-            onKeyDown={handleEnter}
+      {!routeNotAdd && (
+        <div className="ms-header__search">
+          {!routeNotSearch && (
+            <Input
+              placeholder="search..."
+              value={search}
+              beforeIcon={<SearchOutlined />}
+              onChange={handleChangeKeySearch}
+              onKeyDown={handleEnter}
+            />
+          )}
+          <Button
+            text="Add"
+            classButton="ms-btn-create"
+            beforeIcon={<PlusCircleOutlined />}
+            click={handleAddByPage}
           />
-        )}
-        <Button
-          text="Add"
-          classButton="ms-btn-create"
-          beforeIcon={<PlusCircleOutlined />}
-          click={handleAddByPage}
-        />
-      </div>
+        </div>
+      )}
     </div>
   );
 };

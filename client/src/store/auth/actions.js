@@ -9,7 +9,7 @@ export const handleLogin = createAsyncThunk(
         email: user.email,
         password: user.password,
       });
-      actions.success(response.token);
+      actions.success(response);
       return response;
     } catch (error) {
       actions.error();

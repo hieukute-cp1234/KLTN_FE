@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Draggable } from "react-beautiful-dnd";
 import { FullscreenOutlined } from "@ant-design/icons";
 import { TYPE_TASK } from "../../../constants";
@@ -6,6 +7,7 @@ import "./my-task.scss";
 
 const Task = (props) => {
   const { task, index } = props;
+  const navigate = useNavigate();
 
   const styleType = (type) => {
     switch (type) {
@@ -27,6 +29,10 @@ const Task = (props) => {
     }
   };
 
+  const handleViewTask = (id) => {
+    navigate(`/user/my-task/${id}`);
+  };
+
   return (
     <Draggable key={task.id} draggableId={task.id} index={index}>
       {(provider) => (
@@ -41,7 +47,7 @@ const Task = (props) => {
             <span style={{ background: styleType(task.type).background }}>
               {styleType(task.type).text}
             </span>
-            <span>
+            <span onClick={() => handleViewTask(task.id)}>
               <FullscreenOutlined />
             </span>
           </div>

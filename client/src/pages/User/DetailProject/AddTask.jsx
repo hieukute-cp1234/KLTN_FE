@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Form, Input, Button, Select } from "antd";
-import { typeEffort, optionTypeTask } from "../../../constants/options";
-import { convertEffortByType } from "../../../helpers";
-import { createTask } from "../../../store/task/actions";
+import { optionTypeTask } from "../../../constants/options";
+import { createTask, updateTask } from "../../../store/task/actions";
 
 const CreateTask = (props) => {
-  const { onCancel, form, editor, members, project, node, reload } = props;
-
-  const [valueTypeEffort, setValueTypeEffort] = useState(0);
+  const { onCancel, form, editor, members, project, node, reload, selectTask } =
+    props;
 
   const user = useSelector((state) => state.auth.user);
 
-  const handleChangeTypeEffort = (value) => {
-    setValueTypeEffort(value);
-  };
-
   const handleSubmit = async (value) => {
+    if (editor) {
+      await updateTask({
+        id: selectTask,
+        data: value,
+        success: (message) => {
+          reload();
+          onCancel();
+        },
+      });
+    }
+
     const newTask = {
       ...value,
       status: 1,
@@ -70,16 +75,10 @@ const CreateTask = (props) => {
           },
         ]}
       >
-        <Select
-          placeholder="select type..."
-          options={optionTypeTask}
-        />
+        <Select placeholder="select type..." options={optionTypeTask} />
       </Form.Item>
 
-      <Form.Item
-        label="Description"
-        name="description"
-      >
+      <Form.Item label="Description" name="description">
         <Input.TextArea
           className="custom-area"
           rows={4}
@@ -92,7 +91,7 @@ const CreateTask = (props) => {
       </Form.Item>
 
       <Form.Item
-        label="mention"
+        label="Assign"
         name="mention"
         rules={[
           {
@@ -107,42 +106,6 @@ const CreateTask = (props) => {
             label: member.email,
             value: member.id,
           }))}
-        />
-      </Form.Item>
-
-      <Form.Item
-        label="Effort type"
-        name="effortType"
-        rules={[
-          {
-            required: true,
-            message: "Please input your user!",
-          },
-        ]}
-      >
-        <Select
-          placeholder="select type..."
-          options={typeEffort.map((type) => ({
-            value: type.value,
-            label: type.text,
-          }))}
-          onChange={handleChangeTypeEffort}
-        />
-      </Form.Item>
-
-      <Form.Item
-        label="Effort"
-        name="effort"
-        rules={[
-          {
-            required: true,
-            message: "Please input your user!",
-          },
-        ]}
-      >
-        <Select
-          placeholder="select effort..."
-          options={convertEffortByType(valueTypeEffort)}
         />
       </Form.Item>
 

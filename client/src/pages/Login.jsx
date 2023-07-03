@@ -37,8 +37,9 @@ const LoginPage = () => {
       handleLogin({
         user: value,
         actions: {
-          success: (token) => {
-            localStorage.setItem("token", token);
+          success: (data) => {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", data.user);
             navigate("/admin");
           },
           error: () => {},
@@ -99,7 +100,7 @@ const LoginPage = () => {
               cookiePolicy={"single_host_origin"}
             />
           </div>
-        </div>
+        </div>  
       </div>
     </div>
   );

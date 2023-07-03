@@ -30,7 +30,7 @@ const MENU_ADMIN = [
     label: "Roles",
     key: ADMIN.LIST_ROLE,
     path: ADMIN.LIST_ROLE,
-    role: [1, 2],
+    role: [1],
   },
   {
     icon: <UserOutlined />,

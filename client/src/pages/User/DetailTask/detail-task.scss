@@ -19,13 +19,55 @@
   &__chat-box {
     border: 1px solid rgba($text-color, 0.5);
     border-radius: 0.5rem;
-    max-height: 25rem;
     min-height: 5rem;
     padding: 0.25rem;
-    overflow: auto;
 
-    &::-webkit-scrollbar {
-      display: none;
+    > .ms-scroll {
+      overflow: auto;
+      max-height: 20rem;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(#888888, 0.5);
+        border-radius: 999px;
+      }
+    }
+
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      &__email {
+        font-weight: 900;
+        font-size: 0.85rem;
+        color: rgb(67, 100, 117);
+      }
+
+      &__time {
+        color: rgb(107, 107, 107);
+      }
+    }
+
+    &__description {
+      &__link {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__image {
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 1rem;
+
+        > img {
+          width: 100px;
+          height: 100px;
+        }
+      }
     }
 
     .ant-spin-container {
@@ -59,19 +101,79 @@
       text-transform: uppercase;
     }
 
-    > input {
+    &__text {
       flex: 1;
       padding: 0.5rem 1rem;
       border: 1px solid rgba($text-color, 0.5);
-      border-radius: 5rem;
-      outline: none;
+      border-radius: 0.5rem;
+
+      > input {
+        outline: none;
+        border: none;
+        width: 100%;
+        background-color: transparent;
+      }
+
+      &__image {
+        margin-top: 0.5rem;
+        position: relative;
+
+        > img {
+          width: 100px;
+          height: 100px;
+          border: 1px solid rgba($text-color, 0.5);
+        }
+
+        &__close {
+          position: absolute;
+          background-color: rgba($white, 0.5);
+          color: $white;
+          display: flex;
+          width: 1rem;
+          height: 1rem;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          outline: none;
+          border-radius: 5rem;
+          right: 2px;
+          top: 2px;
+          cursor: pointer;
+        }
+      }
+
+      &__file {
+        margin-top: 0.25rem;
+        position: relative;
+
+        > div {
+          padding: 0.5rem;
+          background-color: rgba($text-color, 0.1);
+          border-radius: 0.5rem;
+        }
+
+        &__close {
+          position: absolute;
+          background-color: rgba($white, 0.5);
+          color: $text-color;
+          display: flex;
+          width: 1rem;
+          height: 1rem;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          outline: none;
+          border-radius: 5rem;
+          right: -2px;
+          top: -2px;
+          cursor: pointer;
+        }
+      }
     }
 
     &__send {
       width: 2rem;
       height: 2rem;
-      padding-left: 0.2rem;
-      background-color: red;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -81,6 +183,25 @@
       background-color: #69b1ff;
     }
   }
+}
+
+.link-download {
+  color: #1677ff;
+  cursor: pointer;
+  width: fit-content;
+
+  &:hover {
+    color: #69b1ff;
+  }
+}
+
+.wrapper_image {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-hide {
+  display: none;
 }
 
 .ant-list-item-meta-description {

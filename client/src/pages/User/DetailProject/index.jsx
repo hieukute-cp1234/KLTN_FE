@@ -13,8 +13,9 @@ import PreviewMembers from "./ListMember";
 import Documents from "./Documents";
 import AddDocument from "./AddDocument";
 import { fetchDetailProject } from "../../../store/project/actions";
-import { fetchTaskByProject } from "../../../store/task/actions";
+import { fetchTaskByProject, deleteFile } from "../../../store/task/actions";
 import { SOCKET_HOST } from "../../../constants/config";
+import { formatDate } from "../../../helpers";
 import "./detail.scss";
 
 const PageDetailProject = () => {
@@ -26,7 +27,7 @@ const PageDetailProject = () => {
   const [togglePreviewProcess, setTogglePreviewProcess] = useState(false);
   const [toggleViewMember, setToggleViewMember] = useState(false);
   const [nodeSelected, setNodeSelected] = useState("");
-  const [taskSelected, setTaskSelected] = useState({});
+  const [taskSelected, setTaskSelected] = useState("");
   const [listTask, setListTask] = useState([]);
   const [editor, setEditor] = useState(false);
   const [editorDocument, setEditorDocument] = useState(false);
@@ -106,7 +107,7 @@ const PageDetailProject = () => {
       mention: task.mention.id,
     };
 
-    setTaskSelected(task);
+    setTaskSelected(task.id);
     setEditor(true);
     form.setFieldsValue(value);
     setToggleAddTask(true);
@@ -119,6 +120,17 @@ const PageDetailProject = () => {
 
   const refetchDocument = (document) => {
     setListDocument([...listDocument, document]);
+  };
+
+  const handleDeleteDocument = async (id) => {
+    await deleteFile({
+      id,
+      success: () => {
+        setListDocument((documents) =>
+          documents.filter((doc) => doc.id !== id)
+        );
+      },
+    });
   };
 
   return (
@@ -152,10 +164,11 @@ const PageDetailProject = () => {
             <Documents
               documents={listDocument}
               onAddDocument={openModalAddDocument}
+              onDeleteDocument={handleDeleteDocument}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Start at">
-            {detailProject.createdAt}
+          <Descriptions.Item label="Created at">
+            {formatDate(detailProject.createdAt)}
           </Descriptions.Item>
           <Descriptions.Item label="End at">
             {detailProject.endDate}
@@ -184,6 +197,7 @@ const PageDetailProject = () => {
           members={detailProject.members}
           node={nodeSelected}
           project={projectId}
+          selectTask={taskSelected}
         />
       </Modal>
       <Modal

@@ -144,21 +144,21 @@ export const columnUser = (params) => {
       align: "center",
       render: (processCreated) => <NavLink>{processCreated.length}</NavLink>,
     },
-    {
-      title: "Actions",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      render: (id) => (
-        <div className="role-actions">
-          <Button
-            text="Detail"
-            classButton="ms-btn-edit"
-            afterIcon={<EditOutlined />}
-            click={() => onEdit(id)}
-          />
-        </div>
-      ),
-    },
+    // {
+    //   title: "Actions",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   align: "center",
+    //   render: (id, user) => (
+    //     <div className="role-actions">
+    //       <Button
+    //         text="Detail"
+    //         classButton="ms-btn-edit"
+    //         afterIcon={<EditOutlined />}
+    //         click={() => onEdit(user)}
+    //       />
+    //     </div>
+    //   ),
+    // },
   ];
 };

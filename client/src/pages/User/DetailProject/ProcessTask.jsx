@@ -3,7 +3,7 @@ import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import Button from "../../../components/common/Button";
 import { deleteTask } from "../../../store/task/actions";
-import { renderTypeEffort } from "../../../helpers";
+import { formatDate } from "../../../helpers";
 import { styleType, styleStatus } from "../../../helpers/status";
 import { USER } from "../../../constants/routes";
 import "./detail.scss";
@@ -86,8 +86,8 @@ const ProcessTask = (props) => {
                       Mention: {task.mention.userName}
                     </div>
                     <div className="process-task__item__wrapper-task__task__mention">
-                      Effort:{" "}
-                      {`${task.effort} ${renderTypeEffort(task.effortType)}`}
+                      Created at:{" "}
+                      {`${formatDate(task.createdAt)}`}
                     </div>
                   </div>
                 ))

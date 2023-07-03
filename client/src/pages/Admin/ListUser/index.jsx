@@ -21,8 +21,9 @@ const UsersPage = () => {
     dispatch(fetchListUser());
   }, [dispatch]);
 
-  const openModalEdit = () => {
+  const openModalEdit = (user) => {
     setEditor(true);
+    form.setFieldsValue(user);
     dispatch(toggleModalAddUser(true));
   };
 

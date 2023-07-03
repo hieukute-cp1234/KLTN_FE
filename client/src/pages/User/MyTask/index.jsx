@@ -31,7 +31,9 @@ const PageMyTask = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getProjectForMe();
+      if (!projectSelected) {
+        await getProjectForMe();
+      }
       if (projectSelected && user.id) {
         await getTask({ projectId: projectSelected, userId: user.id });
       }
@@ -47,6 +49,7 @@ const PageMyTask = () => {
           key: project.id,
         }));
         if (newData.length) {
+          console.log("dshds");
           setProjectSelectde(newData[0].key);
         }
         setListProject(newData);
@@ -121,6 +124,7 @@ const PageMyTask = () => {
   };
 
   const selectProject = ({ key }) => {
+    console.log(key);
     setProjectSelectde(key);
   };
 
